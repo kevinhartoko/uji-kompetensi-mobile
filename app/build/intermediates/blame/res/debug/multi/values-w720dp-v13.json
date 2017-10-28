@@ -1,0 +1,26 @@
+[
+    {
+        "outputFile": "C:\\Users\\aldoduha\\AndroidStudioProjects\\UjiKompetensi\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-w720dp-v13\\values-w720dp-v13.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 76,
+                    "endOffset": 127
+                },
+                "from": {
+                    "file": "C:\\Users\\aldoduha\\.android\\build-cache\\7143f0132b95826b586557aa421e4eeae06e6439\\output\\res\\values-w720dp\\values-w720dp.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 278,
+                        "endColumn": 76,
+                        "endOffset": 350
+                    }
+                }
+            }
+        ]
+    }
+]

@@ -38,6 +38,14 @@
             android:name="com.example.aldoduha.ujikompetensi.activity.KYNQuestionFormActivity"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="com.example.aldoduha.ujikompetensi.activity.KYNUserListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="com.example.aldoduha.ujikompetensi.activity.KYNUserDetailActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

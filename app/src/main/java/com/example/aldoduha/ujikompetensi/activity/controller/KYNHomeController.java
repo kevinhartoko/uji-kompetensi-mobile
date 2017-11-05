@@ -7,6 +7,7 @@ import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.KYNHomeActivity;
 import com.example.aldoduha.ujikompetensi.activity.KYNQuestionFormActivity;
 import com.example.aldoduha.ujikompetensi.activity.KYNQuestionFormIdentityActivity;
+import com.example.aldoduha.ujikompetensi.activity.KYNUserListActivity;
 
 /**
  * Created by aldoduha on 10/14/2017.
@@ -30,7 +31,8 @@ public class KYNHomeController implements View.OnClickListener {
 
     }
     private void onUserManagementClicked(){
-
+        Intent intent = new Intent(acitivity, KYNUserListActivity.class);
+        acitivity.startActivity(intent);
     }
     private void onQuestionManagementClicked(){
 

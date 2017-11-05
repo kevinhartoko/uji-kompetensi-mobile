@@ -6,6 +6,7 @@ import android.content.Context;
 
 import com.example.aldoduha.ujikompetensi.model.KYNIntervieweeModel;
 import com.example.aldoduha.ujikompetensi.model.KYNQuestionModel;
+import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
 
 
 import net.sqlcipher.Cursor;
@@ -30,6 +31,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TABLE_INTERVIEWEE = "interviewee";
     private static final String TABLE_QUESTION = "question";
+    private static final String TABLE_USER = "user";
 
     //interviewee
     private static final String INTERVIEWEE_ID = "id";
@@ -49,6 +51,13 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
     private static final String QUESTION_ANSWER_4 = "answer4";
     private static final String QUESTION_INTERVIEWEE_ANSWER = "interviewee_answer";
     private static final String QUESTION_KEY_ANSWER = "key_answer";
+
+    //user
+    private static final String USER_ID = "id";
+    private static final String USER_NAMA = "nama";
+    private static final String USER_USERNAME = "username";
+    private static final String USER_ROLE = "role";
+    private static final String USER_PASSWORD = "password";
 
     private static final String QUERY_CREATE_TABLE_INTERVIEWEE =
             "CREATE TABLE " + TABLE_INTERVIEWEE + " (" +
@@ -71,6 +80,14 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
                     QUESTION_INTERVIEWEE_ANSWER + " TEXT, " +
                     QUESTION_KEY_ANSWER + " TEXT);";
 
+    private static final String QUERY_CREATE_TABLE_USER =
+            "CREATE TABLE " + TABLE_USER + " (" +
+                    USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    USER_NAMA + " TEXT, " +
+                    USER_USERNAME + " TEXT, " +
+                    USER_PASSWORD + " TEXT, " +
+                    USER_ROLE + " TEXT);";
+
     private Context context;
 
     public KYNDatabaseHelper(Context context) {
@@ -84,6 +101,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(QUERY_CREATE_TABLE_INTERVIEWEE);
         db.execSQL(QUERY_CREATE_TABLE_QUESTION);
+        db.execSQL(QUERY_CREATE_TABLE_USER);
     }
 
     @Override
@@ -215,6 +233,36 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
+    public Long insertUser(KYNUserModel model){
+        if (model == null) {
+            return null;
+        }
+
+        Long id = -1l;
+
+        SQLiteDatabase db = getWritableDatabase();
+        try {
+            db.beginTransaction();
+            ContentValues values = new ContentValues();
+            values.put(USER_NAMA, model.getNama());
+            values.put(USER_USERNAME, model.getUsername());
+            values.put(USER_PASSWORD, model.getPassword());
+            values.put(USER_ROLE, model.getRole());
+
+            id = db.insert(TABLE_USER, null, values);
+            db.setTransactionSuccessful();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.endTransaction();
+            if (db.isOpen()) {
+                db.close();
+            }
+        }
+        return id;
+    }
+
     //update
     public void updateInterviewee(KYNIntervieweeModel model){
         if(model == null){
@@ -309,6 +357,29 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
             db.endTransaction();
         }
     }
+
+    public void updateUser(KYNUserModel model){
+        if(model == null){
+            return;
+        }
+        SQLiteDatabase db =getWritableDatabase();
+        try {
+            db.beginTransaction();
+            ContentValues values = new ContentValues();
+
+            values.put(USER_NAMA, model.getNama());
+            values.put(USER_USERNAME, model.getUsername());
+            values.put(USER_PASSWORD, model.getPassword());
+            values.put(USER_ROLE, model.getRole());
+
+            db.update(TABLE_USER, values, USER_ID+ " =? ", new String[]{model.getId() + ""});
+            db.setTransactionSuccessful();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            db.endTransaction();
+        }
+    }
     //get
     public KYNIntervieweeModel getInterviewee(Long intervieweeId) {
         KYNIntervieweeModel result = new KYNIntervieweeModel();
@@ -391,6 +462,32 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public List<KYNUserModel> getUsers() {
+        ArrayList result = new ArrayList();
+        String mQuery = "SELECT * FROM " + TABLE_USER;
+        SQLiteDatabase mReadableDatabase = getReadableDatabase();
+        Cursor mCursor = mReadableDatabase.rawQuery(mQuery, null);
+        try {
+            if (mCursor.moveToFirst()) {
+                do {
+                    KYNUserModel model = new KYNUserModel();
+                    model.setId(mCursor.getLong(mCursor.getColumnIndex(USER_ID)));
+                    model.setNama(mCursor.getString(mCursor.getColumnIndex(USER_NAMA)));
+                    model.setUsername(mCursor.getString(mCursor.getColumnIndex(USER_USERNAME)));
+                    model.setPassword(mCursor.getString(mCursor.getColumnIndex(USER_PASSWORD)));
+                    model.setRole(mCursor.getString(mCursor.getColumnIndex(USER_ROLE)));
+
+                    result.add(model);
+                }while (mCursor.moveToNext());
+            }
+        } catch (Exception e) {
+
+        } finally {
+            mCursor.close();
+        }
+        return result;
+    }
+
     //delete
     public void deleteInterviewee() {
         delete(TABLE_INTERVIEWEE, null, null);
@@ -405,7 +502,12 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
     public void deleteQuestion(Long id){
         delete(TABLE_QUESTION, QUESTION_ID + " =? ", new String[]{id + ""});
     }
-
+    public void deleteUser(Long id){
+        delete(TABLE_USER, USER_ID + " =? ", new String[]{id + ""});
+    }
+    public void deleteUser() {
+        delete(TABLE_USER, null, null);
+    }
 
 
     //UTILITY HELPER TO DATABASE

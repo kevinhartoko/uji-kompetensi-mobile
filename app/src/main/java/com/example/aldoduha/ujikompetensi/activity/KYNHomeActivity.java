@@ -14,6 +14,7 @@ import com.example.aldoduha.ujikompetensi.activity.controller.KYNHomeController;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
 import com.example.aldoduha.ujikompetensi.model.KYNIntervieweeModel;
 import com.example.aldoduha.ujikompetensi.model.KYNQuestionModel;
+import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
 
 /**
  * Created by aldoduha on 10/14/2017.
@@ -87,6 +88,7 @@ public class KYNHomeActivity extends KYNBaseActivity{
         templateManagementButton.setOnClickListener(controller);
         logoutButton.setOnClickListener(controller);
         database = new KYNDatabaseHelper(this);
+        //insert question
         database.deleteInterviewee();
         database.deleteQuestion();
         for (int i = 1;i<=10;i++){
@@ -98,6 +100,16 @@ public class KYNHomeActivity extends KYNBaseActivity{
             model.setAnswer4("answer 4-"+i);
             model.setKeyAnswer("answer 1-"+i);
             database.insertQuestion(model);
+        }
+        //insert user
+        database.deleteUser();
+        for (int i=1;i<=4;i++){
+            KYNUserModel model = new KYNUserModel();
+            model.setNama("User"+i);
+            model.setUsername("Username"+i);
+            model.setPassword("password"+i);
+            model.setRole("admin");
+            database.insertUser(model);
         }
     }
 }

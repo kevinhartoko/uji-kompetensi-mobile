@@ -156,8 +156,6 @@ public class KYNUserListActivity extends KYNBaseActivity{
             textRole.setGravity(Gravity.CENTER);
             textRole.setWidth(textViewRole.getWidth());
 
-            tableRow.addView(new TextView(this));
-            tableRow.addView(new TextView(this));
             tableRow.addView(button);
             tableRow.addView(textNama);
             tableRow.addView(textUsername);
@@ -175,7 +173,7 @@ public class KYNUserListActivity extends KYNBaseActivity{
     }
     public void showOnBackPressAlertDialog(KYNConfirmationAlertDialogListener listener) {
         if (confirmationAlertDialog == null) {
-            confirmationAlertDialog = new KYNConfirmationAlertDialog(this, listener, "");
+            confirmationAlertDialog = new KYNConfirmationAlertDialog(this, listener, "Apakah anda ingin keluar?");
         }
         confirmationAlertDialog.setCancelable(false);
         confirmationAlertDialog.setCanceledOnTouchOutside(false);

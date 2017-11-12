@@ -11,6 +11,15 @@
         <dex dex="D:\repo\uji-kompetensi-mobile\app\build\intermediates\pre-dexed\debug\constraint-layout-solver-1.0.2_d7f3b20bbb533649435e3c500a221b3cab5e98ed.jar" />
     </item>
     <item
+        is-multidex="true"
+        jar="D:\repo\uji-kompetensi-mobile\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="caff8e51a24901cfc9cd7e1cf83d84f4cb0c103b">
+        <dex dex="D:\repo\uji-kompetensi-mobile\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_eb0e18a3f2c8f953c5553134eae3a1d80ad1a1ef\classes.dex" />
+    </item>
+    <item
         is-multidex="false"
         jar="C:\Users\aldoduha\.android\build-cache\6d56dec9887b6d2f93732fc378a467119dbbed61\output\jars\classes.jar"
         jumboMode="false"
@@ -18,6 +27,15 @@
         revision="25.0.2"
         sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
         <dex dex="D:\repo\uji-kompetensi-mobile\app\build\intermediates\pre-dexed\debug\classes_0eb017f32bb99a063f64b0b8ba7ed9100df2ff52.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\repo\uji-kompetensi-mobile\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="2439bc4b90bf0f04cf76a642328ae0a2dda2022d">
+        <dex dex="D:\repo\uji-kompetensi-mobile\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_0159e7956ae3f5ee7754d05df7331190b4536664\classes.dex" />
     </item>
     <item
         is-multidex="false"

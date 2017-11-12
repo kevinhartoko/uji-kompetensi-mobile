@@ -14,13 +14,14 @@ import com.example.aldoduha.ujikompetensi.activity.controller.KYNHomeController;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
 import com.example.aldoduha.ujikompetensi.model.KYNIntervieweeModel;
 import com.example.aldoduha.ujikompetensi.model.KYNQuestionModel;
+import com.example.aldoduha.ujikompetensi.model.KYNTemplateModel;
 import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
 
 /**
  * Created by aldoduha on 10/14/2017.
  */
 
-public class KYNHomeActivity extends KYNBaseActivity{
+public class KYNHomeActivity extends KYNBaseActivity {
     private Activity activity;
     private KYNHomeController controller;
     private Button jawabPertanyaanButton;
@@ -35,7 +36,7 @@ public class KYNHomeActivity extends KYNBaseActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        activity=this;
+        activity = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -44,9 +45,10 @@ public class KYNHomeActivity extends KYNBaseActivity{
         initDefaultValue();
     }
 
-    public void doLogout(){
+    public void doLogout() {
         finish();
     }
+
     KYNConfirmationAlertDialogListener listener = new KYNConfirmationAlertDialogListener() {
         @Override
         public void onOK() {
@@ -64,22 +66,22 @@ public class KYNHomeActivity extends KYNBaseActivity{
         doConfirmationLogout();
     }
 
-    public void doConfirmationLogout(){
+    public void doConfirmationLogout() {
         showConfirmationAlertDialog("Apakah anda ingin keluar?", listener);
     }
 
-    private void loadView(){
-        jawabPertanyaanButton = (Button)findViewById(R.id.btnJawabPertanyaan);
-        listIntervieweeButton = (Button)findViewById(R.id.btnListInterviewee);
-        userManagementButton = (Button)findViewById(R.id.btnUserManagement);
-        questionManagementButton = (Button)findViewById(R.id.btnQuestionManagement);
-        templateManagementButton = (Button)findViewById(R.id.btnTemplateManagement);
-        logoutButton = (Button)findViewById(R.id.btnLogout);
-        intervieweeLinear = (LinearLayout)findViewById(R.id.linearInterviewee);
-        adminLinear = (LinearLayout)findViewById(R.id.linearAdmin);
+    private void loadView() {
+        jawabPertanyaanButton = (Button) findViewById(R.id.btnJawabPertanyaan);
+        listIntervieweeButton = (Button) findViewById(R.id.btnListInterviewee);
+        userManagementButton = (Button) findViewById(R.id.btnUserManagement);
+        questionManagementButton = (Button) findViewById(R.id.btnQuestionManagement);
+        templateManagementButton = (Button) findViewById(R.id.btnTemplateManagement);
+        logoutButton = (Button) findViewById(R.id.btnLogout);
+        intervieweeLinear = (LinearLayout) findViewById(R.id.linearInterviewee);
+        adminLinear = (LinearLayout) findViewById(R.id.linearAdmin);
     }
 
-    private void initDefaultValue(){
+    private void initDefaultValue() {
         controller = new KYNHomeController(this);
         jawabPertanyaanButton.setOnClickListener(controller);
         listIntervieweeButton.setOnClickListener(controller);
@@ -91,25 +93,33 @@ public class KYNHomeActivity extends KYNBaseActivity{
         //insert question
         database.deleteInterviewee();
         database.deleteQuestion();
-        for (int i = 1;i<=10;i++){
+        for (int i = 1; i <= 10; i++) {
             KYNQuestionModel model = new KYNQuestionModel();
-            model.setQuestion("Pertanyaan "+i);
-            model.setAnswer1("answer 1-"+i);
-            model.setAnswer2("answer 2-"+i);
-            model.setAnswer3("answer 3-"+i);
-            model.setAnswer4("answer 4-"+i);
-            model.setKeyAnswer("answer 1-"+i);
+            model.setQuestion("Pertanyaan " + i);
+            model.setAnswer1("answer 1-" + i);
+            model.setAnswer2("answer 2-" + i);
+            model.setAnswer3("answer 3-" + i);
+            model.setAnswer4("answer 4-" + i);
+            model.setKeyAnswer("answer 1-" + i);
             database.insertQuestion(model);
         }
         //insert user
         database.deleteUser();
-        for (int i=1;i<=4;i++){
+        for (int i = 1; i <= 4; i++) {
             KYNUserModel model = new KYNUserModel();
-            model.setNama("User"+i);
-            model.setUsername("Username"+i);
-            model.setPassword("password"+i);
+            model.setNama("User" + i);
+            model.setUsername("Username" + i);
+            model.setPassword("password" + i);
             model.setRole("admin");
             database.insertUser(model);
+        }
+        //insert template
+        database.deleteTemplate();
+        for (int i = 1; i <= 3; i++) {
+            KYNTemplateModel model = new KYNTemplateModel();
+            model.setNama("Template" + i);
+            model.setJumlahSoal(1 + i);
+            database.insertTemplate(model);
         }
     }
 }

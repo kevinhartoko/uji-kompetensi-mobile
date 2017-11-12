@@ -3,11 +3,10 @@ package com.example.aldoduha.ujikompetensi;
 import android.content.ContentValues;
 import android.content.Context;
 
-
 import com.example.aldoduha.ujikompetensi.model.KYNIntervieweeModel;
 import com.example.aldoduha.ujikompetensi.model.KYNQuestionModel;
+import com.example.aldoduha.ujikompetensi.model.KYNTemplateModel;
 import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
-
 
 import net.sqlcipher.Cursor;
 import net.sqlcipher.database.SQLiteDatabase;
@@ -32,6 +31,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_INTERVIEWEE = "interviewee";
     private static final String TABLE_QUESTION = "question";
     private static final String TABLE_USER = "user";
+    private static final String TABLE_TEMPLATE = "template";
 
     //interviewee
     private static final String INTERVIEWEE_ID = "id";
@@ -58,6 +58,11 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
     private static final String USER_USERNAME = "username";
     private static final String USER_ROLE = "role";
     private static final String USER_PASSWORD = "password";
+
+    //template
+    private static final String TEMPLATE_ID = "id";
+    private static final String TEMPLATE_NAMA = "nama";
+    private static final String TEMPLATE_JUMLAH_SOAL = "jumlah_soal";
 
     private static final String QUERY_CREATE_TABLE_INTERVIEWEE =
             "CREATE TABLE " + TABLE_INTERVIEWEE + " (" +
@@ -88,6 +93,12 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
                     USER_PASSWORD + " TEXT, " +
                     USER_ROLE + " TEXT);";
 
+    private static final String QUERY_CREATE_TABLE_TEMPLATE =
+            "CREATE TABLE " + TABLE_TEMPLATE + " (" +
+                    TEMPLATE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    TEMPLATE_NAMA + " TEXT, " +
+                    TEMPLATE_JUMLAH_SOAL + " NUMERIC);";
+
     private Context context;
 
     public KYNDatabaseHelper(Context context) {
@@ -102,6 +113,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(QUERY_CREATE_TABLE_INTERVIEWEE);
         db.execSQL(QUERY_CREATE_TABLE_QUESTION);
         db.execSQL(QUERY_CREATE_TABLE_USER);
+        db.execSQL(QUERY_CREATE_TABLE_TEMPLATE);
     }
 
     @Override
@@ -162,7 +174,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
     }
 
     //insert
-    public Long insertInterviewee(KYNIntervieweeModel model){
+    public Long insertInterviewee(KYNIntervieweeModel model) {
         if (model == null) {
             return null;
         }
@@ -197,7 +209,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    public Long insertQuestion(KYNQuestionModel model){
+    public Long insertQuestion(KYNQuestionModel model) {
         if (model == null) {
             return null;
         }
@@ -214,8 +226,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
             values.put(QUESTION_ANSWER_4, model.getAnswer4());
             values.put(QUESTION_INTERVIEWEE_ANSWER, model.getIntervieweeAnswer());
             values.put(QUESTION_KEY_ANSWER, model.getKeyAnswer());
-            if(model.getIntervieweeModel() != null && model.getIntervieweeModel().getId()!=null)
-            {
+            if (model.getIntervieweeModel() != null && model.getIntervieweeModel().getId() != null) {
                 values.put(QUESTION_FK_INTERVIEWEE, model.getIntervieweeModel().getId());
             }
 
@@ -233,7 +244,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    public Long insertUser(KYNUserModel model){
+    public Long insertUser(KYNUserModel model) {
         if (model == null) {
             return null;
         }
@@ -263,12 +274,40 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
+    public Long insertTemplate(KYNTemplateModel model) {
+        if (model == null) {
+            return null;
+        }
+
+        Long id = -1l;
+
+        SQLiteDatabase db = getWritableDatabase();
+        try {
+            db.beginTransaction();
+            ContentValues values = new ContentValues();
+            values.put(TEMPLATE_NAMA, model.getNama());
+            values.put(TEMPLATE_JUMLAH_SOAL, model.getJumlahSoal());
+
+            id = db.insert(TABLE_TEMPLATE, null, values);
+            db.setTransactionSuccessful();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.endTransaction();
+            if (db.isOpen()) {
+                db.close();
+            }
+        }
+        return id;
+    }
+
     //update
-    public void updateInterviewee(KYNIntervieweeModel model){
-        if(model == null){
+    public void updateInterviewee(KYNIntervieweeModel model) {
+        if (model == null) {
             return;
         }
-        SQLiteDatabase db =getWritableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
         try {
             db.beginTransaction();
             ContentValues values = new ContentValues();
@@ -283,20 +322,20 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
                 values.put(INTERVIEWEE_DOB, "");
             }
 
-            db.update(TABLE_INTERVIEWEE, values, INTERVIEWEE_ID+ " =? ", new String[]{model.getId() + ""});
+            db.update(TABLE_INTERVIEWEE, values, INTERVIEWEE_ID + " =? ", new String[]{model.getId() + ""});
             db.setTransactionSuccessful();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             db.endTransaction();
         }
     }
 
-    public void updateQuestion(KYNQuestionModel model){
-        if(model == null){
+    public void updateQuestion(KYNQuestionModel model) {
+        if (model == null) {
             return;
         }
-        SQLiteDatabase db =getWritableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
         try {
             db.beginTransaction();
             ContentValues values = new ContentValues();
@@ -308,42 +347,41 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
             values.put(QUESTION_ANSWER_4, model.getAnswer4());
             values.put(QUESTION_INTERVIEWEE_ANSWER, model.getIntervieweeAnswer());
             values.put(QUESTION_KEY_ANSWER, model.getKeyAnswer());
-            if(model.getIntervieweeModel() != null && model.getIntervieweeModel().getId()!=null)
-            {
+            if (model.getIntervieweeModel() != null && model.getIntervieweeModel().getId() != null) {
                 values.put(QUESTION_FK_INTERVIEWEE, model.getIntervieweeModel().getId());
             }
 
-            db.update(TABLE_QUESTION, values, QUESTION_ID+ " =? ", new String[]{model.getId() + ""});
+            db.update(TABLE_QUESTION, values, QUESTION_ID + " =? ", new String[]{model.getId() + ""});
             db.setTransactionSuccessful();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             db.endTransaction();
         }
     }
 
-    public void updateQuestionIntervieweeAnswer(KYNQuestionModel model){
-        if(model == null){
+    public void updateQuestionIntervieweeAnswer(KYNQuestionModel model) {
+        if (model == null) {
             return;
         }
-        SQLiteDatabase db =getWritableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
         try {
             db.beginTransaction();
             ContentValues values = new ContentValues();
 
             values.put(QUESTION_INTERVIEWEE_ANSWER, model.getIntervieweeAnswer());
 
-            db.update(TABLE_QUESTION, values, QUESTION_ID+ " =? ", new String[]{model.getId() + ""});
+            db.update(TABLE_QUESTION, values, QUESTION_ID + " =? ", new String[]{model.getId() + ""});
             db.setTransactionSuccessful();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             db.endTransaction();
         }
     }
 
-    public void updateQuestionIntervieweeId(Long intervieweeId){
-        SQLiteDatabase db =getWritableDatabase();
+    public void updateQuestionIntervieweeId(Long intervieweeId) {
+        SQLiteDatabase db = getWritableDatabase();
         try {
             db.beginTransaction();
             ContentValues values = new ContentValues();
@@ -351,18 +389,18 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
 
             db.update(TABLE_QUESTION, values, null, null);
             db.setTransactionSuccessful();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             db.endTransaction();
         }
     }
 
-    public void updateUser(KYNUserModel model){
-        if(model == null){
+    public void updateUser(KYNUserModel model) {
+        if (model == null) {
             return;
         }
-        SQLiteDatabase db =getWritableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
         try {
             db.beginTransaction();
             ContentValues values = new ContentValues();
@@ -372,14 +410,36 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
             values.put(USER_PASSWORD, model.getPassword());
             values.put(USER_ROLE, model.getRole());
 
-            db.update(TABLE_USER, values, USER_ID+ " =? ", new String[]{model.getId() + ""});
+            db.update(TABLE_USER, values, USER_ID + " =? ", new String[]{model.getId() + ""});
             db.setTransactionSuccessful();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             db.endTransaction();
         }
     }
+
+    public void updateTemplate(KYNTemplateModel model) {
+        if (model == null) {
+            return;
+        }
+        SQLiteDatabase db = getWritableDatabase();
+        try {
+            db.beginTransaction();
+            ContentValues values = new ContentValues();
+
+            values.put(TEMPLATE_NAMA, model.getNama());
+            values.put(TEMPLATE_JUMLAH_SOAL, model.getJumlahSoal());
+
+            db.update(TABLE_TEMPLATE, values, TEMPLATE_ID + " =? ", new String[]{model.getId() + ""});
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.endTransaction();
+        }
+    }
+
     //get
     public KYNIntervieweeModel getInterviewee(Long intervieweeId) {
         KYNIntervieweeModel result = new KYNIntervieweeModel();
@@ -452,7 +512,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
                     model.setIntervieweeModel(getInterviewee(mCursor.getLong(mCursor.getColumnIndex(QUESTION_FK_INTERVIEWEE))));
 
                     result.add(model);
-                }while (mCursor.moveToNext());
+                } while (mCursor.moveToNext());
             }
         } catch (Exception e) {
 
@@ -478,7 +538,50 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
                     model.setRole(mCursor.getString(mCursor.getColumnIndex(USER_ROLE)));
 
                     result.add(model);
-                }while (mCursor.moveToNext());
+                } while (mCursor.moveToNext());
+            }
+        } catch (Exception e) {
+
+        } finally {
+            mCursor.close();
+        }
+        return result;
+    }
+
+    public KYNTemplateModel getTemplate(Long templateId) {
+        KYNTemplateModel result = new KYNTemplateModel();
+        String mQuery = "SELECT * FROM " + TABLE_TEMPLATE + " WHERE " + TEMPLATE_ID + "='" + templateId + "'";
+        SQLiteDatabase mReadableDatabase = getReadableDatabase();
+        Cursor mCursor = mReadableDatabase.rawQuery(mQuery, null);
+        try {
+            if (mCursor.moveToFirst()) {
+                result.setId(mCursor.getLong(mCursor.getColumnIndex(TEMPLATE_ID)));
+                result.setNama(mCursor.getString(mCursor.getColumnIndex(TEMPLATE_NAMA)));
+                result.setJumlahSoal(mCursor.getInt(mCursor.getColumnIndex(TEMPLATE_JUMLAH_SOAL)));
+            }
+        } catch (Exception e) {
+
+        } finally {
+            mCursor.close();
+        }
+        return result;
+    }
+
+    public List<KYNTemplateModel> getTemplateList() {
+        ArrayList result = new ArrayList();
+        String mQuery = "SELECT * FROM " + TABLE_TEMPLATE;
+        SQLiteDatabase mReadableDatabase = getReadableDatabase();
+        Cursor mCursor = mReadableDatabase.rawQuery(mQuery, null);
+        try {
+            if (mCursor.moveToFirst()) {
+                do {
+                    KYNTemplateModel model = new KYNTemplateModel();
+                    model.setId(mCursor.getLong(mCursor.getColumnIndex(TEMPLATE_ID)));
+                    model.setNama(mCursor.getString(mCursor.getColumnIndex(TEMPLATE_NAMA)));
+                    model.setJumlahSoal(mCursor.getInt(mCursor.getColumnIndex(TEMPLATE_JUMLAH_SOAL)));
+
+                    result.add(model);
+                } while (mCursor.moveToNext());
             }
         } catch (Exception e) {
 
@@ -492,21 +595,33 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
     public void deleteInterviewee() {
         delete(TABLE_INTERVIEWEE, null, null);
     }
-    public void deleteInterviewee(Long id){
+
+    public void deleteInterviewee(Long id) {
         delete(TABLE_INTERVIEWEE, INTERVIEWEE_ID + " =? ", new String[]{id + ""});
     }
 
     public void deleteQuestion() {
         delete(TABLE_QUESTION, null, null);
     }
-    public void deleteQuestion(Long id){
+
+    public void deleteQuestion(Long id) {
         delete(TABLE_QUESTION, QUESTION_ID + " =? ", new String[]{id + ""});
     }
-    public void deleteUser(Long id){
+
+    public void deleteUser(Long id) {
         delete(TABLE_USER, USER_ID + " =? ", new String[]{id + ""});
     }
+
     public void deleteUser() {
         delete(TABLE_USER, null, null);
+    }
+
+    public void deleteTemplate(Long id) {
+        delete(TABLE_TEMPLATE, TEMPLATE_ID + " =? ", new String[]{id + ""});
+    }
+
+    public void deleteTemplate() {
+        delete(TABLE_TEMPLATE, null, null);
     }
 
 

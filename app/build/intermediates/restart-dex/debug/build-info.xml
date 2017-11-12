@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <instant-run
     abi="armeabi-v7a,armeabi"
-    api-level="21"
-    build-mode="COLD"
-    density="xxhdpi"
+    api-level="22"
+    build-mode="FULL"
+    density="tvdpi"
     format="10"
     plugin-version="2.3.2"
-    timestamp="1509881889836"
+    timestamp="1509957798571"
     token="-4432441192821321278"
-    verifier="COLD_SWAP_REQUESTED" >
+    verifier="FULL_BUILD_REQUESTED" >
 
     <task
         name="javac"
@@ -18,22 +18,52 @@
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="0" />
+        duration="947" />
     <task
         name="verifier"
-        duration="0" />
+        duration="140" />
+
+    <artifact
+        location="D:\repo\uji-kompetensi-mobile\app\build\intermediates\split-apk\debug\slices\slice_0.apk"
+        type="SPLIT" />
+    <artifact
+        location="D:\repo\uji-kompetensi-mobile\app\build\intermediates\split-apk\debug\slices\slice_5.apk"
+        type="SPLIT" />
+    <artifact
+        location="D:\repo\uji-kompetensi-mobile\app\build\intermediates\split-apk\debug\slices\slice_2.apk"
+        type="SPLIT" />
+    <artifact
+        location="D:\repo\uji-kompetensi-mobile\app\build\intermediates\split-apk\debug\slices\slice_1.apk"
+        type="SPLIT" />
+    <artifact
+        location="D:\repo\uji-kompetensi-mobile\app\build\intermediates\split-apk\debug\slices\slice_6.apk"
+        type="SPLIT" />
+    <artifact
+        location="D:\repo\uji-kompetensi-mobile\app\build\outputs\apk\app-debug.apk"
+        type="SPLIT_MAIN" />
 
     <build
         build-mode="FULL"
-        timestamp="1509881704170"
+        timestamp="1509957798571"
         verifier="FULL_BUILD_REQUESTED" >
+        <artifact
+            location="D:\repo\uji-kompetensi-mobile\app\build\intermediates\split-apk\debug\slices\slice_0.apk"
+            type="SPLIT" />
+        <artifact
+            location="D:\repo\uji-kompetensi-mobile\app\build\intermediates\split-apk\debug\slices\slice_5.apk"
+            type="SPLIT" />
+        <artifact
+            location="D:\repo\uji-kompetensi-mobile\app\build\intermediates\split-apk\debug\slices\slice_2.apk"
+            type="SPLIT" />
+        <artifact
+            location="D:\repo\uji-kompetensi-mobile\app\build\intermediates\split-apk\debug\slices\slice_1.apk"
+            type="SPLIT" />
+        <artifact
+            location="D:\repo\uji-kompetensi-mobile\app\build\intermediates\split-apk\debug\slices\slice_6.apk"
+            type="SPLIT" />
         <artifact
             location="D:\repo\uji-kompetensi-mobile\app\build\outputs\apk\app-debug.apk"
             type="SPLIT_MAIN" />
     </build>
-    <build
-        build-mode="COLD"
-        timestamp="1509881889836"
-        verifier="COLD_SWAP_REQUESTED" />
 
 </instant-run>

@@ -40,6 +40,22 @@
             android:name=".activity.KYNUserDetailActivity"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activity.KYNQuestionListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activity.KYNQuestionDetailActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activity.KYNTemplateListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activity.KYNTemplateDetailActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

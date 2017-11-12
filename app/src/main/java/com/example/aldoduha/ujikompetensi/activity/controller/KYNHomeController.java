@@ -6,7 +6,8 @@ import android.view.View;
 import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.KYNHomeActivity;
 import com.example.aldoduha.ujikompetensi.activity.KYNQuestionFormActivity;
-import com.example.aldoduha.ujikompetensi.activity.KYNQuestionFormIdentityActivity;
+import com.example.aldoduha.ujikompetensi.activity.KYNQuestionListActivity;
+import com.example.aldoduha.ujikompetensi.activity.KYNTemplateListActivity;
 import com.example.aldoduha.ujikompetensi.activity.KYNUserListActivity;
 
 /**
@@ -16,34 +17,42 @@ import com.example.aldoduha.ujikompetensi.activity.KYNUserListActivity;
 public class KYNHomeController implements View.OnClickListener {
     private KYNHomeActivity acitivity;
 
-    public KYNHomeController(KYNHomeActivity acitivity){
+    public KYNHomeController(KYNHomeActivity acitivity) {
         this.acitivity = acitivity;
         getView();
     }
-    public void getView(){
+
+    public void getView() {
         //untuk pengecekan menu yang ditampilakan berdasarkan role user
     }
-    private void onJawabPertanyaanClicked(){
+
+    private void onJawabPertanyaanClicked() {
         Intent intent = new Intent(acitivity, KYNQuestionFormActivity.class);
         acitivity.startActivity(intent);
     }
-    private void onListIntervieweeClicked(){
+
+    private void onListIntervieweeClicked() {
 
     }
-    private void onUserManagementClicked(){
+
+    private void onUserManagementClicked() {
         Intent intent = new Intent(acitivity, KYNUserListActivity.class);
         acitivity.startActivity(intent);
     }
-    private void onQuestionManagementClicked(){
 
+    private void onQuestionManagementClicked() {
+        Intent intent = new Intent(acitivity, KYNQuestionListActivity.class);
+        acitivity.startActivity(intent);
     }
-    private void onTemplateManagementClicked(){
 
+    private void onTemplateManagementClicked() {
+        Intent intent = new Intent(acitivity, KYNTemplateListActivity.class);
+        acitivity.startActivity(intent);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btnJawabPertanyaan:
                 onJawabPertanyaanClicked();
                 break;

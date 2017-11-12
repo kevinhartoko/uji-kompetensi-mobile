@@ -39,7 +39,7 @@
                             android:text="Function"
                             android:paddingLeft="3dip"
                             android:paddingRight="3dip"
-                            android:layout_column="2" />
+                            android:layout_column="0" />
 
                         <TextView
                             android:id="@+id/textViewNama"

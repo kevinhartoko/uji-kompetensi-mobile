@@ -46,6 +46,22 @@
             android:name="com.example.aldoduha.ujikompetensi.activity.KYNUserDetailActivity"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="com.example.aldoduha.ujikompetensi.activity.KYNQuestionListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="com.example.aldoduha.ujikompetensi.activity.KYNQuestionDetailActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="com.example.aldoduha.ujikompetensi.activity.KYNTemplateListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="com.example.aldoduha.ujikompetensi.activity.KYNTemplateDetailActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

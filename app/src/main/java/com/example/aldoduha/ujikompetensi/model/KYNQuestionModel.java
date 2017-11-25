@@ -6,6 +6,7 @@ package com.example.aldoduha.ujikompetensi.model;
 
 public class KYNQuestionModel {
     Long id;
+    String name;
     String question;
     String answer1;
     String answer2;
@@ -13,6 +14,7 @@ public class KYNQuestionModel {
     String answer4;
     String intervieweeAnswer;
     String keyAnswer;
+    int bobot;
     KYNIntervieweeModel intervieweeModel;
 
     public Long getId() {
@@ -85,5 +87,21 @@ public class KYNQuestionModel {
 
     public void setIntervieweeModel(KYNIntervieweeModel intervieweeModel) {
         this.intervieweeModel = intervieweeModel;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getBobot() {
+        return bobot;
+    }
+
+    public void setBobot(int bobot) {
+        this.bobot = bobot;
     }
 }

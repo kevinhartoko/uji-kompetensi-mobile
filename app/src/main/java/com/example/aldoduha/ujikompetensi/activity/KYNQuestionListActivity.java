@@ -19,6 +19,7 @@ import com.example.aldoduha.ujikompetensi.activity.controller.KYNQuestionListCon
 import com.example.aldoduha.ujikompetensi.alertDialog.KYNConfirmationAlertDialog;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
 import com.example.aldoduha.ujikompetensi.model.KYNQuestionModel;
+import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 import java.util.List;
 
@@ -98,6 +99,19 @@ public class KYNQuestionListActivity extends KYNBaseActivity {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case KYNIntentConstant.REQUEST_CODE_QUESTION_DETAIL:
+                List<KYNQuestionModel> questions = database.getListQuestion();
+                generateTable(questions);
+                break;
+            default:
+                break;
+        }
+    }
+
     private void loadview() {
         backButton = (Button) findViewById(R.id.buttonKembali);
         tableLayout = (TableLayout) findViewById(R.id.tableLayout);
@@ -139,13 +153,13 @@ public class KYNQuestionListActivity extends KYNBaseActivity {
             });
             // Creation textView nama
             final TextView textNama = new TextView(this);
-            textNama.setText(questionModel.getQuestion());
+            textNama.setText(questionModel.getName());
             textNama.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT));
             textNama.setGravity(Gravity.CENTER);
             textNama.setWidth(textViewNama.getWidth());
             // Creation textView Bobot
             final TextView textBobot = new TextView(this);
-            textBobot.setText(questionModel.getAnswer1());
+            textBobot.setText(questionModel.getBobot()+"");
             textBobot.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT));
             textBobot.setGravity(Gravity.CENTER);
             textBobot.setWidth(textViewBobot.getWidth());
@@ -160,10 +174,10 @@ public class KYNQuestionListActivity extends KYNBaseActivity {
 
     public void viewClicked(Long id) {
         Bundle b = new Bundle();
-        b.putLong("kirimId", id);
+        b.putLong("questionId", id);
         Intent i = new Intent(this, KYNQuestionDetailActivity.class);
         i.putExtras(b);
-        this.startActivity(i);
+        this.startActivityForResult(i, KYNIntentConstant.REQUEST_CODE_QUESTION_DETAIL);
     }
 
     public void showOnBackPressAlertDialog(KYNConfirmationAlertDialogListener listener) {
@@ -179,6 +193,6 @@ public class KYNQuestionListActivity extends KYNBaseActivity {
         Bundle b = new Bundle();
         Intent i = new Intent(this, KYNQuestionDetailActivity.class);
         i.putExtras(b);
-        this.startActivity(i);
+        this.startActivityForResult(i, KYNIntentConstant.REQUEST_CODE_QUESTION_DETAIL);
     }
 }

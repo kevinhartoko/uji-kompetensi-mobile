@@ -13,6 +13,7 @@ public class KYNIntervieweeModel {
     String handphone;
     String address;
     Date dob;
+    String gender;
 
     public Long getId() {
         return id;
@@ -60,5 +61,13 @@ public class KYNIntervieweeModel {
 
     public void setDob(Date dob) {
         this.dob = dob;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }

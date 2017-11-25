@@ -101,6 +101,8 @@ public class KYNHomeActivity extends KYNBaseActivity {
             model.setAnswer3("answer 3-" + i);
             model.setAnswer4("answer 4-" + i);
             model.setKeyAnswer("answer 1-" + i);
+            model.setBobot(i);
+            model.setName("code"+i);
             database.insertQuestion(model);
         }
         //insert user

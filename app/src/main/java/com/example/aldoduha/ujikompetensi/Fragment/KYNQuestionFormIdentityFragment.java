@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.aldoduha.ujikompetensi.Fragment.Controller.KYNQuestionIdentityController;
@@ -42,6 +43,9 @@ public class KYNQuestionFormIdentityFragment extends KYNBaseFragment {
     private SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
     private KYNQuestionFormActivity activity;
     private KYNIntervieweeModel intervieweeModel;
+    private RadioButton radioLakilaki;
+    private RadioButton radioPerempuan;
+    private TextView genderErrorTextView;
 
     @Nullable
     @Override
@@ -65,6 +69,9 @@ public class KYNQuestionFormIdentityFragment extends KYNBaseFragment {
         editTextAddress = (EditText)view.findViewById(R.id.edittextAddress);
         textViewDOB = (TextView)view.findViewById(R.id.textviewDOB);
         buttonLanjut = (Button)view.findViewById(R.id.btnLanjut);
+        radioLakilaki = (RadioButton)view.findViewById(R.id.radioLakilaki);
+        radioPerempuan = (RadioButton)view.findViewById(R.id.radioPerempuan);
+        genderErrorTextView = (TextView)view.findViewById(R.id.genderErrorTextview);
     }
     private void initiateDefaultValue(){
         activity = (KYNQuestionFormActivity)getActivity();
@@ -85,6 +92,11 @@ public class KYNQuestionFormIdentityFragment extends KYNBaseFragment {
             } catch (ParseException e) {
 
             }
+        }
+        if(radioLakilaki.isChecked()){
+            intervieweeModel.setGender("L");
+        }else{
+            intervieweeModel.setGender("P");
         }
         if(intervieweeModel.getId()==null) {
             Long id = database.insertInterviewee(intervieweeModel);
@@ -153,6 +165,12 @@ public class KYNQuestionFormIdentityFragment extends KYNBaseFragment {
         if(dob==null||dob.equals("")){
             textViewDOB.setError(Html.fromHtml("DOB Tidak Boleh Kosong"));
             result=false;
+        }
+        if(!radioLakilaki.isChecked() && !radioPerempuan.isChecked()){
+            genderErrorTextView.setVisibility(View.VISIBLE);
+            result = false;
+        }else{
+            genderErrorTextView.setVisibility(View.GONE);
         }
         return result;
     }

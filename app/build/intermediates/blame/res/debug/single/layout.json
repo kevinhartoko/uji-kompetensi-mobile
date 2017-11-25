@@ -112,6 +112,10 @@
         "source": "C:\\Users\\aldoduha\\.android\\build-cache\\7143f0132b95826b586557aa421e4eeae06e6439\\output\\res\\layout\\abc_action_bar_view_list_nav_layout.xml"
     },
     {
+        "merged": "D:\\repo\\uji-kompetensi-mobile\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_question_detail.xml",
+        "source": "D:\\repo\\uji-kompetensi-mobile\\app\\src\\main\\res\\layout\\activity_question_detail.xml"
+    },
+    {
         "merged": "D:\\repo\\uji-kompetensi-mobile\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_content_include.xml",
         "source": "C:\\Users\\aldoduha\\.android\\build-cache\\7143f0132b95826b586557aa421e4eeae06e6439\\output\\res\\layout\\abc_screen_content_include.xml"
     },

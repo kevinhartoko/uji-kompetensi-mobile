@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="#FFFFFFFF"
+    android:orientation="vertical"
+    android:overScrollMode="never" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="15dip"
+        android:paddingRight="15dip"
+        android:layout_marginTop="5dip">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dip">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="0.4"
+                android:text="Kode :"
+                android:textColor="#FF000000" />
+
+            <EditText
+                android:id="@+id/edittextKode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.6"
+                android:background="@drawable/edittext_style"
+                android:textColor="#FF000000" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dip">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="0.4"
+                android:text="Pertanyaan"
+                android:textColor="#FF000000" />
+
+            <EditText
+                android:id="@+id/edittextPertanyaan"
+                android:layout_width="0dp"
+                android:layout_height="50dip"
+                android:layout_weight="0.6"
+                android:background="@drawable/edittext_style"
+                android:lines="3"
+                android:maxLines="3"
+                android:scrollbars="vertical"
+                android:textColor="#FF000000" />
+        </LinearLayout>
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dip">
+        <TextView
+            android:layout_weight="0.4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Jawaban 1 :"
+            android:textColor="#FF000000"
+            android:layout_marginLeft="5dp"/>
+        <EditText
+            android:id="@+id/edittextJawaban1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#FF000000"
+            android:layout_weight="0.6"
+            android:background="@drawable/edittext_style"/>
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dip">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="0.4"
+                android:text="Jawaban 2 :"
+                android:textColor="#FF000000" />
+
+            <EditText
+                android:id="@+id/edittextJawaban2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="#FF000000"
+                android:layout_weight="0.6"
+                android:background="@drawable/edittext_style"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dip">
+            <TextView
+                android:layout_weight="0.4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Jawaban 3 :"
+                android:textColor="#FF000000"
+                android:layout_marginLeft="5dp"/>
+            <EditText
+                android:id="@+id/edittextJawaban3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="#FF000000"
+                android:layout_weight="0.6"
+                android:background="@drawable/edittext_style"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dip">
+            <TextView
+                android:layout_weight="0.4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Jawaban 4 :"
+                android:textColor="#FF000000"
+                android:layout_marginLeft="5dp"/>
+            <EditText
+                android:id="@+id/edittextJawaban4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="#FF000000"
+                android:layout_weight="0.6"
+                android:background="@drawable/edittext_style"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dip">
+            <TextView
+                android:layout_weight="0.4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Kunci Jawaban :"
+                android:textColor="#FF000000"
+                android:layout_marginLeft="5dp"/>
+            <EditText
+                android:id="@+id/edittextKunciJawaban"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="#FF000000"
+                android:layout_weight="0.6"
+                android:background="@drawable/edittext_style"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dip">
+            <TextView
+                android:layout_weight="0.4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Bobot"
+                android:textColor="#FF000000"
+                android:layout_marginLeft="5dp"/>
+            <EditText
+                android:id="@+id/edittextBobot"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="#FF000000"
+                android:layout_weight="0.6"
+                android:background="@drawable/edittext_style"/>
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Button
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lanjut"
+                android:id="@+id/btnLanjut"
+                android:layout_marginBottom="5dip"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+</ScrollView>

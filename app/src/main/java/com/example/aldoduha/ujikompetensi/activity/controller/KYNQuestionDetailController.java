@@ -1,13 +1,10 @@
 package com.example.aldoduha.ujikompetensi.activity.controller;
 
-import android.content.Intent;
 import android.view.View;
 
 import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
 import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.KYNQuestionDetailActivity;
-import com.example.aldoduha.ujikompetensi.activity.KYNQuestionFormIdentityActivity;
-import com.example.aldoduha.ujikompetensi.activity.KYNQuestionFormQuestionActivity;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 /**

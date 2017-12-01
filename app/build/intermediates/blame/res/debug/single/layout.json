@@ -104,6 +104,10 @@
         "source": "C:\\Users\\aldoduha\\.android\\build-cache\\7143f0132b95826b586557aa421e4eeae06e6439\\output\\res\\layout\\abc_search_dropdown_item_icons_2line.xml"
     },
     {
+        "merged": "D:\\repo\\uji-kompetensi-mobile\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_template_detail.xml",
+        "source": "D:\\repo\\uji-kompetensi-mobile\\app\\src\\main\\res\\layout\\activity_template_detail.xml"
+    },
+    {
         "merged": "D:\\repo\\uji-kompetensi-mobile\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_question_form_question.xml",
         "source": "D:\\repo\\uji-kompetensi-mobile\\app\\src\\main\\res\\layout\\activity_question_form_question.xml"
     },
@@ -170,6 +174,10 @@
     {
         "merged": "D:\\repo\\uji-kompetensi-mobile\\app\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_part_time.xml",
         "source": "C:\\Users\\aldoduha\\.android\\build-cache\\7143f0132b95826b586557aa421e4eeae06e6439\\output\\res\\layout\\notification_template_part_time.xml"
+    },
+    {
+        "merged": "D:\\repo\\uji-kompetensi-mobile\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_user_detail.xml",
+        "source": "D:\\repo\\uji-kompetensi-mobile\\app\\src\\main\\res\\layout\\activity_user_detail.xml"
     },
     {
         "merged": "D:\\repo\\uji-kompetensi-mobile\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_popup_menu_item_layout.xml",

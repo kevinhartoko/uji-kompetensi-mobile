@@ -18,7 +18,9 @@ import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.controller.KYNTemplateListController;
 import com.example.aldoduha.ujikompetensi.alertDialog.KYNConfirmationAlertDialog;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
+import com.example.aldoduha.ujikompetensi.model.KYNQuestionModel;
 import com.example.aldoduha.ujikompetensi.model.KYNTemplateModel;
+import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 import java.util.List;
 
@@ -97,6 +99,18 @@ public class KYNTemplateListActivity extends KYNBaseActivity {
             super.onBackPressed();
         }
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case KYNIntentConstant.REQUEST_CODE_TEMPLATE_DETAIL:
+                List<KYNTemplateModel> templateModels = database.getTemplateList();
+                generateTable(templateModels);
+                break;
+            default:
+                break;
+        }
+    }
 
     private void loadview() {
         backButton = (Button) findViewById(R.id.buttonKembali);
@@ -160,10 +174,10 @@ public class KYNTemplateListActivity extends KYNBaseActivity {
 
     public void viewClicked(Long id) {
         Bundle b = new Bundle();
-        b.putLong("kirimId", id);
+        b.putLong("templateId", id);
         Intent i = new Intent(this, KYNTemplateDetailActivity.class);
         i.putExtras(b);
-        this.startActivity(i);
+        this.startActivityForResult(i, KYNIntentConstant.REQUEST_CODE_TEMPLATE_DETAIL);
     }
 
     public void showOnBackPressAlertDialog(KYNConfirmationAlertDialogListener listener) {
@@ -179,6 +193,6 @@ public class KYNTemplateListActivity extends KYNBaseActivity {
         Bundle b = new Bundle();
         Intent i = new Intent(this, KYNTemplateDetailActivity.class);
         i.putExtras(b);
-        this.startActivity(i);
+        this.startActivityForResult(i, KYNIntentConstant.REQUEST_CODE_TEMPLATE_DETAIL);
     }
 }

@@ -6,6 +6,7 @@ import android.content.Context;
 import com.example.aldoduha.ujikompetensi.model.KYNIntervieweeModel;
 import com.example.aldoduha.ujikompetensi.model.KYNQuestionModel;
 import com.example.aldoduha.ujikompetensi.model.KYNTemplateModel;
+import com.example.aldoduha.ujikompetensi.model.KYNTemplateQuestionModel;
 import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
 
 import net.sqlcipher.Cursor;
@@ -32,6 +33,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_QUESTION = "question";
     private static final String TABLE_USER = "user";
     private static final String TABLE_TEMPLATE = "template";
+    private static final String TABLE_TEMPLATE_QUESTION = "template_question";
 
     //interviewee
     private static final String INTERVIEWEE_ID = "id";
@@ -66,6 +68,12 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
     private static final String TEMPLATE_ID = "id";
     private static final String TEMPLATE_NAMA = "nama";
     private static final String TEMPLATE_JUMLAH_SOAL = "jumlah_soal";
+
+    //template question
+    private static final String TEMPLATE_QUESTION_ID = "id";
+    private static final String TEMPLATE_QUESTION_FK_TEMPLATE = "fk_template";
+    private static final String TEMPLATE_QUESTION_JUMLAH_SOAL = "jumlah_soal";
+    private static final String TEMPLATE_QUESTION_BOBOT = "bobot";
 
     private static final String QUERY_CREATE_TABLE_INTERVIEWEE =
             "CREATE TABLE " + TABLE_INTERVIEWEE + " (" +
@@ -105,6 +113,13 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
                     TEMPLATE_NAMA + " TEXT, " +
                     TEMPLATE_JUMLAH_SOAL + " NUMERIC);";
 
+    private static final String QUERY_CREATE_TABLE_TEMPLATE_QUESTION =
+            "CREATE TABLE " + TABLE_TEMPLATE_QUESTION + " (" +
+                    TEMPLATE_QUESTION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    TEMPLATE_QUESTION_FK_TEMPLATE + " INTEGER, " +
+                    TEMPLATE_QUESTION_BOBOT + " NUMERIC, " +
+                    TEMPLATE_QUESTION_JUMLAH_SOAL + " NUMERIC);";
+
     private Context context;
 
     public KYNDatabaseHelper(Context context) {
@@ -120,6 +135,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(QUERY_CREATE_TABLE_QUESTION);
         db.execSQL(QUERY_CREATE_TABLE_USER);
         db.execSQL(QUERY_CREATE_TABLE_TEMPLATE);
+        db.execSQL(QUERY_CREATE_TABLE_TEMPLATE_QUESTION);
     }
 
     @Override
@@ -298,6 +314,35 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
             values.put(TEMPLATE_JUMLAH_SOAL, model.getJumlahSoal());
 
             id = db.insert(TABLE_TEMPLATE, null, values);
+            db.setTransactionSuccessful();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.endTransaction();
+            if (db.isOpen()) {
+                db.close();
+            }
+        }
+        return id;
+    }
+
+    public Long insertTemplateQuestion(KYNTemplateQuestionModel model) {
+        if (model == null) {
+            return null;
+        }
+
+        Long id = -1l;
+
+        SQLiteDatabase db = getWritableDatabase();
+        try {
+            db.beginTransaction();
+            ContentValues values = new ContentValues();
+            values.put(TEMPLATE_QUESTION_BOBOT, model.getBobot());
+            values.put(TEMPLATE_QUESTION_JUMLAH_SOAL, model.getJumlahSoal());
+            values.put(TEMPLATE_QUESTION_FK_TEMPLATE, model.getTemplateModel().getId());
+
+            id = db.insert(TABLE_TEMPLATE_QUESTION, null, values);
             db.setTransactionSuccessful();
 
         } catch (Exception e) {
@@ -565,6 +610,27 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public KYNUserModel getUser(Long userId) {
+        KYNUserModel model = new KYNUserModel();
+        String mQuery = "SELECT * FROM " + TABLE_USER + " WHERE " + USER_ID + "='" + userId + "'";
+        SQLiteDatabase mReadableDatabase = getReadableDatabase();
+        Cursor mCursor = mReadableDatabase.rawQuery(mQuery, null);
+        try {
+            if (mCursor.moveToFirst()) {
+                model.setId(mCursor.getLong(mCursor.getColumnIndex(USER_ID)));
+                model.setNama(mCursor.getString(mCursor.getColumnIndex(USER_NAMA)));
+                model.setUsername(mCursor.getString(mCursor.getColumnIndex(USER_USERNAME)));
+                model.setPassword(mCursor.getString(mCursor.getColumnIndex(USER_PASSWORD)));
+                model.setRole(mCursor.getString(mCursor.getColumnIndex(USER_ROLE)));
+            }
+        } catch (Exception e) {
+
+        } finally {
+            mCursor.close();
+        }
+        return model;
+    }
+
     public KYNTemplateModel getTemplate(Long templateId) {
         KYNTemplateModel result = new KYNTemplateModel();
         String mQuery = "SELECT * FROM " + TABLE_TEMPLATE + " WHERE " + TEMPLATE_ID + "='" + templateId + "'";
@@ -608,6 +674,31 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public List<KYNTemplateQuestionModel> getTemplateQuestionList(Long templateId) {
+        ArrayList result = new ArrayList();
+        String mQuery = "SELECT * FROM " + TABLE_TEMPLATE_QUESTION + " WHERE " + TEMPLATE_QUESTION_FK_TEMPLATE + "='" + templateId + "'";
+        SQLiteDatabase mReadableDatabase = getReadableDatabase();
+        Cursor mCursor = mReadableDatabase.rawQuery(mQuery, null);
+        try {
+            if (mCursor.moveToFirst()) {
+                do {
+                    KYNTemplateQuestionModel model = new KYNTemplateQuestionModel();
+                    model.setId(mCursor.getLong(mCursor.getColumnIndex(TEMPLATE_QUESTION_ID)));
+                    model.setBobot(mCursor.getInt(mCursor.getColumnIndex(TEMPLATE_QUESTION_BOBOT)));
+                    model.setJumlahSoal(mCursor.getInt(mCursor.getColumnIndex(TEMPLATE_JUMLAH_SOAL)));
+                    model.setTemplateModel(getTemplate(mCursor.getLong(mCursor.getColumnIndex(TEMPLATE_QUESTION_FK_TEMPLATE))));
+
+                    result.add(model);
+                } while (mCursor.moveToNext());
+            }
+        } catch (Exception e) {
+
+        } finally {
+            mCursor.close();
+        }
+        return result;
+    }
+
     //delete
     public void deleteInterviewee() {
         delete(TABLE_INTERVIEWEE, null, null);
@@ -639,6 +730,14 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
 
     public void deleteTemplate() {
         delete(TABLE_TEMPLATE, null, null);
+    }
+
+    public void deleteTemplateQuestion(Long id) {
+        delete(TABLE_TEMPLATE_QUESTION, TEMPLATE_QUESTION_FK_TEMPLATE + " =? ", new String[]{id + ""});
+    }
+
+    public void deleteTemplateQuestion() {
+        delete(TABLE_TEMPLATE_QUESTION, null, null);
     }
 
 

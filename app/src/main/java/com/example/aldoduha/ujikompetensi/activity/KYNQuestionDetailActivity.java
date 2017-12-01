@@ -1,30 +1,23 @@
 package com.example.aldoduha.ujikompetensi.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.example.aldoduha.ujikompetensi.KYNBaseActivity;
 import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
 import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.controller.KYNQuestionDetailController;
-import com.example.aldoduha.ujikompetensi.activity.controller.KYNQuestionFormIdentityController;
-import com.example.aldoduha.ujikompetensi.alertDialog.KYNDatePickerDialog;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
 import com.example.aldoduha.ujikompetensi.model.KYNQuestionModel;
-
-import java.text.SimpleDateFormat;
 
 /**
  * Created by aldoduha on 11/12/2017.
  */
 
 public class KYNQuestionDetailActivity extends KYNBaseActivity {
-    private Activity activity;
     private KYNQuestionDetailController controller;
     private EditText editTextKode;
     private EditText editTextPertanyaan;
@@ -40,7 +33,6 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
     private KYNQuestionModel questionModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        activity=this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_detail);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);

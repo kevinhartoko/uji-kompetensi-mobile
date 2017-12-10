@@ -62,6 +62,10 @@
             android:name="com.example.aldoduha.ujikompetensi.activity.KYNTemplateDetailActivity"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="com.example.aldoduha.ujikompetensi.activity.KYNIntervieweeListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

@@ -525,6 +525,37 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public List<KYNIntervieweeModel> getListInterviewee() {
+        ArrayList result = new ArrayList();
+        String mQuery = "SELECT * FROM " + TABLE_INTERVIEWEE;
+        SQLiteDatabase mReadableDatabase = getReadableDatabase();
+        Cursor mCursor = mReadableDatabase.rawQuery(mQuery, null);
+        try {
+            if (mCursor.moveToFirst()) {
+                do {
+                    KYNIntervieweeModel model = new KYNIntervieweeModel();
+                    model.setId(mCursor.getLong(mCursor.getColumnIndex(INTERVIEWEE_ID)));
+                    model.setNama(mCursor.getString(mCursor.getColumnIndex(INTERVIEWEE_NAMA)));
+                    model.setEmail(mCursor.getString(mCursor.getColumnIndex(INTERVIEWEE_EMAIL)));
+                    model.setAddress(mCursor.getString(mCursor.getColumnIndex(INTERVIEWEE_ADDRESS)));
+                    try {
+                        model.setDob(format.parse(mCursor.getString(mCursor.getColumnIndex(INTERVIEWEE_DOB))));
+                    } catch (Exception e) {
+
+                    }
+                    model.setHandphone(mCursor.getString(mCursor.getColumnIndex(INTERVIEWEE_HANDPHONE)));
+                    model.setGender(mCursor.getString(mCursor.getColumnIndex(INTERVIEWEE_GENDER)));
+                    result.add(model);
+                }while (mCursor.moveToNext());
+            }
+        } catch (Exception e) {
+
+        } finally {
+            mCursor.close();
+        }
+        return result;
+    }
+
     public KYNQuestionModel getQuestion(Long questionId) {
         KYNQuestionModel result = new KYNQuestionModel();
         String mQuery = "SELECT * FROM " + TABLE_QUESTION + " WHERE " + QUESTION_ID + "='" + questionId + "'";

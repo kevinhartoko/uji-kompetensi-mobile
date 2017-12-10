@@ -84,15 +84,18 @@
                 android:layout_height="wrap_content"
                 android:text="Hapus"
                 android:id="@+id/btnHapus"
-                android:layout_marginBottom="5dip"/>
+                android:layout_marginBottom="5dip"
+                android:textAllCaps="false"/>
             <Button
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tambah"
                 android:id="@+id/btnTambah"
-                android:layout_marginBottom="5dip"/>
+                android:layout_alignParentTop="true"
+                android:layout_alignStart="@+id/btnLanjut"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="6dp"
+                android:textAllCaps="false"/>
             <Button
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
@@ -100,7 +103,8 @@
                 android:layout_height="wrap_content"
                 android:text="Lanjut"
                 android:id="@+id/btnLanjut"
-                android:layout_marginBottom="5dip"/>
+                android:layout_marginBottom="5dip"
+                android:textAllCaps="false"/>
         </RelativeLayout>
     </LinearLayout>
 

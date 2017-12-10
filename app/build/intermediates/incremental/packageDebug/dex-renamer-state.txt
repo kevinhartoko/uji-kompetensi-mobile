@@ -1,4 +1,4 @@
-#Sat Dec 02 03:16:37 ICT 2017
+#Sun Dec 10 18:05:03 ICT 2017
 base.0=D\:\\repo\\uji-kompetensi-mobile\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main
 renamed.0=classes.dex
 file.0=D\:\\repo\\uji-kompetensi-mobile\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main\\classes.dex

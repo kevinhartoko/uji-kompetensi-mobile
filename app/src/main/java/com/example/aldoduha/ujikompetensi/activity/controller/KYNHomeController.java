@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.KYNHomeActivity;
+import com.example.aldoduha.ujikompetensi.activity.KYNIntervieweeListActivity;
 import com.example.aldoduha.ujikompetensi.activity.KYNQuestionFormActivity;
 import com.example.aldoduha.ujikompetensi.activity.KYNQuestionListActivity;
 import com.example.aldoduha.ujikompetensi.activity.KYNTemplateListActivity;
@@ -32,7 +33,8 @@ public class KYNHomeController implements View.OnClickListener {
     }
 
     private void onListIntervieweeClicked() {
-
+        Intent intent = new Intent(acitivity, KYNIntervieweeListActivity.class);
+        acitivity.startActivity(intent);
     }
 
     private void onUserManagementClicked() {

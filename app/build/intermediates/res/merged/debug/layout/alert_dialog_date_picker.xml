@@ -26,18 +26,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <Button
             android:id="@+id/cancelButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="tidak"/>
+            android:text="Tidak"
+            android:textAllCaps="false"/>
+
         <Button
             android:id="@+id/submitButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="ya" />
+            android:text="Ya"
+            android:textAllCaps="false"/>
     </LinearLayout>
 
 </LinearLayout>

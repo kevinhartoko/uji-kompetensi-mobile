@@ -187,7 +187,8 @@
                 android:layout_height="wrap_content"
                 android:text="Lanjut"
                 android:id="@+id/btnLanjut"
-                android:layout_marginBottom="5dip"/>
+                android:layout_marginBottom="5dip"
+                android:textAllCaps="false"/>
         </RelativeLayout>
     </LinearLayout>
 

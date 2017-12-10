@@ -21,4 +21,6 @@ public class KYNIntentConstant {
     public static final int RESULT_CODE_USER_DETAIL = 4;
     public static final int REQUEST_CODE_TEMPLATE_DETAIL = 5;
     public static final int RESULT_CODE_TEMPLATE_DETAIL = 6;
+    public static final int REQUEST_CODE_INTERVIEWEE_DETAIL = 7;
+    public static final int RESULT_CODE_INTERVIEWEE_DETAIL = 8;
 }

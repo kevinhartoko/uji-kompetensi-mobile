@@ -179,4 +179,8 @@ public class KYNIntervieweeListActivity extends KYNBaseActivity {
             database.insertInterviewee(model);
         }
     }
+
+    public KYNIntervieweeListAdapter getAdapter() {
+        return adapter;
+    }
 }

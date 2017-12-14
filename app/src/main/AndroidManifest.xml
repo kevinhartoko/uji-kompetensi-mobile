@@ -60,6 +60,10 @@
             android:name=".activity.KYNIntervieweeListActivity"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activity.KYNIntervieweeDetailActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

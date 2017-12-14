@@ -3,6 +3,7 @@ package com.example.aldoduha.ujikompetensi;
 import android.content.ContentValues;
 import android.content.Context;
 
+import com.example.aldoduha.ujikompetensi.model.KYNFeedbackModel;
 import com.example.aldoduha.ujikompetensi.model.KYNIntervieweeModel;
 import com.example.aldoduha.ujikompetensi.model.KYNQuestionModel;
 import com.example.aldoduha.ujikompetensi.model.KYNTemplateModel;
@@ -34,6 +35,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_USER = "user";
     private static final String TABLE_TEMPLATE = "template";
     private static final String TABLE_TEMPLATE_QUESTION = "template_question";
+    private static final String TABLE_FEEDBACK = "feedback";
 
     //interviewee
     private static final String INTERVIEWEE_ID = "id";
@@ -74,6 +76,12 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
     private static final String TEMPLATE_QUESTION_FK_TEMPLATE = "fk_template";
     private static final String TEMPLATE_QUESTION_JUMLAH_SOAL = "jumlah_soal";
     private static final String TEMPLATE_QUESTION_BOBOT = "bobot";
+
+    //feedback
+    private static final String FEEDBACK_ID = "id";
+    private static final String FEEDBACK_DESCRIPTION = "description";
+    private static final String FEEDBACK_NAME = "name";
+    private static final String FEEDBACK_FK_INTERVIEWEE = "fk_interviewee";
 
     private static final String QUERY_CREATE_TABLE_INTERVIEWEE =
             "CREATE TABLE " + TABLE_INTERVIEWEE + " (" +
@@ -120,6 +128,13 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
                     TEMPLATE_QUESTION_BOBOT + " NUMERIC, " +
                     TEMPLATE_QUESTION_JUMLAH_SOAL + " NUMERIC);";
 
+    private static final String QUERY_CREATE_TABLE_FEEDBACK =
+            "CREATE TABLE " + TABLE_FEEDBACK + " (" +
+                    FEEDBACK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    FEEDBACK_FK_INTERVIEWEE + " INTEGER, " +
+                    FEEDBACK_DESCRIPTION + " TEXT, " +
+                    FEEDBACK_NAME + " TEXT);";
+
     private Context context;
 
     public KYNDatabaseHelper(Context context) {
@@ -136,6 +151,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(QUERY_CREATE_TABLE_USER);
         db.execSQL(QUERY_CREATE_TABLE_TEMPLATE);
         db.execSQL(QUERY_CREATE_TABLE_TEMPLATE_QUESTION);
+        db.execSQL(QUERY_CREATE_TABLE_FEEDBACK);
     }
 
     @Override
@@ -343,6 +359,35 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
             values.put(TEMPLATE_QUESTION_FK_TEMPLATE, model.getTemplateModel().getId());
 
             id = db.insert(TABLE_TEMPLATE_QUESTION, null, values);
+            db.setTransactionSuccessful();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.endTransaction();
+            if (db.isOpen()) {
+                db.close();
+            }
+        }
+        return id;
+    }
+
+    public Long insertFeedback(KYNFeedbackModel model) {
+        if (model == null) {
+            return null;
+        }
+
+        Long id = -1l;
+
+        SQLiteDatabase db = getWritableDatabase();
+        try {
+            db.beginTransaction();
+            ContentValues values = new ContentValues();
+            values.put(FEEDBACK_DESCRIPTION, model.getDescription());
+            values.put(FEEDBACK_NAME, model.getName());
+            values.put(FEEDBACK_FK_INTERVIEWEE, model.getIntervieweeModel().getId());
+
+            id = db.insert(TABLE_FEEDBACK, null, values);
             db.setTransactionSuccessful();
 
         } catch (Exception e) {
@@ -716,8 +761,33 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
                     KYNTemplateQuestionModel model = new KYNTemplateQuestionModel();
                     model.setId(mCursor.getLong(mCursor.getColumnIndex(TEMPLATE_QUESTION_ID)));
                     model.setBobot(mCursor.getInt(mCursor.getColumnIndex(TEMPLATE_QUESTION_BOBOT)));
-                    model.setJumlahSoal(mCursor.getInt(mCursor.getColumnIndex(TEMPLATE_JUMLAH_SOAL)));
+                    model.setJumlahSoal(mCursor.getInt(mCursor.getColumnIndex(TEMPLATE_QUESTION_JUMLAH_SOAL)));
                     model.setTemplateModel(getTemplate(mCursor.getLong(mCursor.getColumnIndex(TEMPLATE_QUESTION_FK_TEMPLATE))));
+
+                    result.add(model);
+                } while (mCursor.moveToNext());
+            }
+        } catch (Exception e) {
+
+        } finally {
+            mCursor.close();
+        }
+        return result;
+    }
+
+    public List<KYNFeedbackModel> getFeedbackList(Long intervieweeId) {
+        ArrayList result = new ArrayList();
+        String mQuery = "SELECT * FROM " + TABLE_FEEDBACK + " WHERE " + FEEDBACK_FK_INTERVIEWEE + "='" + intervieweeId + "'";
+        SQLiteDatabase mReadableDatabase = getReadableDatabase();
+        Cursor mCursor = mReadableDatabase.rawQuery(mQuery, null);
+        try {
+            if (mCursor.moveToFirst()) {
+                do {
+                    KYNFeedbackModel model = new KYNFeedbackModel();
+                    model.setId(mCursor.getLong(mCursor.getColumnIndex(FEEDBACK_ID)));
+                    model.setDescription(mCursor.getString(mCursor.getColumnIndex(FEEDBACK_DESCRIPTION)));
+                    model.setName(mCursor.getString(mCursor.getColumnIndex(FEEDBACK_NAME)));
+                    model.setIntervieweeModel(getInterviewee(mCursor.getLong(mCursor.getColumnIndex(FEEDBACK_FK_INTERVIEWEE))));
 
                     result.add(model);
                 } while (mCursor.moveToNext());
@@ -769,6 +839,14 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
 
     public void deleteTemplateQuestion() {
         delete(TABLE_TEMPLATE_QUESTION, null, null);
+    }
+
+    public void deleteFeedback(Long id) {
+        delete(TABLE_FEEDBACK, FEEDBACK_ID + " =? ", new String[]{id + ""});
+    }
+
+    public void deleteFeedback() {
+        delete(TABLE_FEEDBACK, null, null);
     }
 
 

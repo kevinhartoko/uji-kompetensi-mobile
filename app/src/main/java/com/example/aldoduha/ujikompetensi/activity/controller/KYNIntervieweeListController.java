@@ -1,5 +1,7 @@
 package com.example.aldoduha.ujikompetensi.activity.controller;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -7,9 +9,12 @@ import android.widget.AdapterView;
 
 import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
 import com.example.aldoduha.ujikompetensi.R;
+import com.example.aldoduha.ujikompetensi.activity.KYNIntervieweeDetailActivity;
 import com.example.aldoduha.ujikompetensi.activity.KYNIntervieweeListActivity;
+import com.example.aldoduha.ujikompetensi.activity.KYNTemplateDetailActivity;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
 import com.example.aldoduha.ujikompetensi.model.KYNIntervieweeModel;
+import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -112,7 +117,12 @@ public class KYNIntervieweeListController implements View.OnClickListener, Adapt
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        KYNIntervieweeModel intervieweeModel = activity.getAdapter().getItem(position);
+        Bundle b = new Bundle();
+        b.putLong("intervieweeId", intervieweeModel.getId());
+        Intent i = new Intent(activity, KYNIntervieweeDetailActivity.class);
+        i.putExtras(b);
+        activity.startActivityForResult(i, KYNIntentConstant.REQUEST_CODE_INTERVIEWEE_DETAIL);
     }
 
     public List<KYNIntervieweeModel> getIntervieweeModels() {

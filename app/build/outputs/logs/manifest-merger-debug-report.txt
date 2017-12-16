@@ -17,6 +17,7 @@ application
 ADDED from D:\repo\uji-kompetensi-mobile\app\src\main\AndroidManifest.xml:5:5-67:19
 MERGED from [com.android.support:appcompat-v7:23.0.0] C:\Users\aldoduha\.android\build-cache\7143f0132b95826b586557aa421e4eeae06e6439\output\AndroidManifest.xml:22:5-20
 MERGED from [com.android.support:support-v4:23.0.0] C:\Users\aldoduha\.android\build-cache\9c4a0abbf70ea27753c55a50eb36421bd6abbac3\output\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\aldoduha\.android\build-cache\6d56dec9887b6d2f93732fc378a467119dbbed61\output\AndroidManifest.xml:9:5-20
 	android:label
 		ADDED from D:\repo\uji-kompetensi-mobile\app\src\main\AndroidManifest.xml:9:9-41
 	android:supportsRtl
@@ -143,7 +144,8 @@ uses-sdk
 INJECTED from D:\repo\uji-kompetensi-mobile\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 MERGED from [com.android.support:appcompat-v7:23.0.0] C:\Users\aldoduha\.android\build-cache\7143f0132b95826b586557aa421e4eeae06e6439\output\AndroidManifest.xml:20:5-43
 MERGED from [com.android.support:support-v4:23.0.0] C:\Users\aldoduha\.android\build-cache\9c4a0abbf70ea27753c55a50eb36421bd6abbac3\output\AndroidManifest.xml:20:5-43
-MERGED from [com.github.felHR85:UsbSerial:4.5] C:\Users\aldoduha\.android\build-cache\430568445bd862bfaa8c4cd1eb69bf0e7863d192\output\AndroidManifest.xml:6:5-8:41
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\aldoduha\.android\build-cache\6d56dec9887b6d2f93732fc378a467119dbbed61\output\AndroidManifest.xml:5:5-7:41
+MERGED from [net.zetetic:android-database-sqlcipher:3.5.7] C:\Users\aldoduha\.android\build-cache\92377e6ef96058f4209cc111da3750346c40c786\output\AndroidManifest.xml:3:3-40
 	android:targetSdkVersion
 		INJECTED from D:\repo\uji-kompetensi-mobile\app\src\main\AndroidManifest.xml
 		INJECTED from D:\repo\uji-kompetensi-mobile\app\src\main\AndroidManifest.xml

@@ -14,6 +14,7 @@ import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.connection.listener.KYNConnectionListener;
 import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
 import com.example.aldoduha.ujikompetensi.preferences.KYNSharedPreference;
+import com.example.aldoduha.ujikompetensi.utility.KYNHttpPostRest;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 import com.sap.mobile.lib.request.BaseRequest;
 import com.sap.mobile.lib.request.INetListener;
@@ -32,6 +33,7 @@ import org.json.JSONException;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,7 +69,7 @@ public abstract class KYNHTTPPostConnections extends AsyncTask<Void, String, Str
             String url = getRestUrl();
             String request = generateRequest();
 //            Map<String, String> customHeaders = getCustomHeaders(url, request);
-            result = KYNHttpPostRest.postData(url, request, customHeaders);
+            result = KYNHttpPostRest.postData(url, request);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -600,7 +602,13 @@ public abstract class KYNHTTPPostConnections extends AsyncTask<Void, String, Str
 
         try {
 
-            DataInputStream dis = new DataInputStream(response.getEntity().getContent());
+//            DataInputStream dis = new DataInputStream(response.getEntity().getContent());
+            DataInputStream dis = new DataInputStream(new InputStream() {
+                @Override
+                public int read() throws IOException {
+                    return 0;
+                }
+            });
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             byte[] data = new byte[1024];
             int length = 0;
@@ -635,7 +643,13 @@ public abstract class KYNHTTPPostConnections extends AsyncTask<Void, String, Str
         }
 
         try {
-            DataInputStream dis = new DataInputStream(response.getEntity().getContent());
+//            DataInputStream dis = new DataInputStream(response.getEntity().getContent());
+            DataInputStream dis = new DataInputStream(new InputStream() {
+                @Override
+                public int read() throws IOException {
+                    return 0;
+                }
+            });
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             byte[] data = new byte[1024];
             int length = 0;

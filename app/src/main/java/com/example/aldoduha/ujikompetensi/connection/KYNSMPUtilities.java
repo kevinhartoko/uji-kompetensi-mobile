@@ -32,6 +32,7 @@ import java.security.interfaces.RSAPublicKey;
  */
 
 public class KYNSMPUtilities {
+    public static boolean isHandShake = false;
     public static int dbVer;
 
     public static String username = "";

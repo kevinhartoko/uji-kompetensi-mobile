@@ -3,48 +3,129 @@
 
     <item
         is-multidex="false"
-        jar="D:\Software\AndroidStudio\sdk\extras\m2repository\com\android\support\constraint\constraint-layout-solver\1.0.2\constraint-layout-solver-1.0.2.jar"
+        jar="D:\repo\uji-kompetensi-mobile\app\libs\ClientHubSLL-3.4.0.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
-        <dex dex="D:\repo\uji-kompetensi-mobile\app\build\intermediates\pre-dexed\debug\constraint-layout-solver-1.0.2_d7f3b20bbb533649435e3c500a221b3cab5e98ed.jar" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\repo\uji-kompetensi-mobile\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="caff8e51a24901cfc9cd7e1cf83d84f4cb0c103b">
-        <dex dex="D:\repo\uji-kompetensi-mobile\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_eb0e18a3f2c8f953c5553134eae3a1d80ad1a1ef\classes.dex" />
+        sha1="f1cd5e3e89e46f1cf54c9ee0b94530546ffb7b34">
+        <dex dex="D:\repo\uji-kompetensi-mobile\app\build\intermediates\pre-dexed\debug\ClientHubSLL-3.4.0_2213477f0dcc0c0ea125a7d786389b637399b553.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="C:\Users\aldoduha\.android\build-cache\6d56dec9887b6d2f93732fc378a467119dbbed61\output\jars\classes.jar"
+        jar="D:\repo\uji-kompetensi-mobile\app\libs\sap-e2etrace-2.3.3.13.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
-        <dex dex="D:\repo\uji-kompetensi-mobile\app\build\intermediates\pre-dexed\debug\classes_0eb017f32bb99a063f64b0b8ba7ed9100df2ff52.jar" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\repo\uji-kompetensi-mobile\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="2439bc4b90bf0f04cf76a642328ae0a2dda2022d">
-        <dex dex="D:\repo\uji-kompetensi-mobile\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_0159e7956ae3f5ee7754d05df7331190b4536664\classes.dex" />
+        sha1="789221549ab3d0b9520c2c9db453a6f60e20cbdf">
+        <dex dex="D:\repo\uji-kompetensi-mobile\app\build\intermediates\pre-dexed\debug\sap-e2etrace-2.3.3.13_929beb97f9abeee62618fe32948b7ca951123605.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="C:\Users\aldoduha\.android\build-cache\92377e6ef96058f4209cc111da3750346c40c786\output\jars\classes.jar"
+        jar="D:\repo\uji-kompetensi-mobile\app\libs\AfariaSLL-7.00.6169.0.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="a510df52da6402338b2debf32e637277de18c293">
-        <dex dex="D:\repo\uji-kompetensi-mobile\app\build\intermediates\pre-dexed\debug\classes_a7631f6cb141d959fa2ebe820a3f4342a05a9cf4.jar" />
+        sha1="8b26a4edeb6da37bdfb34885def65d3f23eeac08">
+        <dex dex="D:\repo\uji-kompetensi-mobile\app\build\intermediates\pre-dexed\debug\AfariaSLL-7.00.6169.0_2de54c07213179202e5933f9a839740c9650bdf6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\repo\uji-kompetensi-mobile\app\libs\commons-codec-1.3.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="fd32786786e2adb664d5ecc965da47629dca14ba">
+        <dex dex="D:\repo\uji-kompetensi-mobile\app\build\intermediates\pre-dexed\debug\commons-codec-1.3_c61c1559b6996b21215128573467d6a2a4d78eef.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\repo\uji-kompetensi-mobile\app\libs\Common-3.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e3395f83d93430bb8f534eff55b4a7866ff79b1c">
+        <dex dex="D:\repo\uji-kompetensi-mobile\app\build\intermediates\pre-dexed\debug\Common-3.4.0_0a02109dde3eb775a657be0e25ae2975b9a23a2c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\repo\uji-kompetensi-mobile\app\libs\Parser-3.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="267f4348fdfa2dc4075d3908f9839aeb7e3a4e7e">
+        <dex dex="D:\repo\uji-kompetensi-mobile\app\build\intermediates\pre-dexed\debug\Parser-3.4.0_a67135467f852f09fdb1abfd2813a2f4dbaa6355.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\repo\uji-kompetensi-mobile\app\libs\perflib-1.1.5.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4dc043c74cfa785026a6fdc257bd60ccb9c55541">
+        <dex dex="D:\repo\uji-kompetensi-mobile\app\build\intermediates\pre-dexed\debug\perflib-1.1.5_82668d6cf357d7630615a2b96b503a8ac9bcb382.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\repo\uji-kompetensi-mobile\app\libs\sqlcipher-android-3.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="b88f854a228ab8ccae52c8dc99ee9400c3270327">
+        <dex dex="D:\repo\uji-kompetensi-mobile\app\build\intermediates\pre-dexed\debug\sqlcipher-android-3.0.1_edb8f16b51fd572dc4db1075168e49a66edc4dda.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\repo\uji-kompetensi-mobile\app\libs\Cache-3.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="42d3ce9da5a7f634d3690028c37760bbc8b8d4c2">
+        <dex dex="D:\repo\uji-kompetensi-mobile\app\build\intermediates\pre-dexed\debug\Cache-3.4.0_ee28531b8c24f6a9c6b789b739fcd73dc0eff38d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\repo\uji-kompetensi-mobile\app\libs\DataVaultLib-2.3.3.13.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="3ae8d6af77af889eac917aa1e91dd0671c942a60">
+        <dex dex="D:\repo\uji-kompetensi-mobile\app\build\intermediates\pre-dexed\debug\DataVaultLib-2.3.3.13_f7801596d6c51d32732a5eeff8aaebe4403607da.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\repo\uji-kompetensi-mobile\app\libs\CoreServices-3.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="a4e591cb35e8db004fe7d044dc520c71aada1f2f">
+        <dex dex="D:\repo\uji-kompetensi-mobile\app\build\intermediates\pre-dexed\debug\CoreServices-3.4.0_91e69223d5aeb20a6f2d1ec391a8385bfad8a68b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\repo\uji-kompetensi-mobile\app\libs\Connectivity-3.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="834d38f599a275dfed7c5add821933af9f9877e7">
+        <dex dex="D:\repo\uji-kompetensi-mobile\app\build\intermediates\pre-dexed\debug\Connectivity-3.4.0_f7dc8f0d3dfb05f17783c231ca6ec68bc9fec32e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\repo\uji-kompetensi-mobile\app\libs\Request-3.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="996bbef0c2a568e3d51b234557411a32dc0995c3">
+        <dex dex="D:\repo\uji-kompetensi-mobile\app\build\intermediates\pre-dexed\debug\Request-3.4.0_999eaeef870c01e49e6b0f77f538aad7ae96a746.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\repo\uji-kompetensi-mobile\app\libs\Persistence-3.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="fce67d924d1e8b733e62e86cff07fb8600da6151">
+        <dex dex="D:\repo\uji-kompetensi-mobile\app\build\intermediates\pre-dexed\debug\Persistence-3.4.0_0f361e5bfa668189251d3c4fbcb34a5c644cdda7.jar" />
     </item>
 
 </items>

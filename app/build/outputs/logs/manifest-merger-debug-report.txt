@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\repo\uji-kompetensi-mobile\app\src\main\AndroidManifest.xml:2:1-65:12
+ADDED from D:\repo\uji-kompetensi-mobile\app\src\main\AndroidManifest.xml:2:1-69:12
 	package
 		ADDED from D:\repo\uji-kompetensi-mobile\app\src\main\AndroidManifest.xml:3:5-49
 		INJECTED from D:\repo\uji-kompetensi-mobile\app\src\main\AndroidManifest.xml
@@ -14,7 +14,7 @@ ADDED from D:\repo\uji-kompetensi-mobile\app\src\main\AndroidManifest.xml:2:1-65
 		INJECTED from D:\repo\uji-kompetensi-mobile\app\src\main\AndroidManifest.xml
 		INJECTED from D:\repo\uji-kompetensi-mobile\app\src\main\AndroidManifest.xml
 application
-ADDED from D:\repo\uji-kompetensi-mobile\app\src\main\AndroidManifest.xml:5:5-63:19
+ADDED from D:\repo\uji-kompetensi-mobile\app\src\main\AndroidManifest.xml:5:5-67:19
 MERGED from [com.android.support:appcompat-v7:23.0.0] C:\Users\aldoduha\.android\build-cache\7143f0132b95826b586557aa421e4eeae06e6439\output\AndroidManifest.xml:22:5-20
 MERGED from [com.android.support:support-v4:23.0.0] C:\Users\aldoduha\.android\build-cache\9c4a0abbf70ea27753c55a50eb36421bd6abbac3\output\AndroidManifest.xml:22:5-20
 MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\aldoduha\.android\build-cache\6d56dec9887b6d2f93732fc378a467119dbbed61\output\AndroidManifest.xml:9:5-20
@@ -132,6 +132,14 @@ ADDED from D:\repo\uji-kompetensi-mobile\app\src\main\AndroidManifest.xml:59:9-6
 		ADDED from D:\repo\uji-kompetensi-mobile\app\src\main\AndroidManifest.xml:61:13-63
 	android:name
 		ADDED from D:\repo\uji-kompetensi-mobile\app\src\main\AndroidManifest.xml:60:13-64
+activity#com.example.aldoduha.ujikompetensi.activity.KYNIntervieweeDetailActivity
+ADDED from D:\repo\uji-kompetensi-mobile\app\src\main\AndroidManifest.xml:63:9-66:57
+	android:windowSoftInputMode
+		ADDED from D:\repo\uji-kompetensi-mobile\app\src\main\AndroidManifest.xml:66:13-54
+	android:configChanges
+		ADDED from D:\repo\uji-kompetensi-mobile\app\src\main\AndroidManifest.xml:65:13-63
+	android:name
+		ADDED from D:\repo\uji-kompetensi-mobile\app\src\main\AndroidManifest.xml:64:13-66
 uses-sdk
 INJECTED from D:\repo\uji-kompetensi-mobile\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 MERGED from [com.android.support:appcompat-v7:23.0.0] C:\Users\aldoduha\.android\build-cache\7143f0132b95826b586557aa421e4eeae06e6439\output\AndroidManifest.xml:20:5-43

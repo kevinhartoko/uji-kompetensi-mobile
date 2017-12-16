@@ -123,6 +123,40 @@
                 android:textColor="#FF000000"
                 android:layout_weight="0.6"/>
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip">
+            <TextView
+                android:layout_weight="0.4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Interviewee result :"
+                android:textColor="#FF000000"
+                android:layout_marginLeft="5dp"/>
+            <Button
+                android:id="@+id/btnQuestion"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="#FF000000"
+                android:layout_weight="0.4"
+                android:textAllCaps="false"
+                android:text="Tampilkan"/>
+            <TextView
+                android:layout_weight="0.2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="#FF000000"
+                android:layout_marginLeft="5dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linearQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="10dip"
+            android:visibility="gone">
+        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"

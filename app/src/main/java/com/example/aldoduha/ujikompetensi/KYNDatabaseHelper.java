@@ -33,6 +33,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_INTERVIEWEE = "interviewee";
     private static final String TABLE_QUESTION = "question";
     private static final String TABLE_USER = "user";
+    private static final String TABLE_SESSION = "session";
     private static final String TABLE_TEMPLATE = "template";
     private static final String TABLE_TEMPLATE_QUESTION = "template_question";
     private static final String TABLE_FEEDBACK = "feedback";
@@ -65,6 +66,14 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
     private static final String USER_USERNAME = "username";
     private static final String USER_ROLE = "role";
     private static final String USER_PASSWORD = "password";
+
+    //session
+    private static final String SESSION_ID = "id";
+    private static final String SESSION_NAMA = "nama";
+    private static final String SESSION_USERNAME = "username";
+    private static final String SESSION_ROLE = "role";
+    private static final String SESSION_PASSWORD = "password";
+    private static final String SESSION_TOKEN = "token";
 
     //template
     private static final String TEMPLATE_ID = "id";
@@ -115,6 +124,15 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
                     USER_PASSWORD + " TEXT, " +
                     USER_ROLE + " TEXT);";
 
+    private static final String QUERY_CREATE_TABLE_SESSION =
+            "CREATE TABLE " + TABLE_SESSION + " (" +
+                    SESSION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    SESSION_NAMA + " TEXT, " +
+                    SESSION_USERNAME + " TEXT, " +
+                    SESSION_PASSWORD + " TEXT, " +
+                    SESSION_TOKEN + " TEXT, " +
+                    SESSION_ROLE + " TEXT);";
+
     private static final String QUERY_CREATE_TABLE_TEMPLATE =
             "CREATE TABLE " + TABLE_TEMPLATE + " (" +
                     TEMPLATE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -149,6 +167,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(QUERY_CREATE_TABLE_INTERVIEWEE);
         db.execSQL(QUERY_CREATE_TABLE_QUESTION);
         db.execSQL(QUERY_CREATE_TABLE_USER);
+        db.execSQL(QUERY_CREATE_TABLE_SESSION);
         db.execSQL(QUERY_CREATE_TABLE_TEMPLATE);
         db.execSQL(QUERY_CREATE_TABLE_TEMPLATE_QUESTION);
         db.execSQL(QUERY_CREATE_TABLE_FEEDBACK);
@@ -302,6 +321,37 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
             values.put(USER_ROLE, model.getRole());
 
             id = db.insert(TABLE_USER, null, values);
+            db.setTransactionSuccessful();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.endTransaction();
+            if (db.isOpen()) {
+                db.close();
+            }
+        }
+        return id;
+    }
+
+    public Long insertSession(KYNUserModel model) {
+        if (model == null) {
+            return null;
+        }
+
+        Long id = -1l;
+
+        SQLiteDatabase db = getWritableDatabase();
+        try {
+            db.beginTransaction();
+            ContentValues values = new ContentValues();
+            values.put(SESSION_NAMA, model.getNama());
+            values.put(SESSION_USERNAME, model.getUsername());
+            values.put(SESSION_PASSWORD, model.getPassword());
+            values.put(SESSION_ROLE, model.getRole());
+            values.put(SESSION_TOKEN, model.getToken());
+
+            id = db.insert(TABLE_SESSION, null, values);
             db.setTransactionSuccessful();
 
         } catch (Exception e) {
@@ -521,6 +571,30 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void updateSession(KYNUserModel model) {
+        if (model == null) {
+            return;
+        }
+        SQLiteDatabase db = getWritableDatabase();
+        try {
+            db.beginTransaction();
+            ContentValues values = new ContentValues();
+
+            values.put(SESSION_NAMA, model.getNama());
+            values.put(SESSION_USERNAME, model.getUsername());
+            values.put(SESSION_PASSWORD, model.getPassword());
+            values.put(SESSION_ROLE, model.getRole());
+            values.put(SESSION_TOKEN, model.getToken());
+
+            db.update(TABLE_SESSION, values, SESSION_ID + " =? ", new String[]{model.getId() + ""});
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.endTransaction();
+        }
+    }
+
     public void updateTemplate(KYNTemplateModel model) {
         if (model == null) {
             return;
@@ -660,6 +734,38 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public List<KYNQuestionModel> getListQuestion(Long intervieweeId) {
+        ArrayList result = new ArrayList();
+        String mQuery = "SELECT * FROM " + TABLE_QUESTION + " WHERE " + QUESTION_FK_INTERVIEWEE + "='" + intervieweeId + "'";
+        SQLiteDatabase mReadableDatabase = getReadableDatabase();
+        Cursor mCursor = mReadableDatabase.rawQuery(mQuery, null);
+        try {
+            if (mCursor.moveToFirst()) {
+                do {
+                    KYNQuestionModel model = new KYNQuestionModel();
+                    model.setId(mCursor.getLong(mCursor.getColumnIndex(QUESTION_ID)));
+                    model.setName(mCursor.getString(mCursor.getColumnIndex(QUESTION_NAME)));
+                    model.setQuestion(mCursor.getString(mCursor.getColumnIndex(QUESTION_QUESTION)));
+                    model.setAnswer1(mCursor.getString(mCursor.getColumnIndex(QUESTION_ANSWER_1)));
+                    model.setAnswer2(mCursor.getString(mCursor.getColumnIndex(QUESTION_ANSWER_2)));
+                    model.setAnswer3(mCursor.getString(mCursor.getColumnIndex(QUESTION_ANSWER_3)));
+                    model.setAnswer4(mCursor.getString(mCursor.getColumnIndex(QUESTION_ANSWER_4)));
+                    model.setBobot(mCursor.getInt(mCursor.getColumnIndex(QUESTION_BOBOT)));
+                    model.setIntervieweeAnswer(mCursor.getString(mCursor.getColumnIndex(QUESTION_INTERVIEWEE_ANSWER)));
+                    model.setKeyAnswer(mCursor.getString(mCursor.getColumnIndex(QUESTION_KEY_ANSWER)));
+                    model.setIntervieweeModel(getInterviewee(mCursor.getLong(mCursor.getColumnIndex(QUESTION_FK_INTERVIEWEE))));
+
+                    result.add(model);
+                } while (mCursor.moveToNext());
+            }
+        } catch (Exception e) {
+
+        } finally {
+            mCursor.close();
+        }
+        return result;
+    }
+
     public List<KYNUserModel> getUsers() {
         ArrayList result = new ArrayList();
         String mQuery = "SELECT * FROM " + TABLE_USER;
@@ -698,6 +804,28 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
                 model.setUsername(mCursor.getString(mCursor.getColumnIndex(USER_USERNAME)));
                 model.setPassword(mCursor.getString(mCursor.getColumnIndex(USER_PASSWORD)));
                 model.setRole(mCursor.getString(mCursor.getColumnIndex(USER_ROLE)));
+            }
+        } catch (Exception e) {
+
+        } finally {
+            mCursor.close();
+        }
+        return model;
+    }
+
+    public KYNUserModel getSession() {
+        KYNUserModel model = new KYNUserModel();
+        String mQuery = "SELECT * FROM " + TABLE_SESSION;
+        SQLiteDatabase mReadableDatabase = getReadableDatabase();
+        Cursor mCursor = mReadableDatabase.rawQuery(mQuery, null);
+        try {
+            if (mCursor.moveToFirst()) {
+                model.setId(mCursor.getLong(mCursor.getColumnIndex(SESSION_ID)));
+                model.setNama(mCursor.getString(mCursor.getColumnIndex(SESSION_NAMA)));
+                model.setUsername(mCursor.getString(mCursor.getColumnIndex(SESSION_USERNAME)));
+                model.setPassword(mCursor.getString(mCursor.getColumnIndex(SESSION_PASSWORD)));
+                model.setRole(mCursor.getString(mCursor.getColumnIndex(SESSION_ROLE)));
+                model.setToken(mCursor.getString(mCursor.getColumnIndex(SESSION_TOKEN)));
             }
         } catch (Exception e) {
 
@@ -823,6 +951,9 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
 
     public void deleteUser() {
         delete(TABLE_USER, null, null);
+    }
+    public void deleteSession() {
+        delete(TABLE_SESSION, null, null);
     }
 
     public void deleteTemplate(Long id) {

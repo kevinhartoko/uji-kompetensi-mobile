@@ -128,6 +128,10 @@
         "source": "C:\\Users\\aldoduha\\.android\\build-cache\\7143f0132b95826b586557aa421e4eeae06e6439\\output\\res\\layout\\abc_screen_content_include.xml"
     },
     {
+        "merged": "D:\\repo\\uji-kompetensi-mobile\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_interviewee_detail.xml",
+        "source": "D:\\repo\\uji-kompetensi-mobile\\app\\src\\main\\res\\layout\\activity_interviewee_detail.xml"
+    },
+    {
         "merged": "D:\\repo\\uji-kompetensi-mobile\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_select_dialog_material.xml",
         "source": "C:\\Users\\aldoduha\\.android\\build-cache\\7143f0132b95826b586557aa421e4eeae06e6439\\output\\res\\layout\\abc_select_dialog_material.xml"
     },

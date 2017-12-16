@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dip">
             <TextView
-                android:layout_weight="0.4"
+                android:layout_weight="0.3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Nama :"
@@ -29,7 +29,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="#FF000000"
-                android:layout_weight="0.6"
+                android:layout_weight="0.7"
                 android:background="@drawable/edittext_style"/>
         </LinearLayout>
         <TextView
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dip">
             <TextView
-                android:layout_weight="0.4"
+                android:layout_weight="0.3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:text="Jenis Kelamin :"
@@ -56,7 +56,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_weight="0.6">
+                android:layout_weight="0.7">
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dip">
             <TextView
-                android:layout_weight="0.4"
+                android:layout_weight="0.3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Email :"
@@ -85,9 +85,9 @@
             <EditText
                 android:id="@+id/edittextEmail"
                 android:layout_width="0dp"
+                android:layout_weight="0.7"
                 android:layout_height="wrap_content"
                 android:textColor="#FF000000"
-                android:layout_weight="0.6"
                 android:background="@drawable/edittext_style"/>
         </LinearLayout>
         <LinearLayout
@@ -95,7 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dip">
             <TextView
-                android:layout_weight="0.4"
+                android:layout_weight="0.3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Handphone :"
@@ -106,7 +106,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="#FF000000"
-                android:layout_weight="0.6"
+                android:layout_weight="0.7"
                 android:inputType="number"
                 android:background="@drawable/edittext_style"/>
         </LinearLayout>
@@ -115,7 +115,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dip">
             <TextView
-                android:layout_weight="0.4"
+                android:layout_weight="0.3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Address"
@@ -126,7 +126,7 @@
                 android:layout_width="0dp"
                 android:layout_height="50dip"
                 android:textColor="#FF000000"
-                android:layout_weight="0.6"
+                android:layout_weight="0.7"
                 android:maxLines="3"
                 android:lines="3"
                 android:scrollbars="vertical"
@@ -137,7 +137,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dip">
             <TextView
-                android:layout_weight="0.4"
+                android:layout_weight="0.3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="DOB :"
@@ -148,7 +148,7 @@
                 android:layout_width="0dp"
                 android:layout_height="23dip"
                 android:textColor="#FF000000"
-                android:layout_weight="0.6"
+                android:layout_weight="0.7"
                 android:inputType="number"
                 android:background="@drawable/edittext_style"/>
         </LinearLayout>

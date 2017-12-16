@@ -16,7 +16,9 @@ import com.example.aldoduha.ujikompetensi.activity.controller.KYNIntervieweeList
 import com.example.aldoduha.ujikompetensi.adapter.KYNIntervieweeListAdapter;
 import com.example.aldoduha.ujikompetensi.alertDialog.KYNConfirmationAlertDialog;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
+import com.example.aldoduha.ujikompetensi.model.KYNFeedbackModel;
 import com.example.aldoduha.ujikompetensi.model.KYNIntervieweeModel;
+import com.example.aldoduha.ujikompetensi.model.KYNQuestionModel;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 import java.util.ArrayList;
@@ -163,6 +165,8 @@ public class KYNIntervieweeListActivity extends KYNBaseActivity {
 
     public void insertInterviewee(){
         database.deleteInterviewee();
+        database.deleteFeedback();
+        database.deleteQuestion();
         for (int i=0;i<2;i++){
             KYNIntervieweeModel model = new KYNIntervieweeModel();
             if(i==0) {
@@ -176,7 +180,37 @@ public class KYNIntervieweeListActivity extends KYNBaseActivity {
             model.setAddress("jln sunter hijau 1 blok y1 no"+i);
             model.setHandphone("081811853"+i);
             model.setEmail("asdasd@yahoo.com");
-            database.insertInterviewee(model);
+            model.setId(database.insertInterviewee(model));
+
+            KYNFeedbackModel feedbackModel = new KYNFeedbackModel();
+            feedbackModel.setName("a");
+            feedbackModel.setIntervieweeModel(model);
+            feedbackModel.setDescription("bagus");
+            database.insertFeedback(feedbackModel);
+            feedbackModel.setName("b");
+            feedbackModel.setDescription("bagus banget");
+            database.insertFeedback(feedbackModel);
+            for (int y = 1; y <= 10; y++) {
+                KYNQuestionModel questionModel = new KYNQuestionModel();
+                questionModel.setQuestion("Pertanyaan " + y);
+                questionModel.setAnswer1("answer 1-" + y);
+                questionModel.setAnswer2("answer 2-" + y);
+                questionModel.setAnswer3("answer 3-" + y);
+                questionModel.setAnswer4("answer 4-" + y);
+                questionModel.setKeyAnswer("answer 1-" + y);
+                questionModel.setBobot(i);
+                questionModel.setName("code"+i);
+                if(y==1||y==5||y==9)
+                    questionModel.setIntervieweeAnswer("answer 1-" + y);
+                else if(y==2||y==6||y==10)
+                    questionModel.setIntervieweeAnswer("answer 2-" + y);
+                else if(y==3||y==7)
+                    questionModel.setIntervieweeAnswer("answer 3-" + y);
+                else if(y==4||y==8)
+                    questionModel.setIntervieweeAnswer("answer 4-" + y);
+                questionModel.setIntervieweeModel(model);
+                database.insertQuestion(questionModel);
+            }
         }
     }
 

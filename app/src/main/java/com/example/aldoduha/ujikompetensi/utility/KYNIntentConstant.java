@@ -5,9 +5,15 @@ package com.example.aldoduha.ujikompetensi.utility;
  */
 
 public class KYNIntentConstant {
+    public static String SSL_PUBLIC_KEY;
+    public static String SSL_CHECK_SUM;
+    public static final boolean isUseGateway = true;
+    public static boolean needSS = false;
+
     public static final String BUNDLE_KEY_LOADING_SHOW = "loading_show";
     public static final String BUNDLE_KEY_ALERT_SHOW = "alert_show";
     public static final String BUNDLE_KEY_MESSAGE = "message";
+    public static final String BUNDLE_KEY_CODE = "code";
     public static final String BUNDLE_KEY_TITLE = "title";
     public static final String INTENT_EXTRA_CODE = "code";
 

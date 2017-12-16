@@ -6,6 +6,7 @@ import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
 import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.KYNIntervieweeDetailActivity;
 import com.example.aldoduha.ujikompetensi.model.KYNFeedbackModel;
+import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 import java.util.List;
@@ -32,6 +33,9 @@ public class KYNIntervieweeDetailController implements View.OnClickListener{
             case R.id.btnKirim:
                 onButtonKirimClicked();
                 break;
+            case R.id.btnQuestion:
+                onButtonQuestionClicked();
+                break;
             default:
                 break;
         }
@@ -44,13 +48,25 @@ public class KYNIntervieweeDetailController implements View.OnClickListener{
     private void onButtonKirimClicked(){
         String feedback = activity.getEditTextFeedback().getText().toString().trim();
         if(feedback!=null && !feedback.equals("")){
+            KYNUserModel session = database.getSession();
             KYNFeedbackModel model = new KYNFeedbackModel();
             model.setDescription(feedback);
             model.setIntervieweeModel(activity.getIntervieweeModel());
-            model.setName("haha");
+            model.setName(session.getUsername());
             database.insertFeedback(model);
+            activity.getEditTextFeedback().setText("");
             List<KYNFeedbackModel> feedbackModels = database.getFeedbackList(activity.getIntervieweeId());
             activity.generateFeedback(feedbackModels);
+        }
+    }
+
+    private void onButtonQuestionClicked(){
+        if(activity.getLinearLayoutQuestion().getVisibility() == View.VISIBLE){
+            activity.getLinearLayoutQuestion().setVisibility(View.GONE);
+            activity.getBtnQuestion().setText("Tampilkan");
+        }else{
+            activity.getLinearLayoutQuestion().setVisibility(View.VISIBLE);
+            activity.getBtnQuestion().setText("Sembunyikan");
         }
     }
 }

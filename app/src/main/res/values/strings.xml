@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">UjiKompetensi</string>
+
+    <string name="failed_to_connect">Gagal, Tidak bisa menghubungi server</string>
+    <string name="invalid_token">Sesi Anda telah Berakhir. Mohon Login kembali</string>
+    <string name="failed_to_register">Gagal Register ke Server</string>
 </resources>

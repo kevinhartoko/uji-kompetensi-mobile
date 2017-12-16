@@ -8,6 +8,7 @@ import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
 import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.KYNHomeActivity;
 import com.example.aldoduha.ujikompetensi.activity.KYNLoginActivity;
+import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 /**
@@ -56,6 +57,14 @@ public class KYNLoginController implements View.OnClickListener, View.OnKeyListe
             return;
         }
         activity.hideKeyBoard();
+        KYNUserModel session = new KYNUserModel();
+        session.setUsername(username);
+        session.setPassword(password);
+        session.setNama("hehe");
+        session.setToken("adasda");
+        session.setRole("admin");
+        database.deleteSession();
+        database.insertSession(session);
         //start service login
         startActivityForLoginSuccess();
     }

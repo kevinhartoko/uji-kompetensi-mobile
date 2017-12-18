@@ -124,7 +124,6 @@
     <orderEntry type="library" exported="" name="Request-3.4.0" level="project" />
     <orderEntry type="library" exported="" name="CoreServices-3.4.0" level="project" />
     <orderEntry type="library" exported="" name="sap-e2etrace-2.3.3.13" level="project" />
-    <orderEntry type="library" exported="" name="sqlcipher-android-3.0.1" level="project" />
     <orderEntry type="library" exported="" name="DataVaultLib-2.3.3.13" level="project" />
     <orderEntry type="library" exported="" name="Connectivity-3.4.0" level="project" />
     <orderEntry type="library" exported="" name="ormlite-core-4.48" level="project" />

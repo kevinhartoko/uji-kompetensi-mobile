@@ -602,13 +602,7 @@ public abstract class KYNHTTPPostConnections extends AsyncTask<Void, String, Str
 
         try {
 
-//            DataInputStream dis = new DataInputStream(response.getEntity().getContent());
-            DataInputStream dis = new DataInputStream(new InputStream() {
-                @Override
-                public int read() throws IOException {
-                    return 0;
-                }
-            });
+            DataInputStream dis = new DataInputStream(response.getEntity().getContent());
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             byte[] data = new byte[1024];
             int length = 0;
@@ -643,13 +637,7 @@ public abstract class KYNHTTPPostConnections extends AsyncTask<Void, String, Str
         }
 
         try {
-//            DataInputStream dis = new DataInputStream(response.getEntity().getContent());
-            DataInputStream dis = new DataInputStream(new InputStream() {
-                @Override
-                public int read() throws IOException {
-                    return 0;
-                }
-            });
+            DataInputStream dis = new DataInputStream(response.getEntity().getContent());
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             byte[] data = new byte[1024];
             int length = 0;

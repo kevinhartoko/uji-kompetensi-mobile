@@ -43,7 +43,6 @@ public abstract class KYNHTTPPostConnections extends AsyncTask<Void, String, Str
     protected DataVault dataVault;
     protected boolean isPendingResponse = false;
     protected boolean isCanceled = false;
-    protected String userPhoneNumber = "";
     private KYNConnectionManager conMan;
     protected KYNConnectionListener listener;
 

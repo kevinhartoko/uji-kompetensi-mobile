@@ -45,6 +45,9 @@ public class KYNSMPUtilities {
     public static String host;
     public static String port;
     public static int portHttps;
+
+    public static String appIdLogin = "rfb.app.eform.login";
+    public static String appIdLoginRest = "eformws/rest/user/login";
     
     public static String secConfig = "";
     public static String appId = "";

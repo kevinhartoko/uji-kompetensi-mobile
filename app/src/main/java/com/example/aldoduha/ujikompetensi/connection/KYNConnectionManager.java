@@ -41,10 +41,6 @@ public class KYNConnectionManager {
 
     static {
         configureNEWSIT();
-//        configureUATPT();
-//        configureNEWUATDemo();
-//        configureNEWUAT();
-//        configureProdNew();
     }
 
     /**
@@ -54,27 +50,15 @@ public class KYNConnectionManager {
 
     private static void configureNEWSIT(){
         KYNSMPUtilities.isHttpRequest = false;
-        if(KYNIntentConstant.isUseGateway) {
-            KYNSMPUtilities.requestType = requestType = "https://";
-            KYNSMPUtilities.host = host = "appapisit02.dev.corp.btpn.co.id";
-            KYNSMPUtilities.port = port = "9501";
-        }else {
-            KYNSMPUtilities.requestType = requestType = "http://";
-            //KYNSMPUtilities.host = host = "192.168.43.58";
-            //KYNSMPUtilities.host = host = "192.168.43.155";
-            //KYNSMPUtilities.host = host = "10.157.205.112";
-            //KYNSMPUtilities.host = host = "172.20.10.3";
-            KYNSMPUtilities.host = host = "192.168.1.79";
-            //KYNSMPUtilities.host = host = "10.157.205.112";
-            //KYNSMPUtilities.host = host = "localhost";
-            KYNSMPUtilities.port = port = "8080";
-        }
+        KYNSMPUtilities.requestType = requestType = "https://";
+        KYNSMPUtilities.host = host = "google.co.id";
+        KYNSMPUtilities.port = port = "9501";
+
         KYNSMPUtilities.portHttps = portHttps = Preferences.DEFAULT_HTTPS_PORT;
-        KYNSMPUtilities.secConfig = secConfig = "EFORM-SDB";
+        KYNSMPUtilities.secConfig = secConfig = "UJI-KOMPETENSI";
         dataKYN = "data.KYN";
         KYNIntentConstant.SSL_PUBLIC_KEY = "30820122300d06092a864886f70d01010105000382010f003082010a0282010100e149f7f5d57ac3047d7d72fe603e08c8ca88172b36d146e81410acb76523a710b7404f7859f1034b91f2a0d9712eb9de36dba4d9cbe4c539bfbe09f68bba6163ddfcf3aecc3dba2131fb0833f60c59ea6a6488c42e77b7cfb99271c55bedd9751479aeff120c9bbf4a15d3f62c2536fe40ba8aeee28a0de36a956cbba6036edddb7bbf3ffd78da95495393561f2bb8b1c47fad918386013b986ff8f5c2ef90380468ffcf22899299587a6826a9dca6247a79ddd3f8cf04aa729c1dfa2813e19bc48ebb4d9a1625426daa5a7acf60041365c222c6dbab0a4efde32ae98bbef6098cbd7adba3d3cc4de5bd44c32c48a7c2f92299f2394f132d4b1e98fc4766c4270203010001";
         KYNIntentConstant.SSL_CHECK_SUM 	= "174653844";
-//        KYNConstants.BTPN_API_KEY_VALUE 	= "8428c326-ae66-47c7-9b06-1797ac513911";
         dbVersion = 1;
         KYNIntentConstant.needSS = true;
     }

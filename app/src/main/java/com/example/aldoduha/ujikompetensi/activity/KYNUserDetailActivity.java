@@ -16,6 +16,7 @@ import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.controller.KYNUserDetailController;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
 import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
+import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,8 @@ public class KYNUserDetailActivity extends KYNBaseActivity{
     private EditText editTextPassword;
     private Spinner spinnerRole;
     private Button buttonLanjut;
+    private Button buttonHapus;
+    private Button buttonKembali;
     private KYNDatabaseHelper database;
     private Long userId;
     private KYNUserModel userModel;
@@ -55,6 +58,8 @@ public class KYNUserDetailActivity extends KYNBaseActivity{
         editTextPassword = (EditText)findViewById(R.id.edittextPassword);
         spinnerRole = (Spinner)findViewById(R.id.spinnerRole); 
         buttonLanjut = (Button)findViewById(R.id.btnLanjut);
+        buttonKembali = (Button)findViewById(R.id.btnKembali);
+        buttonHapus = (Button)findViewById(R.id.btnHapus);
     }
 
     private void initDefaultValue(){
@@ -66,6 +71,8 @@ public class KYNUserDetailActivity extends KYNBaseActivity{
         }
         controller = new KYNUserDetailController(this);
         buttonLanjut.setOnClickListener(controller);
+        buttonHapus.setOnClickListener(controller);
+        buttonKembali.setOnClickListener(controller);
     }
 
     public void setValueToModel(){
@@ -148,5 +155,23 @@ public class KYNUserDetailActivity extends KYNBaseActivity{
     @Override
     public void onBackPressed() {
         showConfirmationAlertDialog("Apakah anda ingin keluar?", listener);
+    }
+
+    KYNConfirmationAlertDialogListener listenerHapus = new KYNConfirmationAlertDialogListener() {
+        @Override
+        public void onOK() {
+            database.deleteUser(userId);
+            setResult(KYNIntentConstant.RESULT_CODE_USER_DETAIL);
+            finish();
+        }
+
+        @Override
+        public void onCancel() {
+
+        }
+    };
+
+    public void onButtonHapusClicked(){
+        showConfirmationAlertDialog("Apakah anda yakin ingin menghapus user ini?", listenerHapus);
     }
 }

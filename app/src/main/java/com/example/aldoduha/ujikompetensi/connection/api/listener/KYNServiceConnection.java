@@ -125,6 +125,8 @@ public class KYNServiceConnection extends Service {
 
     private void registerLocalBroadcastReceiver(){
         IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(KYNIntentConstant.ACTION_LOGIN);
+        intentFilter.addCategory(KYNIntentConstant.CATEGORY_LOGIN);
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(broadcastReceiver, intentFilter);
     }
 

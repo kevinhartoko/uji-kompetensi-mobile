@@ -16,6 +16,7 @@ import com.example.aldoduha.ujikompetensi.activity.controller.KYNTemplateDetailC
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
 import com.example.aldoduha.ujikompetensi.model.KYNTemplateModel;
 import com.example.aldoduha.ujikompetensi.model.KYNTemplateQuestionModel;
+import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 import java.util.List;
 
@@ -31,6 +32,8 @@ public class KYNTemplateDetailActivity extends KYNBaseActivity {
     private Button buttonTambah;
     private Button buttonHapus;
     private Button buttonLanjut;
+    private Button buttonKembali;
+    private Button buttonHapusTemplate;
     private KYNDatabaseHelper database;
     private Long templateId;
     private KYNTemplateModel templateModel;
@@ -55,6 +58,8 @@ public class KYNTemplateDetailActivity extends KYNBaseActivity {
         buttonTambah = (Button)findViewById(R.id.btnTambah);
         buttonHapus = (Button)findViewById(R.id.btnHapus);
         buttonLanjut = (Button)findViewById(R.id.btnLanjut);
+        buttonHapusTemplate = (Button)findViewById(R.id.btnHapusTemplate);
+        buttonKembali = (Button)findViewById(R.id.btnKembali);
     }
 
     private void initDefaultValue(){
@@ -72,6 +77,8 @@ public class KYNTemplateDetailActivity extends KYNBaseActivity {
         buttonLanjut.setOnClickListener(controller);
         buttonHapus.setOnClickListener(controller);
         buttonTambah.setOnClickListener(controller);
+        buttonHapusTemplate.setOnClickListener(controller);
+        buttonKembali.setOnClickListener(controller);
     }
 
     public void setValueToModel(){
@@ -273,5 +280,27 @@ public class KYNTemplateDetailActivity extends KYNBaseActivity {
     @Override
     public void onBackPressed() {
         showConfirmationAlertDialog("Apakah anda ingin keluar?", listener);
+    }
+
+    KYNConfirmationAlertDialogListener listenerHapus = new KYNConfirmationAlertDialogListener() {
+        @Override
+        public void onOK() {
+            List<KYNTemplateQuestionModel> models = database.getTemplateQuestionList(templateId);
+            for(KYNTemplateQuestionModel model : models){
+                database.deleteTemplateQuestion(model.getId());
+            }
+            database.deleteTemplate(templateId);
+            setResult(KYNIntentConstant.RESULT_CODE_TEMPLATE_DETAIL);
+            finish();
+        }
+
+        @Override
+        public void onCancel() {
+
+        }
+    };
+
+    public void onButtonHapusTemplateClicked(){
+        showConfirmationAlertDialog("Apakah anda yakin ingin menghapus template ini?",listenerHapus);
     }
 }

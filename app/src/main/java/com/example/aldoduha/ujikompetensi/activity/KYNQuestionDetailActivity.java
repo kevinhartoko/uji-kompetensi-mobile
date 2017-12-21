@@ -12,6 +12,7 @@ import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.controller.KYNQuestionDetailController;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
 import com.example.aldoduha.ujikompetensi.model.KYNQuestionModel;
+import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 /**
  * Created by aldoduha on 11/12/2017.
@@ -28,6 +29,8 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
     private EditText editTextKunciJawaban;
     private EditText editTextBobot;
     private Button buttonLanjut;
+    private Button buttonKembali;
+    private Button buttonHapus;
     private KYNDatabaseHelper database;
     private Long questionId;
     private KYNQuestionModel questionModel;
@@ -55,6 +58,8 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
         editTextKunciJawaban = (EditText)findViewById(R.id.edittextKunciJawaban);
         editTextBobot = (EditText)findViewById(R.id.edittextBobot);
         buttonLanjut = (Button)findViewById(R.id.btnLanjut);
+        buttonKembali = (Button)findViewById(R.id.btnKembali);
+        buttonHapus = (Button)findViewById(R.id.btnHapus);
     }
 
     private void initDefaultValue(){
@@ -66,6 +71,8 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
         }
         controller = new KYNQuestionDetailController(this);
         buttonLanjut.setOnClickListener(controller);
+        buttonKembali.setOnClickListener(controller);
+        buttonHapus.setOnClickListener(controller);
     }
 
     public void setValueToModel(){
@@ -179,5 +186,23 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
     @Override
     public void onBackPressed() {
         showConfirmationAlertDialog("Apakah anda ingin keluar?", listener);
+    }
+
+    KYNConfirmationAlertDialogListener listenerHapus = new KYNConfirmationAlertDialogListener() {
+        @Override
+        public void onOK() {
+            database.deleteQuestion(questionId);
+            setResult(KYNIntentConstant.RESULT_CODE_QUESTION_DETAIL);
+            finish();
+        }
+
+        @Override
+        public void onCancel() {
+
+        }
+    };
+
+    public void onButtonHapusClicked(){
+        showConfirmationAlertDialog("Apakah anda yakin ingin menhapus pertanyaan ini?", listenerHapus);
     }
 }

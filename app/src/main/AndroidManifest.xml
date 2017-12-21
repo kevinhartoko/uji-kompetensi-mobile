@@ -64,6 +64,8 @@
             android:name=".activity.KYNIntervieweeDetailActivity"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="stateHidden" />
+
+        <service android:name=".connection.api.listener.KYNServiceConnection" />
     </application>
 
 </manifest>

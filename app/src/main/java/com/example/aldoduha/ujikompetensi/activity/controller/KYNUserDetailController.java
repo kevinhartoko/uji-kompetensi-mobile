@@ -27,6 +27,12 @@ public class KYNUserDetailController implements View.OnClickListener {
             case R.id.btnLanjut:
                 onButtonLanjutClicked();
                 break;
+            case R.id.btnHapus:
+                onButtonHapusClicked();
+                break;
+            case R.id.btnKembali:
+                onButtonKembaliClicked();
+                break;
             default:
                 break;
         }
@@ -37,5 +43,11 @@ public class KYNUserDetailController implements View.OnClickListener {
             activity.setResult(KYNIntentConstant.RESULT_CODE_USER_DETAIL);
             activity.finish();
         }
+    }
+    private void onButtonHapusClicked(){
+        activity.onButtonHapusClicked();
+    }
+    private void onButtonKembaliClicked(){
+        activity.onBackPressed();
     }
 }

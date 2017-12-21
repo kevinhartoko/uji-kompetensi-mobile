@@ -5,6 +5,7 @@ import android.view.View;
 import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
 import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.KYNQuestionDetailActivity;
+import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 /**
@@ -26,6 +27,12 @@ public class KYNQuestionDetailController implements View.OnClickListener {
             case R.id.btnLanjut:
                 onButtonLanjutClicked();
                 break;
+            case R.id.btnKembali:
+                onButtonKembaliClicked();
+                break;
+            case R.id.btnHapus:
+                onButtonHapusClicked();
+                break;
             default:
                 break;
         }
@@ -36,5 +43,12 @@ public class KYNQuestionDetailController implements View.OnClickListener {
             activity.setResult(KYNIntentConstant.RESULT_CODE_QUESTION_DETAIL);
             activity.finish();
         }
+    }
+    private void onButtonKembaliClicked(){
+        activity.onBackPressed();
+    }
+
+    private void onButtonHapusClicked(){
+        activity.onButtonHapusClicked();
     }
 }

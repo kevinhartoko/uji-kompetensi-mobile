@@ -32,6 +32,12 @@ public class KYNTemplateDetailController implements View.OnClickListener {
             case R.id.btnHapus:
                 activity.onHapusButtonClicked();
                 break;
+            case R.id.btnHapusTemplate:
+                onButtonHapusTemplateClicked();
+                break;
+            case R.id.btnKembali:
+                onButtonKembaliClicked();
+                break;
             default:
                 break;
         }
@@ -42,5 +48,11 @@ public class KYNTemplateDetailController implements View.OnClickListener {
             activity.setResult(KYNIntentConstant.RESULT_CODE_TEMPLATE_DETAIL);
             activity.finish();
         }
+    }
+    private void onButtonKembaliClicked(){
+        activity.onBackPressed();
+    }
+    private void onButtonHapusTemplateClicked(){
+        activity.onButtonHapusTemplateClicked();
     }
 }

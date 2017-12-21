@@ -82,7 +82,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hapus"
+                android:text="Kurang"
                 android:id="@+id/btnHapus"
                 android:layout_marginBottom="5dip"
                 android:textAllCaps="false"/>
@@ -98,10 +98,28 @@
                 android:textAllCaps="false"/>
             <Button
                 android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kembali"
+                android:id="@+id/btnKembali"
+                android:layout_marginBottom="5dip"
+                android:textAllCaps="false"/>
+            <Button
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hapus"
+                android:id="@+id/btnHapusTemplate"
+                android:layout_marginBottom="5dip"
+                android:textAllCaps="false"/>
+            <Button
+                android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lanjut"
+                android:text="Simpan"
                 android:id="@+id/btnLanjut"
                 android:layout_marginBottom="5dip"
                 android:textAllCaps="false"/>

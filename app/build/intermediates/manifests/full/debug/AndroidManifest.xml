@@ -70,6 +70,8 @@
             android:name="com.example.aldoduha.ujikompetensi.activity.KYNIntervieweeDetailActivity"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="stateHidden" />
+
+        <service android:name="com.example.aldoduha.ujikompetensi.connection.api.listener.KYNServiceConnection" />
     </application>
 
 </manifest>

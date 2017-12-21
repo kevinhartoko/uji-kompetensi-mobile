@@ -1,12 +1,13 @@
 package com.example.aldoduha.ujikompetensi.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by aldoduha on 10/9/2017.
  */
 
-public class KYNIntervieweeModel {
+public class KYNIntervieweeModel  implements Serializable {
     Long id;
     String nama;
     String email;

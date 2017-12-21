@@ -1,10 +1,12 @@
 package com.example.aldoduha.ujikompetensi.model;
 
+import java.io.Serializable;
+
 /**
  * Created by aldoduha on 11/5/2017.
  */
 
-public class KYNUserModel {
+public class KYNUserModel implements Serializable{
     private Long id;
     private String nama;
     private String username;

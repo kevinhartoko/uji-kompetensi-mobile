@@ -1,6 +1,7 @@
 package com.example.aldoduha.ujikompetensi.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -12,10 +13,12 @@ import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
 import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.controller.KYNHomeController;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
+import com.example.aldoduha.ujikompetensi.connection.api.listener.KYNServiceConnection;
 import com.example.aldoduha.ujikompetensi.model.KYNIntervieweeModel;
 import com.example.aldoduha.ujikompetensi.model.KYNQuestionModel;
 import com.example.aldoduha.ujikompetensi.model.KYNTemplateModel;
 import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
+import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 /**
  * Created by aldoduha on 10/14/2017.
@@ -47,6 +50,45 @@ public class KYNHomeActivity extends KYNBaseActivity {
 
     public void doLogout() {
         finish();
+//        showLoadingDialog(activity.getResources().getString(R.string.loading));
+//        KYNUserModel session = database.getSession();
+//        Intent intent = new Intent(this, KYNServiceConnection.class);
+//        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, session);
+//        intent.setAction(KYNIntentConstant.ACTION_LOGOUT);
+//        intent.addCategory(KYNIntentConstant.CATEGORY_LOGOUT);
+//        activity.startService(intent);
+    }
+
+    public void getUserList(){
+        showLoadingDialog(activity.getResources().getString(R.string.loading));
+        Intent intent = new Intent(this, KYNServiceConnection.class);
+        intent.setAction(KYNIntentConstant.ACTION_USER_LIST);
+        intent.addCategory(KYNIntentConstant.CATEGORY_USER_LIST);
+        activity.startService(intent);
+    }
+
+    public void getQuestionList(){
+        showLoadingDialog(activity.getResources().getString(R.string.loading));
+        Intent intent = new Intent(this, KYNServiceConnection.class);
+        intent.setAction(KYNIntentConstant.ACTION_QUESTION_LIST);
+        intent.addCategory(KYNIntentConstant.CATEGORY_QUESTION_LIST);
+        activity.startService(intent);
+    }
+
+    public void getTemplateList(){
+        showLoadingDialog(activity.getResources().getString(R.string.loading));
+        Intent intent = new Intent(this, KYNServiceConnection.class);
+        intent.setAction(KYNIntentConstant.ACTION_TEMPLATE_LIST);
+        intent.addCategory(KYNIntentConstant.CATEGORY_TEMPLATE_LIST);
+        activity.startService(intent);
+    }
+
+    public void getIntervieweeList(){
+        showLoadingDialog(activity.getResources().getString(R.string.loading));
+        Intent intent = new Intent(this, KYNServiceConnection.class);
+        intent.setAction(KYNIntentConstant.ACTION_INTERVIEWEE_LIST);
+        intent.addCategory(KYNIntentConstant.CATEGORY_INTERVIEWEE_LIST);
+        activity.startService(intent);
     }
 
     KYNConfirmationAlertDialogListener listener = new KYNConfirmationAlertDialogListener() {

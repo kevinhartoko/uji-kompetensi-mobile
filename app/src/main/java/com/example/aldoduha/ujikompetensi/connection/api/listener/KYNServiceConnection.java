@@ -10,7 +10,9 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
 import com.example.aldoduha.ujikompetensi.connection.api.KYNAPILogin;
+import com.example.aldoduha.ujikompetensi.connection.api.KYNAPILogout;
 import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPILoginListener;
+import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPILogoutListener;
 import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
@@ -65,6 +67,8 @@ public class KYNServiceConnection extends Service {
 
         if (intent.getAction().equals(KYNIntentConstant.ACTION_LOGIN)) {
             requestLogin(intent);
+        }else if (intent.getAction().equals(KYNIntentConstant.ACTION_LOGOUT)) {
+            requestLogout(intent);
         }
 
         return super.onStartCommand(intent, flags, startId);
@@ -76,6 +80,14 @@ public class KYNServiceConnection extends Service {
         KYNAPILogin requestLogin = new KYNAPILogin(getApplicationContext(), new KYNAPILoginListener());
         requestLogin.setData(userModel);
         requestLogin.execute();
+    }
+
+    private void requestLogout(Intent intent){
+        KYNUserModel userModel = (KYNUserModel)intent.getSerializableExtra(KYNIntentConstant.INTENT_EXTRA_DATA);
+
+        KYNAPILogout requestLogout = new KYNAPILogout(getApplicationContext(), new KYNAPILogoutListener());
+        requestLogout.setData(userModel);
+        requestLogout.execute();
     }
 
 //    private void startTimeCounterForClearData(){

@@ -106,7 +106,7 @@ public class KYNLoginActivity extends KYNBaseActivity {
     }
 
     public void doLogin(){
-        showLoadingDialog("Harap tunggu...");
+        showLoadingDialog(getResources().getString(R.string.loading));
         controller.doLogin();
     }
     public void hideKeyBoard(){

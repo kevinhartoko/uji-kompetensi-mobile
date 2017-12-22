@@ -48,6 +48,8 @@ public class KYNSMPUtilities {
 
     public static String appIdLogin = "rfb.app.eform.login";
     public static String appIdLoginRest = "eformws/rest/user/login";
+    public static String appIdLogout = "rfb.app.eform.logout";
+    public static String appIdLogoutRest = "eformws/rest/user/logout";
     
     public static String secConfig = "";
     public static String appId = "";

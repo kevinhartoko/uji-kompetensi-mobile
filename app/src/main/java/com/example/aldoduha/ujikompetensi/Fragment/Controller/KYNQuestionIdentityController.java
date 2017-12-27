@@ -28,6 +28,7 @@ public class KYNQuestionIdentityController implements View.OnClickListener {
     public KYNQuestionIdentityController(KYNQuestionFormIdentityFragment fragment) {
         this.fragment = fragment;
         this.database = new KYNDatabaseHelper(fragment.getActivity());
+        fragment.initiateTemplate();
     }
 
     private KYNDatePickerDialogListener listener = new KYNDatePickerDialogListener() {

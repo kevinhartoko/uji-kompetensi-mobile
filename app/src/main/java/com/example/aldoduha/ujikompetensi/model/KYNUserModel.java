@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 public class KYNUserModel implements Serializable{
     private Long id;
+    private Long serverId;
     private String nama;
     private String username;
     private String password;
@@ -60,5 +61,13 @@ public class KYNUserModel implements Serializable{
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public Long getServerId() {
+        return serverId;
+    }
+
+    public void setServerId(Long serverId) {
+        this.serverId = serverId;
     }
 }

@@ -7,10 +7,11 @@ import java.io.Serializable;
  */
 
 public class KYNFeedbackModel implements Serializable {
-    Long id;
-    String description;
-    String name;
-    KYNIntervieweeModel intervieweeModel;
+    private Long id;
+    private Long serverId;
+    private String description;
+    private String name;
+    private KYNIntervieweeModel intervieweeModel;
 
     public Long getId() {
         return id;
@@ -42,5 +43,13 @@ public class KYNFeedbackModel implements Serializable {
 
     public void setIntervieweeModel(KYNIntervieweeModel intervieweeModel) {
         this.intervieweeModel = intervieweeModel;
+    }
+
+    public Long getServerId() {
+        return serverId;
+    }
+
+    public void setServerId(Long serverId) {
+        this.serverId = serverId;
     }
 }

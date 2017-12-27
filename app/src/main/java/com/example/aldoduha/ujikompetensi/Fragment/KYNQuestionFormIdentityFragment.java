@@ -1,6 +1,5 @@
 package com.example.aldoduha.ujikompetensi.Fragment;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,23 +7,29 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.aldoduha.ujikompetensi.Fragment.Controller.KYNQuestionIdentityController;
 import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
 import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.KYNQuestionFormActivity;
-import com.example.aldoduha.ujikompetensi.activity.controller.KYNQuestionFormIdentityController;
 import com.example.aldoduha.ujikompetensi.alertDialog.KYNDatePickerDialog;
-import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNDatePickerDialogListener;
+import com.example.aldoduha.ujikompetensi.connection.api.listener.KYNServiceConnection;
 import com.example.aldoduha.ujikompetensi.model.KYNIntervieweeModel;
+import com.example.aldoduha.ujikompetensi.model.KYNTemplateModel;
+import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
+import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by aldoduha on 10/26/2017.
@@ -46,6 +51,9 @@ public class KYNQuestionFormIdentityFragment extends KYNBaseFragment {
     private RadioButton radioLakilaki;
     private RadioButton radioPerempuan;
     private TextView genderErrorTextView;
+    private Spinner templateSpinner;
+    private ArrayAdapter adapter;
+    private TextView templateErrorMessage;
 
     @Nullable
     @Override
@@ -72,12 +80,14 @@ public class KYNQuestionFormIdentityFragment extends KYNBaseFragment {
         radioLakilaki = (RadioButton)view.findViewById(R.id.radioLakilaki);
         radioPerempuan = (RadioButton)view.findViewById(R.id.radioPerempuan);
         genderErrorTextView = (TextView)view.findViewById(R.id.genderErrorTextview);
+        templateSpinner = (Spinner)view.findViewById(R.id.templateSpinner);
+        templateErrorMessage = (TextView)view.findViewById(R.id.template_error_message);
     }
     private void initiateDefaultValue(){
         activity = (KYNQuestionFormActivity)getActivity();
+        database = new KYNDatabaseHelper(activity);
         controller = new KYNQuestionIdentityController(this);
         intervieweeModel = activity.getIntervieweeModel();
-        database = new KYNDatabaseHelper(activity);
         buttonLanjut.setOnClickListener(controller);
         textViewDOB.setOnClickListener(controller);
     }
@@ -134,6 +144,19 @@ public class KYNQuestionFormIdentityFragment extends KYNBaseFragment {
         }
     }
 
+    public void generateQuestion(){
+        String template = templateSpinner.getSelectedItem().toString();
+
+        activity.showLoadingDialog(activity.getResources().getString(R.string.loading));
+        KYNUserModel session = database.getSession();
+        Intent intent = new Intent(activity, KYNServiceConnection.class);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, session);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_STRING, template);
+        intent.setAction(KYNIntentConstant.ACTION_GENERATE_QUESTION);
+        intent.addCategory(KYNIntentConstant.CATEGORY_GENERATE_QEUSTION);
+        activity.startService(intent);
+    }
+
     public boolean validate(){
         boolean result = true;
         String nama = editTextNama.getText().toString();
@@ -141,6 +164,8 @@ public class KYNQuestionFormIdentityFragment extends KYNBaseFragment {
         String handphone = editTextHandphone.getText().toString();
         String address = editTextAddress.getText().toString();
         String dob = textViewDOB.getText().toString();
+        String template = templateSpinner.getSelectedItem().toString();
+
         editTextNama.setError(null);
         editTextEmail.setError(null);
         editTextHandphone.setError(null);
@@ -172,7 +197,25 @@ public class KYNQuestionFormIdentityFragment extends KYNBaseFragment {
         }else{
             genderErrorTextView.setVisibility(View.GONE);
         }
+        if(template==null||template.equals("")||template.equalsIgnoreCase("pilih")){
+            templateErrorMessage.setVisibility(View.VISIBLE);
+            result=false;
+        }else{
+            templateErrorMessage.setVisibility(View.GONE);
+        }
         return result;
+    }
+
+    public void initiateTemplate(){
+        List<String> listTemplate = new ArrayList<>();
+        listTemplate.add("Pilih");
+        List<KYNTemplateModel> models = database.getTemplateList();
+        for (KYNTemplateModel model : models){
+            listTemplate.add(model.getNama());
+        }
+        adapter = new ArrayAdapter(activity, android.R.layout.simple_spinner_dropdown_item, listTemplate);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        templateSpinner.setAdapter(adapter);
     }
 
     public void showDialog(KYNDatePickerDialogListener listener, String headerTitle, String date){

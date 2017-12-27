@@ -83,7 +83,7 @@ public class KYNLoginController implements View.OnClickListener, View.OnKeyListe
         this.database = KYNDatabaseHelper.getInstance(activity);
     }
 
-    public void onDestory(){
+    public void onDestroy(){
         unregisterLocalBroadCastReceiver();
         if(database != null)
             database.close();

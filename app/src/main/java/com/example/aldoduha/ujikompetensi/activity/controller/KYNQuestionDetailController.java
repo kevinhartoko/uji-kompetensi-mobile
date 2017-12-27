@@ -1,9 +1,16 @@
 package com.example.aldoduha.ujikompetensi.activity.controller;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 
 import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
 import com.example.aldoduha.ujikompetensi.R;
+import com.example.aldoduha.ujikompetensi.activity.KYNLoginActivity;
 import com.example.aldoduha.ujikompetensi.activity.KYNQuestionDetailActivity;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
@@ -16,10 +23,40 @@ public class KYNQuestionDetailController implements View.OnClickListener {
     private KYNQuestionDetailActivity activity;
     private KYNDatabaseHelper database;
 
+    private BroadcastReceiver localBroadCastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            activity.dismisLoadingDialog();
+            if (action.equals(KYNIntentConstant.ACTION_SUBMIT_QUESTION)) {
+                Bundle bundle = intent.getExtras();
+                int code = bundle.getInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_FAILED);
+                String message = bundle .getString(KYNIntentConstant.BUNDLE_KEY_MESSAGE);
+
+                if(code==KYNIntentConstant.CODE_FAILED ||
+                        code==KYNIntentConstant.CODE_SUBMIT_QUESTION_FAILED){
+                    if(message!=null && !message.equals(""))
+                        activity.showAlertDialog("Error", message);
+                    else
+                        activity.showAlertDialog("Error", "Gagal Submit Question");
+                }else if(code==KYNIntentConstant.CODE_FAILED_TOKEN){
+                    activity.showErrorTokenDialog();
+                }else if(code==KYNIntentConstant.CODE_SUBMIT_QUESTION_SUCCESS){
+                    activity.finish();
+                }
+            }
+        }
+    };
+
     public KYNQuestionDetailController(KYNQuestionDetailActivity activity){
         this.activity = activity;
         this.database = new KYNDatabaseHelper(activity);
         activity.setValuesToView();
+        registerLocalBroadCastReceiver();
+    }
+
+    public void onDestroy(){
+        unregisterLocalBroadCastReceiver();
     }
     @Override
     public void onClick(View v) {
@@ -50,5 +87,16 @@ public class KYNQuestionDetailController implements View.OnClickListener {
 
     private void onButtonHapusClicked(){
         activity.onButtonHapusClicked();
+    }
+
+    public void registerLocalBroadCastReceiver(){
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(KYNIntentConstant.ACTION_SUBMIT_QUESTION);
+        intentFilter.addCategory(KYNIntentConstant.CATEGORY_SUBMIT_QUESTION);
+        LocalBroadcastManager.getInstance(activity.getApplicationContext()).registerReceiver(localBroadCastReceiver, intentFilter);
+    }
+
+    public void unregisterLocalBroadCastReceiver(){
+        LocalBroadcastManager.getInstance(activity.getApplicationContext()).unregisterReceiver(localBroadCastReceiver);
     }
 }

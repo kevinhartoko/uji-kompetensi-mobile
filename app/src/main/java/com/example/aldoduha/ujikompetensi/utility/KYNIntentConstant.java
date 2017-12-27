@@ -4,11 +4,12 @@ package com.example.aldoduha.ujikompetensi.utility;
  * Created by aldoduha on 10/9/2017.
  */
 
-public class KYNIntentConstant {
+public class    KYNIntentConstant {
     public static String SSL_PUBLIC_KEY;
     public static String SSL_CHECK_SUM;
     public static final boolean isUseGateway = true;
     public static boolean needSS = false;
+    public static final String DATE_FORMAT = "dd-MM-yyyy";
 
     public static final String BUNDLE_KEY_LOADING_SHOW = "loading_show";
     public static final String BUNDLE_KEY_ALERT_SHOW = "alert_show";
@@ -22,6 +23,8 @@ public class KYNIntentConstant {
 
     public static final String INTENT_EXTRA_CODE = "code";
     public static final String INTENT_EXTRA_DATA = "data";
+    public static final String INTENT_EXTRA_USERNAME = "username";
+    public static final String INTENT_EXTRA_STRING = "string";
 
     //action
     public static final String ACTION_LOGIN = "login";
@@ -39,7 +42,7 @@ public class KYNIntentConstant {
     public static final String ACTION_SUBMIT_USER = "submit_user";
     public static final String ACTION_SUBMIT_TEMPLATE = "submit_template";
     public static final String ACTION_SUBMIT_FEEDBACK = "submit_feedback";
-    public static final String ACTION_GENERATE_QEUSTION = "generate_question";
+    public static final String ACTION_GENERATE_QUESTION = "generate_question";
 
     //category
     public static final String CATEGORY_LOGIN = "category_login";

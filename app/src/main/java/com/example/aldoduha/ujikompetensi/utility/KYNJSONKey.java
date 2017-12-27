@@ -53,4 +53,7 @@ public class KYNJSONKey {
     public static String KEY_USER_NAME = "name";
     public static String KEY_USER_PASSWORD = "password";
     public static String KEY_USER_ROLE = "role";
+
+    //generate question
+    public static String KEY_TEMPLATE = "template";
 }

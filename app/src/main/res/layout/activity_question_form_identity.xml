@@ -39,6 +39,7 @@
             android:text="Jenis Kelamin haru dipilih"
             android:textColor="@color/red"
             android:gravity="right"
+            android:textSize="12sp"
             android:visibility="gone"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -118,7 +119,7 @@
                 android:layout_weight="0.3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Address"
+                android:text="Alamat"
                 android:textColor="#FF000000"
                 android:layout_marginLeft="5dp"/>
             <EditText
@@ -140,7 +141,7 @@
                 android:layout_weight="0.3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="DOB :"
+                android:text="Tanggal Lahir :"
                 android:textColor="#FF000000"
                 android:layout_marginLeft="5dp"/>
             <TextView
@@ -152,18 +153,51 @@
                 android:inputType="number"
                 android:background="@drawable/edittext_style"/>
         </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:text="*Template diisi oleh interviewer"/>
+        <TextView
+            android:id="@+id/template_error_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/red"
+            android:gravity="right"
+            android:textSize="12sp"
+            android:text="Template Harus Dipilih"
+            android:visibility="gone"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip">
+            <TextView
+                android:layout_weight="0.3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Template :"
+                android:textColor="#FF000000"
+                android:layout_marginLeft="5dp"/>
+            <Spinner
+                android:id="@+id/templateSpinner"
+                android:layout_width="0dp"
+                android:layout_height="23dip"
+                android:textColor="#FF000000"
+                android:layout_weight="0.7"
+                android:background="@drawable/edittext_style"/>
+        </LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <Button
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lanjut"
+                android:text="Mulai"
                 android:id="@+id/btnLanjut"
-                android:layout_marginBottom="5dip"
-                android:textAllCaps="false"/>
+                android:layout_marginBottom="7dp"
+                android:textAllCaps="false"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true" />
         </RelativeLayout>
     </LinearLayout>
 

@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 public class KYNTemplateQuestionModel  implements Serializable {
     private Long id;
+    private Long serverId;
     private int jumlahSoal;
     private int bobot;
     private KYNTemplateModel templateModel;
@@ -42,5 +43,13 @@ public class KYNTemplateQuestionModel  implements Serializable {
 
     public void setTemplateModel(KYNTemplateModel templateModel) {
         this.templateModel = templateModel;
+    }
+
+    public Long getServerId() {
+        return serverId;
+    }
+
+    public void setServerId(Long serverId) {
+        this.serverId = serverId;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.aldoduha.ujikompetensi.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.WindowManager;
@@ -11,7 +12,9 @@ import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
 import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.controller.KYNQuestionDetailController;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
+import com.example.aldoduha.ujikompetensi.connection.api.listener.KYNServiceConnection;
 import com.example.aldoduha.ujikompetensi.model.KYNQuestionModel;
+import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 /**
@@ -45,6 +48,8 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
     }
     @Override
     protected void onDestroy() {
+        if(controller!=null)
+            controller.onDestroy();
         super.onDestroy();
     }
 
@@ -201,6 +206,17 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
 
         }
     };
+
+    public void submitQuestion(KYNQuestionModel model){
+        showLoadingDialog(getResources().getString(R.string.loading));
+        KYNUserModel session = database.getSession();
+        Intent intent = new Intent(this, KYNServiceConnection.class);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, model);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME, session.getUsername());
+        intent.setAction(KYNIntentConstant.ACTION_SUBMIT_QUESTION);
+        intent.addCategory(KYNIntentConstant.CATEGORY_SUBMIT_QUESTION);
+        startService(intent);
+    }
 
     public void onButtonHapusClicked(){
         showConfirmationAlertDialog("Apakah anda yakin ingin menhapus pertanyaan ini?", listenerHapus);

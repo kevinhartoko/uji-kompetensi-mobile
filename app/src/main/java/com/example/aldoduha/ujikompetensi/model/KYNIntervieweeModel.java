@@ -8,13 +8,14 @@ import java.util.Date;
  */
 
 public class KYNIntervieweeModel  implements Serializable {
-    Long id;
-    String nama;
-    String email;
-    String handphone;
-    String address;
-    Date dob;
-    String gender;
+    private Long id;
+    private Long serverId;
+    private String nama;
+    private String email;
+    private String handphone;
+    private String address;
+    private Date dob;
+    private String gender;
 
     public Long getId() {
         return id;
@@ -70,5 +71,13 @@ public class KYNIntervieweeModel  implements Serializable {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public Long getServerId() {
+        return serverId;
+    }
+
+    public void setServerId(Long serverId) {
+        this.serverId = serverId;
     }
 }

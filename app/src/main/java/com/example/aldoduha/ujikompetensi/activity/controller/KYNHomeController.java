@@ -3,7 +3,9 @@ package com.example.aldoduha.ujikompetensi.activity.controller;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 
 import com.example.aldoduha.ujikompetensi.R;
@@ -41,9 +43,14 @@ public class KYNHomeController implements View.OnClickListener {
         }
     };
 
+    public void onDestroy(){
+        unregisterLocalBroadCastReceiver();
+    }
+
     public KYNHomeController(KYNHomeActivity activity) {
         this.activity = activity;
         getView();
+        registerLocalBroadCastReceiver();
     }
 
     public void getView() {
@@ -204,5 +211,23 @@ public class KYNHomeController implements View.OnClickListener {
             Intent intentList = new Intent(activity, KYNIntervieweeListActivity.class);
             activity.startActivity(intentList);
         }
+    }
+    public void registerLocalBroadCastReceiver(){
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(KYNIntentConstant.ACTION_LOGOUT);
+        intentFilter.addAction(KYNIntentConstant.ACTION_USER_LIST);
+        intentFilter.addAction(KYNIntentConstant.ACTION_TEMPLATE_LIST);
+        intentFilter.addAction(KYNIntentConstant.ACTION_QUESTION_LIST);
+        intentFilter.addAction(KYNIntentConstant.ACTION_INTERVIEWEE_LIST);
+        intentFilter.addCategory(KYNIntentConstant.CATEGORY_LOGOUT);
+        intentFilter.addCategory(KYNIntentConstant.CATEGORY_USER_LIST);
+        intentFilter.addCategory(KYNIntentConstant.CATEGORY_TEMPLATE_LIST);
+        intentFilter.addCategory(KYNIntentConstant.CATEGORY_QUESTION_LIST);
+        intentFilter.addCategory(KYNIntentConstant.CATEGORY_INTERVIEWEE_LIST);
+        LocalBroadcastManager.getInstance(activity.getApplicationContext()).registerReceiver(localBroadCastReceiver, intentFilter);
+    }
+
+    public void unregisterLocalBroadCastReceiver(){
+        LocalBroadcastManager.getInstance(activity.getApplicationContext()).unregisterReceiver(localBroadCastReceiver);
     }
 }

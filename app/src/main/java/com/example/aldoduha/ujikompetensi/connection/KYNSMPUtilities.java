@@ -50,6 +50,20 @@ public class KYNSMPUtilities {
     public static String appIdLoginRest = "eformws/rest/user/login";
     public static String appIdLogout = "rfb.app.eform.logout";
     public static String appIdLogoutRest = "eformws/rest/user/logout";
+    public static String appIdUserList = "rfb.app.eform.userlist";
+    public static String appIdUserListRest = "eformws/rest/user/userlist";
+    public static String appIdQuestionList = "rfb.app.eform.questionlist";
+    public static String appIdQuestionListRest = "eformws/rest/user/questionlist";
+    public static String appIdTemplateList = "rfb.app.eform.templatelist";
+    public static String appIdTemplateListRest = "eformws/rest/user/templatelist";
+    public static String appIdIntervieweeList = "rfb.app.eform.intervieweelist";
+    public static String appIdIntervieweeListRest = "eformws/rest/user/intervieweelist";
+    public static String appIdGenerateQuestion = "rfb.app.eform.generatequestion";
+    public static String appIdGenerateQuestionRest = "eformws/rest/user/generatequestion";
+    public static String appIdSubmitQuestion = "rfb.app.eform.submitquestion";
+    public static String appIdSubmitQuestionRest = "eformws/rest/user/submitquestion";
+    public static String appIdSubmitUser = "rfb.app.eform.submituser";
+    public static String appIdSubmitUserRest = "eformws/rest/user/submituser";
     
     public static String secConfig = "";
     public static String appId = "";

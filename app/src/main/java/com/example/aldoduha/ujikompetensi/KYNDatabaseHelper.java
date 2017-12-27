@@ -40,6 +40,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
 
     //interviewee
     private static final String INTERVIEWEE_ID = "id";
+    private static final String INTERVIEWEE_SERVER_ID = "serverId";
     private static final String INTERVIEWEE_NAMA = "nama";
     private static final String INTERVIEWEE_EMAIL = "email";
     private static final String INTERVIEWEE_HANDPHONE = "handphone";
@@ -49,6 +50,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
 
     //question
     private static final String QUESTION_ID = "id";
+    private static final String QUESTION_SERVER_ID = "serverId";
     private static final String QUESTION_FK_INTERVIEWEE = "fk_interviewee";
     private static final String QUESTION_NAME = "name";
     private static final String QUESTION_QUESTION = "question";
@@ -62,6 +64,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
 
     //user
     private static final String USER_ID = "id";
+    private static final String USER_SERVER_ID = "serverId";
     private static final String USER_NAMA = "nama";
     private static final String USER_USERNAME = "username";
     private static final String USER_ROLE = "role";
@@ -77,17 +80,20 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
 
     //template
     private static final String TEMPLATE_ID = "id";
+    private static final String TEMPLATE_SERVER_ID = "serverId";
     private static final String TEMPLATE_NAMA = "nama";
     private static final String TEMPLATE_JUMLAH_SOAL = "jumlah_soal";
 
     //template question
     private static final String TEMPLATE_QUESTION_ID = "id";
+    private static final String TEMPLATE_QUESTION_SERVER_ID = "serverId";
     private static final String TEMPLATE_QUESTION_FK_TEMPLATE = "fk_template";
     private static final String TEMPLATE_QUESTION_JUMLAH_SOAL = "jumlah_soal";
     private static final String TEMPLATE_QUESTION_BOBOT = "bobot";
 
     //feedback
     private static final String FEEDBACK_ID = "id";
+    private static final String FEEDBACK_SERVER_ID = "serverId";
     private static final String FEEDBACK_DESCRIPTION = "description";
     private static final String FEEDBACK_NAME = "name";
     private static final String FEEDBACK_FK_INTERVIEWEE = "fk_interviewee";
@@ -95,6 +101,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
     private static final String QUERY_CREATE_TABLE_INTERVIEWEE =
             "CREATE TABLE " + TABLE_INTERVIEWEE + " (" +
                     INTERVIEWEE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    INTERVIEWEE_SERVER_ID + " INTEGER, " +
                     INTERVIEWEE_NAMA + " TEXT, " +
                     INTERVIEWEE_EMAIL + " TEXT, " +
                     INTERVIEWEE_HANDPHONE + " TEXT, " +
@@ -106,6 +113,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + TABLE_QUESTION + " (" +
                     QUESTION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     QUESTION_FK_INTERVIEWEE + " INTEGER, " +
+                    QUESTION_SERVER_ID + " INTEGER, " +
                     QUESTION_NAME + " TEXT, " +
                     QUESTION_QUESTION + " TEXT, " +
                     QUESTION_ANSWER_1 + " TEXT, " +
@@ -119,6 +127,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
     private static final String QUERY_CREATE_TABLE_USER =
             "CREATE TABLE " + TABLE_USER + " (" +
                     USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    USER_SERVER_ID + " INTEGER, " +
                     USER_NAMA + " TEXT, " +
                     USER_USERNAME + " TEXT, " +
                     USER_PASSWORD + " TEXT, " +
@@ -136,6 +145,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
     private static final String QUERY_CREATE_TABLE_TEMPLATE =
             "CREATE TABLE " + TABLE_TEMPLATE + " (" +
                     TEMPLATE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    TEMPLATE_SERVER_ID + " INTEGER, " +
                     TEMPLATE_NAMA + " TEXT, " +
                     TEMPLATE_JUMLAH_SOAL + " NUMERIC);";
 
@@ -149,6 +159,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
     private static final String QUERY_CREATE_TABLE_FEEDBACK =
             "CREATE TABLE " + TABLE_FEEDBACK + " (" +
                     FEEDBACK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    FEEDBACK_SERVER_ID + " INTEGER, " +
                     FEEDBACK_FK_INTERVIEWEE + " INTEGER, " +
                     FEEDBACK_DESCRIPTION + " TEXT, " +
                     FEEDBACK_NAME + " TEXT);";
@@ -242,6 +253,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
         try {
             db.beginTransaction();
             ContentValues values = new ContentValues();
+            values.put(INTERVIEWEE_SERVER_ID, model.getServerId());
             values.put(INTERVIEWEE_NAMA, model.getNama());
             values.put(INTERVIEWEE_EMAIL, model.getEmail());
             values.put(INTERVIEWEE_HANDPHONE, model.getHandphone());
@@ -277,6 +289,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
         try {
             db.beginTransaction();
             ContentValues values = new ContentValues();
+            values.put(QUESTION_SERVER_ID, model.getServerId());
             values.put(QUESTION_NAME, model.getName());
             values.put(QUESTION_QUESTION, model.getQuestion());
             values.put(QUESTION_ANSWER_1, model.getAnswer1());
@@ -315,6 +328,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
         try {
             db.beginTransaction();
             ContentValues values = new ContentValues();
+            values.put(USER_SERVER_ID, model.getServerId());
             values.put(USER_NAMA, model.getNama());
             values.put(USER_USERNAME, model.getUsername());
             values.put(USER_PASSWORD, model.getPassword());
@@ -376,6 +390,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
         try {
             db.beginTransaction();
             ContentValues values = new ContentValues();
+            values.put(TEMPLATE_SERVER_ID, model.getServerId());
             values.put(TEMPLATE_NAMA, model.getNama());
             values.put(TEMPLATE_JUMLAH_SOAL, model.getJumlahSoal());
 
@@ -433,6 +448,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
         try {
             db.beginTransaction();
             ContentValues values = new ContentValues();
+            values.put(FEEDBACK_SERVER_ID, model.getServerId());
             values.put(FEEDBACK_DESCRIPTION, model.getDescription());
             values.put(FEEDBACK_NAME, model.getName());
             values.put(FEEDBACK_FK_INTERVIEWEE, model.getIntervieweeModel().getId());
@@ -461,6 +477,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
             db.beginTransaction();
             ContentValues values = new ContentValues();
 
+            values.put(INTERVIEWEE_SERVER_ID, model.getServerId());
             values.put(INTERVIEWEE_NAMA, model.getNama());
             values.put(INTERVIEWEE_EMAIL, model.getEmail());
             values.put(INTERVIEWEE_HANDPHONE, model.getHandphone());
@@ -490,6 +507,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
             db.beginTransaction();
             ContentValues values = new ContentValues();
 
+            values.put(QUESTION_SERVER_ID, model.getServerId());
             values.put(QUESTION_NAME, model.getName());
             values.put(QUESTION_QUESTION, model.getQuestion());
             values.put(QUESTION_ANSWER_1, model.getAnswer1());
@@ -557,6 +575,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
             db.beginTransaction();
             ContentValues values = new ContentValues();
 
+            values.put(USER_SERVER_ID, model.getServerId());
             values.put(USER_NAMA, model.getNama());
             values.put(USER_USERNAME, model.getUsername());
             values.put(USER_PASSWORD, model.getPassword());
@@ -604,6 +623,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
             db.beginTransaction();
             ContentValues values = new ContentValues();
 
+            values.put(TEMPLATE_SERVER_ID, model.getServerId());
             values.put(TEMPLATE_NAMA, model.getNama());
             values.put(TEMPLATE_JUMLAH_SOAL, model.getJumlahSoal());
 
@@ -625,6 +645,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
         try {
             if (mCursor.moveToFirst()) {
                 result.setId(mCursor.getLong(mCursor.getColumnIndex(INTERVIEWEE_ID)));
+                result.setServerId(mCursor.getLong(mCursor.getColumnIndex(INTERVIEWEE_SERVER_ID)));
                 result.setNama(mCursor.getString(mCursor.getColumnIndex(INTERVIEWEE_NAMA)));
                 result.setEmail(mCursor.getString(mCursor.getColumnIndex(INTERVIEWEE_EMAIL)));
                 result.setAddress(mCursor.getString(mCursor.getColumnIndex(INTERVIEWEE_ADDRESS)));
@@ -654,6 +675,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
                 do {
                     KYNIntervieweeModel model = new KYNIntervieweeModel();
                     model.setId(mCursor.getLong(mCursor.getColumnIndex(INTERVIEWEE_ID)));
+                    model.setServerId(mCursor.getLong(mCursor.getColumnIndex(INTERVIEWEE_SERVER_ID)));
                     model.setNama(mCursor.getString(mCursor.getColumnIndex(INTERVIEWEE_NAMA)));
                     model.setEmail(mCursor.getString(mCursor.getColumnIndex(INTERVIEWEE_EMAIL)));
                     model.setAddress(mCursor.getString(mCursor.getColumnIndex(INTERVIEWEE_ADDRESS)));
@@ -683,6 +705,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
         try {
             if (mCursor.moveToFirst()) {
                 result.setId(mCursor.getLong(mCursor.getColumnIndex(QUESTION_ID)));
+                result.setServerId(mCursor.getLong(mCursor.getColumnIndex(QUESTION_SERVER_ID)));
                 result.setName(mCursor.getString(mCursor.getColumnIndex(QUESTION_NAME)));
                 result.setQuestion(mCursor.getString(mCursor.getColumnIndex(QUESTION_QUESTION)));
                 result.setAnswer1(mCursor.getString(mCursor.getColumnIndex(QUESTION_ANSWER_1)));
@@ -712,6 +735,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
                 do {
                     KYNQuestionModel model = new KYNQuestionModel();
                     model.setId(mCursor.getLong(mCursor.getColumnIndex(QUESTION_ID)));
+                    model.setServerId(mCursor.getLong(mCursor.getColumnIndex(QUESTION_SERVER_ID)));
                     model.setName(mCursor.getString(mCursor.getColumnIndex(QUESTION_NAME)));
                     model.setQuestion(mCursor.getString(mCursor.getColumnIndex(QUESTION_QUESTION)));
                     model.setAnswer1(mCursor.getString(mCursor.getColumnIndex(QUESTION_ANSWER_1)));
@@ -744,6 +768,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
                 do {
                     KYNQuestionModel model = new KYNQuestionModel();
                     model.setId(mCursor.getLong(mCursor.getColumnIndex(QUESTION_ID)));
+                    model.setServerId(mCursor.getLong(mCursor.getColumnIndex(QUESTION_SERVER_ID)));
                     model.setName(mCursor.getString(mCursor.getColumnIndex(QUESTION_NAME)));
                     model.setQuestion(mCursor.getString(mCursor.getColumnIndex(QUESTION_QUESTION)));
                     model.setAnswer1(mCursor.getString(mCursor.getColumnIndex(QUESTION_ANSWER_1)));
@@ -776,6 +801,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
                 do {
                     KYNUserModel model = new KYNUserModel();
                     model.setId(mCursor.getLong(mCursor.getColumnIndex(USER_ID)));
+                    model.setServerId(mCursor.getLong(mCursor.getColumnIndex(USER_SERVER_ID)));
                     model.setNama(mCursor.getString(mCursor.getColumnIndex(USER_NAMA)));
                     model.setUsername(mCursor.getString(mCursor.getColumnIndex(USER_USERNAME)));
                     model.setPassword(mCursor.getString(mCursor.getColumnIndex(USER_PASSWORD)));
@@ -800,6 +826,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
         try {
             if (mCursor.moveToFirst()) {
                 model.setId(mCursor.getLong(mCursor.getColumnIndex(USER_ID)));
+                model.setServerId(mCursor.getLong(mCursor.getColumnIndex(USER_SERVER_ID)));
                 model.setNama(mCursor.getString(mCursor.getColumnIndex(USER_NAMA)));
                 model.setUsername(mCursor.getString(mCursor.getColumnIndex(USER_USERNAME)));
                 model.setPassword(mCursor.getString(mCursor.getColumnIndex(USER_PASSWORD)));
@@ -843,6 +870,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
         try {
             if (mCursor.moveToFirst()) {
                 result.setId(mCursor.getLong(mCursor.getColumnIndex(TEMPLATE_ID)));
+                result.setServerId(mCursor.getLong(mCursor.getColumnIndex(TEMPLATE_SERVER_ID)));
                 result.setNama(mCursor.getString(mCursor.getColumnIndex(TEMPLATE_NAMA)));
                 result.setJumlahSoal(mCursor.getInt(mCursor.getColumnIndex(TEMPLATE_JUMLAH_SOAL)));
             }
@@ -864,6 +892,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
                 do {
                     KYNTemplateModel model = new KYNTemplateModel();
                     model.setId(mCursor.getLong(mCursor.getColumnIndex(TEMPLATE_ID)));
+                    model.setServerId(mCursor.getLong(mCursor.getColumnIndex(TEMPLATE_SERVER_ID)));
                     model.setNama(mCursor.getString(mCursor.getColumnIndex(TEMPLATE_NAMA)));
                     model.setJumlahSoal(mCursor.getInt(mCursor.getColumnIndex(TEMPLATE_JUMLAH_SOAL)));
 
@@ -913,6 +942,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
                 do {
                     KYNFeedbackModel model = new KYNFeedbackModel();
                     model.setId(mCursor.getLong(mCursor.getColumnIndex(FEEDBACK_ID)));
+                    model.setServerId(mCursor.getLong(mCursor.getColumnIndex(FEEDBACK_SERVER_ID)));
                     model.setDescription(mCursor.getString(mCursor.getColumnIndex(FEEDBACK_DESCRIPTION)));
                     model.setName(mCursor.getString(mCursor.getColumnIndex(FEEDBACK_NAME)));
                     model.setIntervieweeModel(getInterviewee(mCursor.getLong(mCursor.getColumnIndex(FEEDBACK_FK_INTERVIEWEE))));

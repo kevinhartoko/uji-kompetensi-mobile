@@ -7,17 +7,18 @@ import java.io.Serializable;
  */
 
 public class KYNQuestionModel  implements Serializable {
-    Long id;
-    String name;
-    String question;
-    String answer1;
-    String answer2;
-    String answer3;
-    String answer4;
-    String intervieweeAnswer;
-    String keyAnswer;
-    int bobot;
-    KYNIntervieweeModel intervieweeModel;
+    private Long id;
+    private Long serverId;
+    private String name;
+    private String question;
+    private String answer1;
+    private String answer2;
+    private String answer3;
+    private String answer4;
+    private String intervieweeAnswer;
+    private String keyAnswer;
+    private int bobot;
+    private KYNIntervieweeModel intervieweeModel;
 
     public Long getId() {
         return id;
@@ -105,5 +106,13 @@ public class KYNQuestionModel  implements Serializable {
 
     public void setBobot(int bobot) {
         this.bobot = bobot;
+    }
+
+    public Long getServerId() {
+        return serverId;
+    }
+
+    public void setServerId(Long serverId) {
+        this.serverId = serverId;
     }
 }

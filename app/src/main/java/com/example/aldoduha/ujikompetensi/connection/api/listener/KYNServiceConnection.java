@@ -9,10 +9,25 @@ import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
+import com.example.aldoduha.ujikompetensi.connection.api.KYNAPIGenerateQuestion;
+import com.example.aldoduha.ujikompetensi.connection.api.KYNAPIIntervieweeList;
 import com.example.aldoduha.ujikompetensi.connection.api.KYNAPILogin;
 import com.example.aldoduha.ujikompetensi.connection.api.KYNAPILogout;
+import com.example.aldoduha.ujikompetensi.connection.api.KYNAPIQuestionList;
+import com.example.aldoduha.ujikompetensi.connection.api.KYNAPISubmitQuestion;
+import com.example.aldoduha.ujikompetensi.connection.api.KYNAPISubmitUser;
+import com.example.aldoduha.ujikompetensi.connection.api.KYNAPITemplateList;
+import com.example.aldoduha.ujikompetensi.connection.api.KYNAPIUserList;
+import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPIGenerateQuestionListener;
+import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPIIntervieweeListListener;
 import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPILoginListener;
 import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPILogoutListener;
+import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPIQuestionListListener;
+import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPISubmitQuestionListener;
+import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPISubmitUserListener;
+import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPITemplateListListener;
+import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPIUserListListener;
+import com.example.aldoduha.ujikompetensi.model.KYNQuestionModel;
 import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
@@ -69,6 +84,20 @@ public class KYNServiceConnection extends Service {
             requestLogin(intent);
         }else if (intent.getAction().equals(KYNIntentConstant.ACTION_LOGOUT)) {
             requestLogout(intent);
+        }else if (intent.getAction().equals(KYNIntentConstant.ACTION_USER_LIST)) {
+            requestUserList(intent);
+        }else if (intent.getAction().equals(KYNIntentConstant.ACTION_QUESTION_LIST)) {
+            requestQuestionList(intent);
+        }else if (intent.getAction().equals(KYNIntentConstant.ACTION_TEMPLATE_LIST)) {
+            requestTemplateList(intent);
+        }else if (intent.getAction().equals(KYNIntentConstant.ACTION_INTERVIEWEE_LIST)) {
+            requestIntervieweeList(intent);
+        }else if (intent.getAction().equals(KYNIntentConstant.ACTION_GENERATE_QUESTION)) {
+            requestGenerateQuestion(intent);
+        }else if (intent.getAction().equals(KYNIntentConstant.ACTION_SUBMIT_QUESTION)) {
+            requestSubmitQuestion(intent);
+        }else if (intent.getAction().equals(KYNIntentConstant.ACTION_SUBMIT_USER)) {
+            requestSubmitUser(intent);
         }
 
         return super.onStartCommand(intent, flags, startId);
@@ -88,6 +117,65 @@ public class KYNServiceConnection extends Service {
         KYNAPILogout requestLogout = new KYNAPILogout(getApplicationContext(), new KYNAPILogoutListener());
         requestLogout.setData(userModel);
         requestLogout.execute();
+    }
+
+    private void requestUserList(Intent intent){
+        KYNUserModel userModel = (KYNUserModel)intent.getSerializableExtra(KYNIntentConstant.INTENT_EXTRA_DATA);
+
+        KYNAPIUserList requestUserList = new KYNAPIUserList(getApplicationContext(), new KYNAPIUserListListener());
+        requestUserList.setData(userModel);
+        requestUserList.execute();
+    }
+
+    private void requestQuestionList(Intent intent){
+        KYNUserModel userModel = (KYNUserModel)intent.getSerializableExtra(KYNIntentConstant.INTENT_EXTRA_DATA);
+
+        KYNAPIQuestionList requestQuestionList = new KYNAPIQuestionList(getApplicationContext(), new KYNAPIQuestionListListener());
+        requestQuestionList.setData(userModel);
+        requestQuestionList.execute();
+    }
+
+    private void requestTemplateList(Intent intent){
+        KYNUserModel userModel = (KYNUserModel)intent.getSerializableExtra(KYNIntentConstant.INTENT_EXTRA_DATA);
+
+        KYNAPITemplateList requestTemplateList = new KYNAPITemplateList(getApplicationContext(), new KYNAPITemplateListListener());
+        requestTemplateList.setData(userModel);
+        requestTemplateList.execute();
+    }
+
+    private void requestIntervieweeList(Intent intent){
+        KYNUserModel userModel = (KYNUserModel)intent.getSerializableExtra(KYNIntentConstant.INTENT_EXTRA_DATA);
+
+        KYNAPIIntervieweeList requestIntervieweeList = new KYNAPIIntervieweeList(getApplicationContext(), new KYNAPIIntervieweeListListener());
+        requestIntervieweeList.setData(userModel);
+        requestIntervieweeList.execute();
+    }
+
+    private void requestGenerateQuestion(Intent intent){
+        KYNUserModel userModel = (KYNUserModel)intent.getSerializableExtra(KYNIntentConstant.INTENT_EXTRA_DATA);
+        String template = intent.getStringExtra(KYNIntentConstant.INTENT_EXTRA_STRING);
+
+        KYNAPIGenerateQuestion requestGenerateQuestion = new KYNAPIGenerateQuestion(getApplicationContext(), new KYNAPIGenerateQuestionListener());
+        requestGenerateQuestion.setData(userModel, template);
+        requestGenerateQuestion.execute();
+    }
+
+    private void requestSubmitQuestion(Intent intent){
+        KYNQuestionModel questionModel = (KYNQuestionModel) intent.getSerializableExtra(KYNIntentConstant.INTENT_EXTRA_DATA);
+        String username = intent.getStringExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME);
+
+        KYNAPISubmitQuestion requestSubmitQuestion = new KYNAPISubmitQuestion(getApplicationContext(), new KYNAPISubmitQuestionListener());
+        requestSubmitQuestion.setData(username, questionModel);
+        requestSubmitQuestion.execute();
+    }
+
+    private void requestSubmitUser(Intent intent){
+        KYNUserModel userModel = (KYNUserModel) intent.getSerializableExtra(KYNIntentConstant.INTENT_EXTRA_DATA);
+        String username = intent.getStringExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME);
+
+        KYNAPISubmitUser requestSubmitUser = new KYNAPISubmitUser(getApplicationContext(), new KYNAPISubmitUserListener());
+        requestSubmitUser.setData(username, userModel);
+        requestSubmitUser.execute();
     }
 
 //    private void startTimeCounterForClearData(){

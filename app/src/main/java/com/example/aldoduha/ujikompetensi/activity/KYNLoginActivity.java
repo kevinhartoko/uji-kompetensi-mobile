@@ -41,6 +41,13 @@ public class KYNLoginActivity extends KYNBaseActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        if(controller!=null)
+            controller.onDestroy();
+        super.onDestroy();
+    }
+
+    @Override
     public void onBackPressed() {
         showExitConfirmationDialog();
     }

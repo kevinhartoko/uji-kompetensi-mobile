@@ -1,5 +1,6 @@
 package com.example.aldoduha.ujikompetensi.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.WindowManager;
@@ -15,6 +16,8 @@ import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
 import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.controller.KYNUserDetailController;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
+import com.example.aldoduha.ujikompetensi.connection.api.listener.KYNServiceConnection;
+import com.example.aldoduha.ujikompetensi.model.KYNQuestionModel;
 import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
@@ -49,6 +52,8 @@ public class KYNUserDetailActivity extends KYNBaseActivity{
     }
     @Override
     protected void onDestroy() {
+        if(controller!=null)
+            controller.onDestroy();
         super.onDestroy();
     }
 
@@ -138,6 +143,17 @@ public class KYNUserDetailActivity extends KYNBaseActivity{
         adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, listRole);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerRole.setAdapter(adapter);
+    }
+
+    public void submitUser(KYNUserModel model){
+        showLoadingDialog(getResources().getString(R.string.loading));
+        KYNUserModel session = database.getSession();
+        Intent intent = new Intent(this, KYNServiceConnection.class);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, model);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME, session.getUsername());
+        intent.setAction(KYNIntentConstant.ACTION_SUBMIT_USER);
+        intent.addCategory(KYNIntentConstant.CATEGORY_SUBMIT_USER);
+        startService(intent);
     }
 
     KYNConfirmationAlertDialogListener listener = new KYNConfirmationAlertDialogListener() {

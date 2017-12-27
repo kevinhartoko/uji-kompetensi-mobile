@@ -102,6 +102,7 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 23 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="gson-2.2.4" level="project" />
     <orderEntry type="library" exported="" name="maflogonimo-1.204.0" level="project" />
     <orderEntry type="library" exported="" name="maflogger-1.204.0" level="project" />
     <orderEntry type="library" exported="" name="Parser-3.4.0" level="project" />

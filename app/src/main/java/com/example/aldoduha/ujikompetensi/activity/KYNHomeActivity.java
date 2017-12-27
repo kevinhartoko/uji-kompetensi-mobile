@@ -48,6 +48,13 @@ public class KYNHomeActivity extends KYNBaseActivity {
         initDefaultValue();
     }
 
+    @Override
+    protected void onDestroy() {
+        if(controller!=null)
+            controller.onDestroy();
+        super.onDestroy();
+    }
+
     public void doLogout() {
         finish();
 //        showLoadingDialog(activity.getResources().getString(R.string.loading));
@@ -61,7 +68,9 @@ public class KYNHomeActivity extends KYNBaseActivity {
 
     public void getUserList(){
         showLoadingDialog(activity.getResources().getString(R.string.loading));
+        KYNUserModel session = database.getSession();
         Intent intent = new Intent(this, KYNServiceConnection.class);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, session);
         intent.setAction(KYNIntentConstant.ACTION_USER_LIST);
         intent.addCategory(KYNIntentConstant.CATEGORY_USER_LIST);
         activity.startService(intent);
@@ -69,7 +78,9 @@ public class KYNHomeActivity extends KYNBaseActivity {
 
     public void getQuestionList(){
         showLoadingDialog(activity.getResources().getString(R.string.loading));
+        KYNUserModel session = database.getSession();
         Intent intent = new Intent(this, KYNServiceConnection.class);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, session);
         intent.setAction(KYNIntentConstant.ACTION_QUESTION_LIST);
         intent.addCategory(KYNIntentConstant.CATEGORY_QUESTION_LIST);
         activity.startService(intent);
@@ -77,7 +88,9 @@ public class KYNHomeActivity extends KYNBaseActivity {
 
     public void getTemplateList(){
         showLoadingDialog(activity.getResources().getString(R.string.loading));
+        KYNUserModel session = database.getSession();
         Intent intent = new Intent(this, KYNServiceConnection.class);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, session);
         intent.setAction(KYNIntentConstant.ACTION_TEMPLATE_LIST);
         intent.addCategory(KYNIntentConstant.CATEGORY_TEMPLATE_LIST);
         activity.startService(intent);
@@ -85,7 +98,9 @@ public class KYNHomeActivity extends KYNBaseActivity {
 
     public void getIntervieweeList(){
         showLoadingDialog(activity.getResources().getString(R.string.loading));
+        KYNUserModel session = database.getSession();
         Intent intent = new Intent(this, KYNServiceConnection.class);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, session);
         intent.setAction(KYNIntentConstant.ACTION_INTERVIEWEE_LIST);
         intent.addCategory(KYNIntentConstant.CATEGORY_INTERVIEWEE_LIST);
         activity.startService(intent);

@@ -54,6 +54,7 @@ public class KYNQuestionFormQuestionFragment extends KYNBaseFragment {
     }
 
     private void initDefaultValue(){
+        buttonKembali.setVisibility(View.GONE);
         controller = new KYNQuestionQuestionController(this);
         database = new KYNDatabaseHelper(activity);
         buttonSubmit.setOnClickListener(controller);

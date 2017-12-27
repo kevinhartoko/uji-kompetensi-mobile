@@ -70,6 +70,13 @@ public class KYNQuestionFormIdentityFragment extends KYNBaseFragment {
         setValueToView();
     }
 
+    @Override
+    public void onPause() {
+        if(controller != null)
+            controller.unregisterLocalBroadCastReceiver();
+        super.onPause();
+    }
+
     private void loadview(){
         editTextNama = (EditText)view.findViewById(R.id.edittextNama);
         editTextEmail = (EditText)view.findViewById(R.id.edittextEmail);

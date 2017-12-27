@@ -1,6 +1,11 @@
 package com.example.aldoduha.ujikompetensi.Fragment.Controller;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 
 import com.example.aldoduha.ujikompetensi.Fragment.KYNQuestionFormIdentityFragment;
@@ -10,6 +15,7 @@ import com.example.aldoduha.ujikompetensi.activity.KYNQuestionFormActivity;
 import com.example.aldoduha.ujikompetensi.activity.KYNQuestionFormQuestionActivity;
 import com.example.aldoduha.ujikompetensi.activity.controller.KYNQuestionFormIdentityController;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNDatePickerDialogListener;
+import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,10 +31,36 @@ public class KYNQuestionIdentityController implements View.OnClickListener {
     private KYNQuestionFormIdentityFragment fragment;
     private KYNDatabaseHelper database;
 
+    private BroadcastReceiver localBroadCastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            fragment.getNewActivity().dismisLoadingDialog();
+            if (action.equals(KYNIntentConstant.ACTION_GENERATE_QUESTION)) {
+                Bundle bundle = intent.getExtras();
+                int code = bundle.getInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_FAILED);
+                String message = bundle .getString(KYNIntentConstant.BUNDLE_KEY_MESSAGE);
+
+                if(code==KYNIntentConstant.CODE_FAILED ||
+                        code==KYNIntentConstant.CODE_GENERATE_QUESTION_FAILED){
+                    if(message!=null && !message.equals(""))
+                        fragment.getNewActivity().showAlertDialog("Error", message);
+                    else
+                        fragment.getNewActivity().showAlertDialog("Error", "Gagal Generate Soal");
+                }else if(code==KYNIntentConstant.CODE_FAILED_TOKEN){
+                    fragment.getNewActivity().showErrorTokenDialog();
+                }else if(code==KYNIntentConstant.CODE_GENERATE_QUESTION_SUCCESS){
+                    fragment.getNewActivity().onNextButtonClicked(1);
+                }
+            }
+        }
+    };
+
     public KYNQuestionIdentityController(KYNQuestionFormIdentityFragment fragment) {
         this.fragment = fragment;
         this.database = new KYNDatabaseHelper(fragment.getActivity());
         fragment.initiateTemplate();
+        registerLocalBroadCastReceiver();
     }
 
     private KYNDatePickerDialogListener listener = new KYNDatePickerDialogListener() {
@@ -95,6 +127,17 @@ public class KYNQuestionIdentityController implements View.OnClickListener {
             fragment.setValueToModel();
             fragment.getNewActivity().onNextButtonClicked(1);
         }
+    }
+
+    public void registerLocalBroadCastReceiver(){
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(KYNIntentConstant.ACTION_GENERATE_QUESTION);
+        intentFilter.addCategory(KYNIntentConstant.CATEGORY_GENERATE_QEUSTION);
+        LocalBroadcastManager.getInstance(fragment.getNewActivity().getApplicationContext()).registerReceiver(localBroadCastReceiver, intentFilter);
+    }
+
+    public void unregisterLocalBroadCastReceiver(){
+        LocalBroadcastManager.getInstance(fragment.getNewActivity().getApplicationContext()).unregisterReceiver(localBroadCastReceiver);
     }
 }
 

@@ -60,7 +60,6 @@ public class KYNQuestionIdentityController implements View.OnClickListener {
         this.fragment = fragment;
         this.database = new KYNDatabaseHelper(fragment.getActivity());
         fragment.initiateTemplate();
-        registerLocalBroadCastReceiver();
     }
 
     private KYNDatePickerDialogListener listener = new KYNDatePickerDialogListener() {

@@ -13,6 +13,7 @@ public class KYNJSONKey {
     public static String KEY_RESULT = "result";
     public static String KEY_TOKEN = "token";
     public static String KEY_D = "d";
+    public static String KEY_INTERVIEWEE_SERVER_ID = "id";
 
     public static String VAL_SUCCESS = "success";
     public static String VAL_ERROR = "error";

@@ -68,6 +68,8 @@ public class KYNQuestionFormIdentityFragment extends KYNBaseFragment {
     public void onResume() {
         super.onResume();
         setValueToView();
+        if(controller != null)
+            controller.registerLocalBroadCastReceiver();
     }
 
     @Override

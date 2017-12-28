@@ -10,24 +10,35 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
 import com.example.aldoduha.ujikompetensi.connection.api.KYNAPIGenerateQuestion;
+import com.example.aldoduha.ujikompetensi.connection.api.KYNAPIIntervieweeDetail;
 import com.example.aldoduha.ujikompetensi.connection.api.KYNAPIIntervieweeList;
 import com.example.aldoduha.ujikompetensi.connection.api.KYNAPILogin;
 import com.example.aldoduha.ujikompetensi.connection.api.KYNAPILogout;
 import com.example.aldoduha.ujikompetensi.connection.api.KYNAPIQuestionList;
+import com.example.aldoduha.ujikompetensi.connection.api.KYNAPISubmitFeedback;
+import com.example.aldoduha.ujikompetensi.connection.api.KYNAPISubmitIntervieweeData;
 import com.example.aldoduha.ujikompetensi.connection.api.KYNAPISubmitQuestion;
+import com.example.aldoduha.ujikompetensi.connection.api.KYNAPISubmitTemplate;
 import com.example.aldoduha.ujikompetensi.connection.api.KYNAPISubmitUser;
 import com.example.aldoduha.ujikompetensi.connection.api.KYNAPITemplateList;
 import com.example.aldoduha.ujikompetensi.connection.api.KYNAPIUserList;
 import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPIGenerateQuestionListener;
+import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPIIntervieweeDetailListener;
 import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPIIntervieweeListListener;
 import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPILoginListener;
 import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPILogoutListener;
 import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPIQuestionListListener;
+import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPISubmitFeedbackListener;
+import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPISubmitIntervieweeDataListener;
 import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPISubmitQuestionListener;
+import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPISubmitTemplateListener;
 import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPISubmitUserListener;
 import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPITemplateListListener;
 import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPIUserListListener;
+import com.example.aldoduha.ujikompetensi.model.KYNFeedbackModel;
+import com.example.aldoduha.ujikompetensi.model.KYNIntervieweeModel;
 import com.example.aldoduha.ujikompetensi.model.KYNQuestionModel;
+import com.example.aldoduha.ujikompetensi.model.KYNTemplateModel;
 import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
@@ -98,6 +109,14 @@ public class KYNServiceConnection extends Service {
             requestSubmitQuestion(intent);
         }else if (intent.getAction().equals(KYNIntentConstant.ACTION_SUBMIT_USER)) {
             requestSubmitUser(intent);
+        }else if (intent.getAction().equals(KYNIntentConstant.ACTION_SUBMIT_TEMPLATE)) {
+            requestSubmitTemplate(intent);
+        }else if (intent.getAction().equals(KYNIntentConstant.ACTION_SUBMIT_FEEDBACK)) {
+            requestSubmitFeedback(intent);
+        }else if (intent.getAction().equals(KYNIntentConstant.ACTION_SUBMIT_INTERVIEWEE_DATA)) {
+            requestSubmitIntervieweeData(intent);
+        }else if (intent.getAction().equals(KYNIntentConstant.ACTION_INTERVIEWEE_DETAIL)) {
+            requestIntervieweeDetail(intent);
         }
 
         return super.onStartCommand(intent, flags, startId);
@@ -176,6 +195,42 @@ public class KYNServiceConnection extends Service {
         KYNAPISubmitUser requestSubmitUser = new KYNAPISubmitUser(getApplicationContext(), new KYNAPISubmitUserListener());
         requestSubmitUser.setData(username, userModel);
         requestSubmitUser.execute();
+    }
+
+    private void requestSubmitTemplate(Intent intent){
+        KYNTemplateModel templateModel = (KYNTemplateModel) intent.getSerializableExtra(KYNIntentConstant.INTENT_EXTRA_DATA);
+        String username = intent.getStringExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME);
+
+        KYNAPISubmitTemplate requestSubmitTemplate = new KYNAPISubmitTemplate(getApplicationContext(), new KYNAPISubmitTemplateListener());
+        requestSubmitTemplate.setData(username, templateModel);
+        requestSubmitTemplate.execute();
+    }
+
+    private void requestSubmitFeedback(Intent intent){
+        KYNFeedbackModel feedbackModel = (KYNFeedbackModel) intent.getSerializableExtra(KYNIntentConstant.INTENT_EXTRA_DATA);
+        String username = intent.getStringExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME);
+
+        KYNAPISubmitFeedback requestSubmitFeedback = new KYNAPISubmitFeedback(getApplicationContext(), new KYNAPISubmitFeedbackListener());
+        requestSubmitFeedback.setData(username, feedbackModel);
+        requestSubmitFeedback.execute();
+    }
+
+    private void requestSubmitIntervieweeData(Intent intent){
+        KYNIntervieweeModel intervieweeModel = (KYNIntervieweeModel) intent.getSerializableExtra(KYNIntentConstant.INTENT_EXTRA_DATA);
+        String username = intent.getStringExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME);
+
+        KYNAPISubmitIntervieweeData requestSubmitIntervieweeData = new KYNAPISubmitIntervieweeData(getApplicationContext(), new KYNAPISubmitIntervieweeDataListener());
+        requestSubmitIntervieweeData.setData(username, intervieweeModel);
+        requestSubmitIntervieweeData.execute();
+    }
+
+    private void requestIntervieweeDetail(Intent intent){
+        KYNIntervieweeModel intervieweeModel = (KYNIntervieweeModel) intent.getSerializableExtra(KYNIntentConstant.INTENT_EXTRA_DATA);
+        String username = intent.getStringExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME);
+
+        KYNAPIIntervieweeDetail requestIntervieweeDetail = new KYNAPIIntervieweeDetail(getApplicationContext(), new KYNAPIIntervieweeDetailListener());
+        requestIntervieweeDetail.setData(intervieweeModel, username);
+        requestIntervieweeDetail.execute();
     }
 
 //    private void startTimeCounterForClearData(){

@@ -16,9 +16,12 @@ import com.example.aldoduha.ujikompetensi.activity.controller.KYNIntervieweeList
 import com.example.aldoduha.ujikompetensi.adapter.KYNIntervieweeListAdapter;
 import com.example.aldoduha.ujikompetensi.alertDialog.KYNConfirmationAlertDialog;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
+import com.example.aldoduha.ujikompetensi.connection.api.listener.KYNServiceConnection;
 import com.example.aldoduha.ujikompetensi.model.KYNFeedbackModel;
 import com.example.aldoduha.ujikompetensi.model.KYNIntervieweeModel;
 import com.example.aldoduha.ujikompetensi.model.KYNQuestionModel;
+import com.example.aldoduha.ujikompetensi.model.KYNTemplateModel;
+import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 import java.util.ArrayList;
@@ -212,6 +215,17 @@ public class KYNIntervieweeListActivity extends KYNBaseActivity {
                 database.insertQuestion(questionModel);
             }
         }
+    }
+
+    public void getIntervieweeDetail(KYNIntervieweeModel model){
+        showLoadingDialog(getResources().getString(R.string.loading));
+        KYNUserModel session = database.getSession();
+        Intent intent = new Intent(this, KYNServiceConnection.class);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, model);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME, session.getUsername());
+        intent.setAction(KYNIntentConstant.ACTION_INTERVIEWEE_DETAIL);
+        intent.addCategory(KYNIntentConstant.CATEGORY_INTERVIEWEE_DETAIL);
+        startService(intent);
     }
 
     public KYNIntervieweeListAdapter getAdapter() {

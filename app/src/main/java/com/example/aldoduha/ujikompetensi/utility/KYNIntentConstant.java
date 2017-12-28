@@ -82,8 +82,8 @@ public class    KYNIntentConstant {
     public static final int CODE_LOGOUT_FAILED = 303;
     public static final int CODE_USER_DETAIL_SUCCESS = 304;
     public static final int CODE_USER_DETAIL_FAILED = 305;
-    public static final int CODE_INTERIVEWEE_DETAIL_SUCCESS = 306;
-    public static final int CODE_INTERIVEWEE_DETAIL_FAILED = 307;
+    public static final int CODE_INTERVIEWEE_DETAIL_SUCCESS = 306;
+    public static final int CODE_INTERVIEWEE_DETAIL_FAILED = 307;
     public static final int CODE_QUESTION_DETAIL_SUCCESS = 308;
     public static final int CODE_QUESTION_DETAIL_FAILED = 309;
     public static final int CODE_TEMPLATE_DETAIL_SUCCESS = 310;

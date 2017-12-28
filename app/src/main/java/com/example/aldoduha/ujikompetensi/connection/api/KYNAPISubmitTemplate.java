@@ -3,26 +3,35 @@ package com.example.aldoduha.ujikompetensi.connection.api;
 import android.content.Context;
 import android.os.Bundle;
 
+import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
 import com.example.aldoduha.ujikompetensi.connection.KYNHTTPPostConnections;
 import com.example.aldoduha.ujikompetensi.connection.KYNSMPUtilities;
 import com.example.aldoduha.ujikompetensi.connection.listener.KYNConnectionListener;
-import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
+import com.example.aldoduha.ujikompetensi.model.KYNTemplateModel;
+import com.example.aldoduha.ujikompetensi.model.KYNTemplateQuestionModel;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 import com.example.aldoduha.ujikompetensi.utility.KYNJSONKey;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 /**
- * Created by aldoduha on 12/27/2017.
+ * Created by aldoduha on 12/28/2017.
  */
 
-public class KYNAPIIntervieweeList extends KYNHTTPPostConnections {
-    private String intervieweeListUrl = "";
-    private KYNUserModel userModel;
+public class KYNAPISubmitTemplate extends KYNHTTPPostConnections {
+    private String submitTemplateUrl = "";
+    private String username;
+    private KYNTemplateModel templateModel;
+    private KYNDatabaseHelper database;
 
-    public KYNAPIIntervieweeList(Context applicationContext, KYNConnectionListener listener) {
+    public KYNAPISubmitTemplate(Context applicationContext, KYNConnectionListener listener) {
         super(applicationContext, listener);
+        database = new KYNDatabaseHelper(applicationContext);
     }
 
     @Override
@@ -37,9 +46,9 @@ public class KYNAPIIntervieweeList extends KYNHTTPPostConnections {
             bundle.putString(KYNIntentConstant.BUNDLE_KEY_MESSAGE, jsonResponse.getString(KYNJSONKey.KEY_MESSAGE));
 
             if (result.equalsIgnoreCase(KYNJSONKey.VAL_SUCCESS)) {
-                bundle.putInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_INTERVIEWEE_LIST_SUCCESS);
+                bundle.putInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_SUBMIT_TEMPLATE_SUCCESS);
             }else{
-                bundle.putInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_INTERVIEWEE_DETAIL_FAILED);
+                bundle.putInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_SUBMIT_TEMPLATE_FAILED);
             }
 
             return bundle;
@@ -56,7 +65,7 @@ public class KYNAPIIntervieweeList extends KYNHTTPPostConnections {
 
         bundle.putString(KYNIntentConstant.BUNDLE_KEY_RESULT, KYNJSONKey.VAL_ERROR);
         bundle.putString(KYNIntentConstant.BUNDLE_KEY_MESSAGE, KYNJSONKey.VAL_MESSAGE_FAILED);
-        bundle.putInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_INTERVIEWEE_LIST_FAILED);
+        bundle.putInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_SUBMIT_TEMPLATE_FAILED);
 
         return bundle;
     }
@@ -64,8 +73,13 @@ public class KYNAPIIntervieweeList extends KYNHTTPPostConnections {
     @Override
     protected String generateRequest(){
         try {
+            Gson gson = new GsonBuilder().setDateFormat(KYNIntentConstant.DATE_FORMAT).create();
+            List<KYNTemplateQuestionModel> templateQuestionModels = database.getTemplateQuestionList(templateModel.getId());
+            templateModel.setTemplateQuestionModels(templateQuestionModels);
+            String template = gson.toJson(templateModel);
             JSONObject json = new JSONObject();
-            json.put(KYNJSONKey.KEY_USERNAME, userModel.getUsername());
+            json.put(KYNJSONKey.KEY_USERNAME, username);
+            json.put(KYNJSONKey.KEY_JSON, template);
             return json.toString();
         } catch (JSONException e) {
 
@@ -77,7 +91,7 @@ public class KYNAPIIntervieweeList extends KYNHTTPPostConnections {
     protected byte[] generateBodyForHttpPost() {
         try {
             JSONObject json = new JSONObject();
-            json.put(KYNJSONKey.KEY_USERNAME, userModel.getUsername());
+            json.put(KYNJSONKey.KEY_USERNAME, username);
             JSONObject jsonParent = new JSONObject();
             jsonParent.put(KYNJSONKey.KEY_D, json);
             return jsonParent.toString().getBytes();
@@ -89,17 +103,17 @@ public class KYNAPIIntervieweeList extends KYNHTTPPostConnections {
 
     @Override
     protected String getAddtionalURL() {
-        intervieweeListUrl = "IntervieweeList";
-        return intervieweeListUrl;
+        submitTemplateUrl = "SubmitTemplate";
+        return submitTemplateUrl;
     }
 
     @Override
     protected String getRestUrl() {
         String url;
         if (KYNSMPUtilities.port != null) {
-            url = KYNSMPUtilities.requestType + KYNSMPUtilities.host + ":" + KYNSMPUtilities.port + "/" + KYNSMPUtilities.appIdIntervieweeListRest;
+            url = KYNSMPUtilities.requestType + KYNSMPUtilities.host + ":" + KYNSMPUtilities.port + "/" + KYNSMPUtilities.appIdSubmitTemplateRest;
         } else {
-            url = KYNSMPUtilities.requestType + KYNSMPUtilities.host + "/" + KYNSMPUtilities.appIdIntervieweeListRest;
+            url = KYNSMPUtilities.requestType + KYNSMPUtilities.host + "/" + KYNSMPUtilities.appIdSubmitTemplateRest;
         }
         return url;
     }
@@ -108,9 +122,9 @@ public class KYNAPIIntervieweeList extends KYNHTTPPostConnections {
     protected String getFullUrl() {
         String url;
         if (KYNSMPUtilities.port != null) {
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+":"+KYNSMPUtilities.port+"/"+KYNSMPUtilities.appIdIntervieweeList +"/"+ getAddtionalURL();
+            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+":"+KYNSMPUtilities.port+"/"+KYNSMPUtilities.appIdSubmitTemplate +"/"+ getAddtionalURL();
         }else{
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+"/"+KYNSMPUtilities.appIdIntervieweeList +"/"+ getAddtionalURL();
+            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+"/"+KYNSMPUtilities.appIdSubmitTemplate +"/"+ getAddtionalURL();
         }
 
         return url;
@@ -120,9 +134,9 @@ public class KYNAPIIntervieweeList extends KYNHTTPPostConnections {
     protected String getGetUrl() {
         String url;
         if (KYNSMPUtilities.port != null) {
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+":"+KYNSMPUtilities.port+"/"+KYNSMPUtilities.appIdIntervieweeList;
+            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+":"+KYNSMPUtilities.port+"/"+KYNSMPUtilities.appIdSubmitTemplate;
         }else{
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+"/"+KYNSMPUtilities.appIdIntervieweeList;
+            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+"/"+KYNSMPUtilities.appIdSubmitTemplate;
         }
 
         return url;
@@ -133,7 +147,8 @@ public class KYNAPIIntervieweeList extends KYNHTTPPostConnections {
         return false;
     }
 
-    public void setData(KYNUserModel userModel){
-        this.userModel = userModel;
+    public void setData(String username, KYNTemplateModel templateModel){
+        this.username = username;
+        this.templateModel = templateModel;
     }
 }

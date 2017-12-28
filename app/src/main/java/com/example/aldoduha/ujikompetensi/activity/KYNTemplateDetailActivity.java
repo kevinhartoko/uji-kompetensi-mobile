@@ -1,5 +1,6 @@
 package com.example.aldoduha.ujikompetensi.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.InputType;
@@ -14,8 +15,10 @@ import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
 import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.controller.KYNTemplateDetailController;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
+import com.example.aldoduha.ujikompetensi.connection.api.listener.KYNServiceConnection;
 import com.example.aldoduha.ujikompetensi.model.KYNTemplateModel;
 import com.example.aldoduha.ujikompetensi.model.KYNTemplateQuestionModel;
+import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 import java.util.List;
@@ -48,6 +51,8 @@ public class KYNTemplateDetailActivity extends KYNBaseActivity {
     }
     @Override
     protected void onDestroy() {
+        if(controller!=null)
+            controller.unregisterLocalBroadCastReceiver();
         super.onDestroy();
     }
 
@@ -302,5 +307,16 @@ public class KYNTemplateDetailActivity extends KYNBaseActivity {
 
     public void onButtonHapusTemplateClicked(){
         showConfirmationAlertDialog("Apakah anda yakin ingin menghapus template ini?",listenerHapus);
+    }
+
+    public void submitTemplate(KYNTemplateModel model){
+        showLoadingDialog(getResources().getString(R.string.loading));
+        KYNUserModel session = database.getSession();
+        Intent intent = new Intent(this, KYNServiceConnection.class);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, model);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME, session.getUsername());
+        intent.setAction(KYNIntentConstant.ACTION_SUBMIT_TEMPLATE);
+        intent.addCategory(KYNIntentConstant.CATEGORY_SUBMIT_TEMPLATE);
+        startService(intent);
     }
 }

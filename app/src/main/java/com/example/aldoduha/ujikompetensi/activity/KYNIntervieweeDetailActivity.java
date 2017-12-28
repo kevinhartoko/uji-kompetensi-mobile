@@ -1,5 +1,6 @@
 package com.example.aldoduha.ujikompetensi.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -16,10 +17,13 @@ import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
 import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.controller.KYNIntervieweeDetailController;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
+import com.example.aldoduha.ujikompetensi.connection.api.listener.KYNServiceConnection;
 import com.example.aldoduha.ujikompetensi.model.KYNFeedbackModel;
 import com.example.aldoduha.ujikompetensi.model.KYNIntervieweeModel;
 import com.example.aldoduha.ujikompetensi.model.KYNQuestionModel;
+import com.example.aldoduha.ujikompetensi.model.KYNTemplateModel;
 import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
+import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -57,6 +61,8 @@ public class KYNIntervieweeDetailActivity extends KYNBaseActivity{
     }
     @Override
     protected void onDestroy() {
+        if(controller!=null)
+            controller.unregisterLocalBroadCastReceiver();
         super.onDestroy();
     }
 
@@ -238,6 +244,17 @@ public class KYNIntervieweeDetailActivity extends KYNBaseActivity{
     @Override
     public void onBackPressed() {
         showConfirmationAlertDialog("Apakah anda ingin keluar?", listener);
+    }
+
+    public void submitFeedback(KYNFeedbackModel model){
+        showLoadingDialog(getResources().getString(R.string.loading));
+        KYNUserModel session = database.getSession();
+        Intent intent = new Intent(this, KYNServiceConnection.class);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, model);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME, session.getUsername());
+        intent.setAction(KYNIntentConstant.ACTION_SUBMIT_FEEDBACK);
+        intent.addCategory(KYNIntentConstant.CATEGORY_SUBMIT_FEEDBACK);
+        startService(intent);
     }
 
     public EditText getEditTextFeedback() {

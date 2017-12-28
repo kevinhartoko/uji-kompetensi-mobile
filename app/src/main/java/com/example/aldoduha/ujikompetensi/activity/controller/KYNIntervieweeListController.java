@@ -1,7 +1,11 @@
 package com.example.aldoduha.ujikompetensi.activity.controller;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -11,13 +15,11 @@ import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
 import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.KYNIntervieweeDetailActivity;
 import com.example.aldoduha.ujikompetensi.activity.KYNIntervieweeListActivity;
-import com.example.aldoduha.ujikompetensi.activity.KYNTemplateDetailActivity;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
 import com.example.aldoduha.ujikompetensi.model.KYNIntervieweeModel;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,6 +30,31 @@ public class KYNIntervieweeListController implements View.OnClickListener, Adapt
     private KYNIntervieweeListActivity activity;
     private KYNDatabaseHelper database;
     private List<KYNIntervieweeModel> intervieweeModels;
+
+    private BroadcastReceiver localBroadCastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            activity.dismisLoadingDialog();
+            if (action.equals(KYNIntentConstant.ACTION_INTERVIEWEE_DETAIL)) {
+                Bundle bundle = intent.getExtras();
+                int code = bundle.getInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_FAILED);
+                String message = bundle .getString(KYNIntentConstant.BUNDLE_KEY_MESSAGE);
+
+                if(code==KYNIntentConstant.CODE_FAILED ||
+                        code==KYNIntentConstant.CODE_INTERVIEWEE_DETAIL_FAILED){
+                    if(message!=null && !message.equals(""))
+                        activity.showAlertDialog("Error", message);
+                    else
+                        activity.showAlertDialog("Error", "Gagal Ambil Detail");
+                }else if(code==KYNIntentConstant.CODE_FAILED_TOKEN){
+                    activity.showErrorTokenDialog();
+                }else if(code==KYNIntentConstant.CODE_INTERVIEWEE_DETAIL_SUCCESS){
+                    activity.finish();
+                }
+            }
+        }
+    };
 
     private KYNConfirmationAlertDialogListener backPressListener = new KYNConfirmationAlertDialogListener() {
         @Override
@@ -70,21 +97,6 @@ public class KYNIntervieweeListController implements View.OnClickListener, Adapt
         }
     }
 
-    private void registerBroadcastReceiver() {
-//        IntentFilter intentFilter = new IntentFilter();
-//        intentFilter.addAction(MTFIntentConstant.ACTION_NEW_CUSTOMER);
-//        intentFilter.addAction(MTFIntentConstant.ACTION_UPDATE_CUSTOMER);
-//        intentFilter.addAction(MTFIntentConstant.ACTION_CHECK_CIF);
-//        intentFilter.addAction(MTFIntentConstant.ACTION_CHECK_DHIB);
-//        intentFilter.addCategory(MTFIntentConstant.CATEGORY_REGISTER_CUSTOMER);
-//        intentFilter.addCategory(MTFIntentConstant.CATEGORY_CUSTOMER_LIST);
-//        LocalBroadcastManager.getInstance(activity.getApplicationContext()).registerReceiver(localBroadCastReceiver, intentFilter);
-    }
-
-    public void unregisterLocalBroadCastReceiver() {
-//        LocalBroadcastManager.getInstance(activity.getApplicationContext()).unregisterReceiver(localBroadCastReceiver);
-    }
-
     private void onSearchCustomer(CharSequence key){
         List<KYNIntervieweeModel> listIntervieweeAfterSearch = new ArrayList<KYNIntervieweeModel>();
         List<KYNIntervieweeModel> listIntervieweeAll = intervieweeModels;
@@ -108,7 +120,7 @@ public class KYNIntervieweeListController implements View.OnClickListener, Adapt
     }
 
     public void onResume() {
-        registerBroadcastReceiver();
+        registerLocalBroadCastReceiver();
     }
 
     public void onPause() {
@@ -147,5 +159,16 @@ public class KYNIntervieweeListController implements View.OnClickListener, Adapt
     @Override
     public void afterTextChanged(Editable s) {
 
+    }
+
+    public void registerLocalBroadCastReceiver(){
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(KYNIntentConstant.ACTION_INTERVIEWEE_DETAIL);
+        intentFilter.addCategory(KYNIntentConstant.CATEGORY_INTERVIEWEE_DETAIL);
+        LocalBroadcastManager.getInstance(activity.getApplicationContext()).registerReceiver(localBroadCastReceiver, intentFilter);
+    }
+
+    public void unregisterLocalBroadCastReceiver(){
+        LocalBroadcastManager.getInstance(activity.getApplicationContext()).unregisterReceiver(localBroadCastReceiver);
     }
 }

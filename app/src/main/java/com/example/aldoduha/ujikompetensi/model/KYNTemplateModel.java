@@ -1,6 +1,7 @@
 package com.example.aldoduha.ujikompetensi.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by aldoduha on 11/12/2017.
@@ -11,6 +12,10 @@ public class KYNTemplateModel  implements Serializable {
     private Long serverId;
     private String nama;
     private int jumlahSoal;
+
+    //untuk pengiriman data
+    private List<KYNTemplateQuestionModel> templateQuestionModels;
+
 
     public Long getId() {
         return id;
@@ -42,5 +47,13 @@ public class KYNTemplateModel  implements Serializable {
 
     public void setServerId(Long serverId) {
         this.serverId = serverId;
+    }
+
+    public List<KYNTemplateQuestionModel> getTemplateQuestionModels() {
+        return templateQuestionModels;
+    }
+
+    public void setTemplateQuestionModels(List<KYNTemplateQuestionModel> templateQuestionModels) {
+        this.templateQuestionModels = templateQuestionModels;
     }
 }

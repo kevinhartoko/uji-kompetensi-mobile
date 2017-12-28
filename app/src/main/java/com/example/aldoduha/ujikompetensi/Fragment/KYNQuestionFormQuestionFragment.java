@@ -1,6 +1,7 @@
 package com.example.aldoduha.ujikompetensi.Fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -20,7 +21,12 @@ import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.KYNQuestionFormActivity;
 import com.example.aldoduha.ujikompetensi.activity.controller.KYNQuestionFormQuestionController;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
+import com.example.aldoduha.ujikompetensi.connection.api.listener.KYNServiceConnection;
+import com.example.aldoduha.ujikompetensi.model.KYNIntervieweeModel;
 import com.example.aldoduha.ujikompetensi.model.KYNQuestionModel;
+import com.example.aldoduha.ujikompetensi.model.KYNTemplateModel;
+import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
+import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 import java.util.List;
 
@@ -45,6 +51,20 @@ public class KYNQuestionFormQuestionFragment extends KYNBaseFragment {
         loadview();
         initDefaultValue();
         return view;
+    }
+
+    @Override
+    public void onPause() {
+        if(controller!=null)
+            controller.unregisterLocalBroadCastReceiver();
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(controller!=null)
+            controller.registerLocalBroadCastReceiver();
     }
 
     private void loadview(){
@@ -161,10 +181,29 @@ public class KYNQuestionFormQuestionFragment extends KYNBaseFragment {
         }
     };
 
+    public void submitIntervieweeData(KYNIntervieweeModel model){
+        activity.showLoadingDialog(getResources().getString(R.string.loading));
+        KYNUserModel session = database.getSession();
+        Intent intent = new Intent(activity, KYNServiceConnection.class);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, model);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME, session.getUsername());
+        intent.setAction(KYNIntentConstant.ACTION_SUBMIT_INTERVIEWEE_DATA);
+        intent.addCategory(KYNIntentConstant.CATEGORY_SUBMIT_INTERVIEWEE_DATA);
+        activity.startService(intent);
+    }
+
     public void onButtonSubmitClicked(){
         activity.showConfirmationAlertDialog("Apakah anda sudah yakin dengan semua jawaban anda?", submitListener);
     }
     public void onButtonKembaliClicked(){
         activity.onNextButtonClicked(0);
+    }
+
+    public KYNQuestionFormActivity getNewActivity() {
+        return activity;
+    }
+
+    public void setActivity(KYNQuestionFormActivity activity) {
+        this.activity = activity;
     }
 }

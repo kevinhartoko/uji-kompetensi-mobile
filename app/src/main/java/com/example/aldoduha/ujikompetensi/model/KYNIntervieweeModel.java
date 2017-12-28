@@ -2,6 +2,7 @@ package com.example.aldoduha.ujikompetensi.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by aldoduha on 10/9/2017.
@@ -16,6 +17,8 @@ public class KYNIntervieweeModel  implements Serializable {
     private String address;
     private Date dob;
     private String gender;
+    //untuk kirim data
+    private List<KYNQuestionModel> questionModels;
 
     public Long getId() {
         return id;
@@ -79,5 +82,13 @@ public class KYNIntervieweeModel  implements Serializable {
 
     public void setServerId(Long serverId) {
         this.serverId = serverId;
+    }
+
+    public List<KYNQuestionModel> getQuestionModels() {
+        return questionModels;
+    }
+
+    public void setQuestionModels(List<KYNQuestionModel> questionModels) {
+        this.questionModels = questionModels;
     }
 }

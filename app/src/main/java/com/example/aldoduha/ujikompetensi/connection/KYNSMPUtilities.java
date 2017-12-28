@@ -64,6 +64,14 @@ public class KYNSMPUtilities {
     public static String appIdSubmitQuestionRest = "eformws/rest/user/submitquestion";
     public static String appIdSubmitUser = "rfb.app.eform.submituser";
     public static String appIdSubmitUserRest = "eformws/rest/user/submituser";
+    public static String appIdSubmitTemplate = "rfb.app.eform.submittemplate";
+    public static String appIdSubmitTemplateRest = "eformws/rest/user/submittemplate";
+    public static String appIdSubmitFeedback = "rfb.app.eform.submitfeedback";
+    public static String appIdSubmitFeedbackRest = "eformws/rest/user/submitfeedback";
+    public static String appIdSubmitIntervieweeData = "rfb.app.eform.submitintervieweedata";
+    public static String appIdSubmitIntervieweeDataRest = "eformws/rest/user/submitintervieweedata";
+    public static String appIdIntervieweeDetail = "rfb.app.eform.intervieweedetail";
+    public static String appIdIntervieweeDetailRest = "eformws/rest/user/intervieweedetail";
     
     public static String secConfig = "";
     public static String appId = "";

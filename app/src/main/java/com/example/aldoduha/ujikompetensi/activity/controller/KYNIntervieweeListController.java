@@ -16,6 +16,7 @@ import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.KYNIntervieweeDetailActivity;
 import com.example.aldoduha.ujikompetensi.activity.KYNIntervieweeListActivity;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
+import com.example.aldoduha.ujikompetensi.connection.KYNSMPUtilities;
 import com.example.aldoduha.ujikompetensi.model.KYNIntervieweeModel;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
@@ -50,7 +51,11 @@ public class KYNIntervieweeListController implements View.OnClickListener, Adapt
                 }else if(code==KYNIntentConstant.CODE_FAILED_TOKEN){
                     activity.showErrorTokenDialog();
                 }else if(code==KYNIntentConstant.CODE_INTERVIEWEE_DETAIL_SUCCESS){
-                    activity.finish();
+                    Bundle b = new Bundle();
+                    b.putLong("intervieweeId", activity.getIntervieweeId());
+                    Intent i = new Intent(activity, KYNIntervieweeDetailActivity.class);
+                    i.putExtras(b);
+                    activity.startActivityForResult(i, KYNIntentConstant.REQUEST_CODE_INTERVIEWEE_DETAIL);
                 }
             }
         }
@@ -130,11 +135,16 @@ public class KYNIntervieweeListController implements View.OnClickListener, Adapt
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         KYNIntervieweeModel intervieweeModel = activity.getAdapter().getItem(position);
-        Bundle b = new Bundle();
-        b.putLong("intervieweeId", intervieweeModel.getId());
-        Intent i = new Intent(activity, KYNIntervieweeDetailActivity.class);
-        i.putExtras(b);
-        activity.startActivityForResult(i, KYNIntentConstant.REQUEST_CODE_INTERVIEWEE_DETAIL);
+        activity.setIntervieweeId(intervieweeModel.getId());
+        if(KYNSMPUtilities.isConnectServer) {
+            activity.getIntervieweeDetail(intervieweeModel);
+        }else {
+            Bundle b = new Bundle();
+            b.putLong("intervieweeId", intervieweeModel.getId());
+            Intent i = new Intent(activity, KYNIntervieweeDetailActivity.class);
+            i.putExtras(b);
+            activity.startActivityForResult(i, KYNIntentConstant.REQUEST_CODE_INTERVIEWEE_DETAIL);
+        }
     }
 
     public List<KYNIntervieweeModel> getIntervieweeModels() {

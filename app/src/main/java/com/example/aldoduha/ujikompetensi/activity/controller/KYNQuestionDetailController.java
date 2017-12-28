@@ -13,6 +13,7 @@ import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.KYNLoginActivity;
 import com.example.aldoduha.ujikompetensi.activity.KYNQuestionDetailActivity;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
+import com.example.aldoduha.ujikompetensi.connection.KYNSMPUtilities;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 /**
@@ -42,6 +43,7 @@ public class KYNQuestionDetailController implements View.OnClickListener {
                 }else if(code==KYNIntentConstant.CODE_FAILED_TOKEN){
                     activity.showErrorTokenDialog();
                 }else if(code==KYNIntentConstant.CODE_SUBMIT_QUESTION_SUCCESS){
+                    activity.setResult(KYNIntentConstant.RESULT_CODE_QUESTION_DETAIL);
                     activity.finish();
                 }
             }
@@ -77,8 +79,12 @@ public class KYNQuestionDetailController implements View.OnClickListener {
     private void onButtonLanjutClicked(){
         if(activity.validate()){
             activity.setValueToModel();
-            activity.setResult(KYNIntentConstant.RESULT_CODE_QUESTION_DETAIL);
-            activity.finish();
+            if(KYNSMPUtilities.isConnectServer){
+                activity.submitQuestion();
+            }else {
+                activity.setResult(KYNIntentConstant.RESULT_CODE_QUESTION_DETAIL);
+                activity.finish();
+            }
         }
     }
     private void onButtonKembaliClicked(){

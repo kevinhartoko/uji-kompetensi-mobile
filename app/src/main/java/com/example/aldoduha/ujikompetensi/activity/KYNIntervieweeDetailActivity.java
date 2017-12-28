@@ -17,6 +17,7 @@ import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
 import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.controller.KYNIntervieweeDetailController;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
+import com.example.aldoduha.ujikompetensi.connection.KYNSMPUtilities;
 import com.example.aldoduha.ujikompetensi.connection.api.listener.KYNServiceConnection;
 import com.example.aldoduha.ujikompetensi.model.KYNFeedbackModel;
 import com.example.aldoduha.ujikompetensi.model.KYNIntervieweeModel;
@@ -49,6 +50,8 @@ public class KYNIntervieweeDetailActivity extends KYNBaseActivity{
     private LinearLayout linearLayoutFeedback;
     private LinearLayout linearLayoutQuestion;
     private Button btnQuestion;
+    private boolean isDeleteFeedback = false;
+    private Long feedbackId;//untuk delete feedback
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,9 +150,18 @@ public class KYNIntervieweeDetailActivity extends KYNBaseActivity{
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    database.deleteFeedback(feedbackModel.getId());
-                    List<KYNFeedbackModel> feedbackModels = database.getFeedbackList(intervieweeId);
-                    generateFeedback(feedbackModels);
+                    if(KYNSMPUtilities.isConnectServer){
+                        KYNFeedbackModel model = new KYNFeedbackModel();
+                        model.setId(feedbackModel.getId());
+                        model.setServerId(feedbackModel.getServerId());
+                        isDeleteFeedback = true;
+                        feedbackId = feedbackModel.getId();
+                        submitFeedback(model);
+                    }else{
+                        database.deleteFeedback(feedbackModel.getId());
+                        List<KYNFeedbackModel> feedbackModels = database.getFeedbackList(intervieweeId);
+                        generateFeedback(feedbackModels);
+                    }
                 }
             });
 
@@ -275,5 +287,17 @@ public class KYNIntervieweeDetailActivity extends KYNBaseActivity{
 
     public Button getBtnQuestion() {
         return btnQuestion;
+    }
+
+    public boolean isDeleteFeedback() {
+        return isDeleteFeedback;
+    }
+
+    public void setDeleteFeedback(boolean deleteFeedback) {
+        isDeleteFeedback = deleteFeedback;
+    }
+
+    public Long getFeedbackId() {
+        return feedbackId;
     }
 }

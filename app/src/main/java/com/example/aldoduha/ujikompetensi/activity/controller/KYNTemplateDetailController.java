@@ -11,6 +11,7 @@ import android.view.View;
 import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
 import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.KYNTemplateDetailActivity;
+import com.example.aldoduha.ujikompetensi.connection.KYNSMPUtilities;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 /**
@@ -77,8 +78,12 @@ public class KYNTemplateDetailController implements View.OnClickListener {
     private void onButtonLanjutClicked(){
         if(activity.validate()){
             activity.setValueToModel();
-            activity.setResult(KYNIntentConstant.RESULT_CODE_TEMPLATE_DETAIL);
-            activity.finish();
+            if(KYNSMPUtilities.isConnectServer) {
+                activity.submitTemplate();
+            }else {
+                activity.setResult(KYNIntentConstant.RESULT_CODE_TEMPLATE_DETAIL);
+                activity.finish();
+            }
         }
     }
     private void onButtonKembaliClicked(){

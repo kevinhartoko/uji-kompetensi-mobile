@@ -175,6 +175,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="#FF000000"
                 android:layout_weight="0.6"
+                android:inputType="number"
                 android:background="@drawable/edittext_style"/>
         </LinearLayout>
         <RelativeLayout

@@ -12,6 +12,7 @@ import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
 import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.controller.KYNQuestionDetailController;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
+import com.example.aldoduha.ujikompetensi.connection.KYNSMPUtilities;
 import com.example.aldoduha.ujikompetensi.connection.api.listener.KYNServiceConnection;
 import com.example.aldoduha.ujikompetensi.model.KYNQuestionModel;
 import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
@@ -197,8 +198,15 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
         @Override
         public void onOK() {
             database.deleteQuestion(questionId);
-            setResult(KYNIntentConstant.RESULT_CODE_QUESTION_DETAIL);
-            finish();
+            if(KYNSMPUtilities.isConnectServer){
+                KYNQuestionModel model = new KYNQuestionModel();
+                model.setId(questionModel.getId());
+                model.setServerId(questionModel.getServerId());
+                submitQuestion(model);
+            }else {
+                setResult(KYNIntentConstant.RESULT_CODE_QUESTION_DETAIL);
+                finish();
+            }
         }
 
         @Override
@@ -207,11 +215,22 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
         }
     };
 
-    public void submitQuestion(KYNQuestionModel model){
+    public void submitQuestion(){
         showLoadingDialog(getResources().getString(R.string.loading));
         KYNUserModel session = database.getSession();
         Intent intent = new Intent(this, KYNServiceConnection.class);
-        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, model);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, questionModel);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME, session.getUsername());
+        intent.setAction(KYNIntentConstant.ACTION_SUBMIT_QUESTION);
+        intent.addCategory(KYNIntentConstant.CATEGORY_SUBMIT_QUESTION);
+        startService(intent);
+    }
+
+    public void submitQuestion(KYNQuestionModel questionModel){
+        showLoadingDialog(getResources().getString(R.string.loading));
+        KYNUserModel session = database.getSession();
+        Intent intent = new Intent(this, KYNServiceConnection.class);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, questionModel);
         intent.putExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME, session.getUsername());
         intent.setAction(KYNIntentConstant.ACTION_SUBMIT_QUESTION);
         intent.addCategory(KYNIntentConstant.CATEGORY_SUBMIT_QUESTION);

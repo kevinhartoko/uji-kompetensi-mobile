@@ -11,6 +11,7 @@ import android.view.View;
 import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
 import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.KYNIntervieweeDetailActivity;
+import com.example.aldoduha.ujikompetensi.connection.KYNSMPUtilities;
 import com.example.aldoduha.ujikompetensi.model.KYNFeedbackModel;
 import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
@@ -24,6 +25,7 @@ import java.util.List;
 public class KYNIntervieweeDetailController implements View.OnClickListener{
     private KYNIntervieweeDetailActivity activity;
     private KYNDatabaseHelper database;
+    private KYNFeedbackModel feedbackModel;
 
     private BroadcastReceiver localBroadCastReceiver = new BroadcastReceiver() {
         @Override
@@ -44,6 +46,12 @@ public class KYNIntervieweeDetailController implements View.OnClickListener{
                 }else if(code==KYNIntentConstant.CODE_FAILED_TOKEN){
                     activity.showErrorTokenDialog();
                 }else if(code==KYNIntentConstant.CODE_SUBMIT_FEEDBACK_SUCCESS){
+                    if(activity.isDeleteFeedback()){
+                        database.deleteFeedback(activity.getFeedbackId());
+                    }else {
+                        database.insertFeedback(feedbackModel);
+                    }
+                    activity.getEditTextFeedback().setText("");
                     List<KYNFeedbackModel> feedbackModels = database.getFeedbackList(activity.getIntervieweeId());
                     activity.generateFeedback(feedbackModels);
                 }
@@ -82,14 +90,19 @@ public class KYNIntervieweeDetailController implements View.OnClickListener{
         String feedback = activity.getEditTextFeedback().getText().toString().trim();
         if(feedback!=null && !feedback.equals("")){
             KYNUserModel session = database.getSession();
-            KYNFeedbackModel model = new KYNFeedbackModel();
-            model.setDescription(feedback);
-            model.setIntervieweeModel(activity.getIntervieweeModel());
-            model.setName(session.getUsername());
-            database.insertFeedback(model);
-            activity.getEditTextFeedback().setText("");
-            List<KYNFeedbackModel> feedbackModels = database.getFeedbackList(activity.getIntervieweeId());
-            activity.generateFeedback(feedbackModels);
+            feedbackModel = new KYNFeedbackModel();
+            feedbackModel.setDescription(feedback);
+            feedbackModel.setIntervieweeModel(activity.getIntervieweeModel());
+            feedbackModel.setName(session.getUsername());
+            if(KYNSMPUtilities.isConnectServer){
+                activity.setDeleteFeedback(false);
+                activity.submitFeedback(feedbackModel);
+            }else {
+                database.insertFeedback(feedbackModel);
+                activity.getEditTextFeedback().setText("");
+                List<KYNFeedbackModel> feedbackModels = database.getFeedbackList(activity.getIntervieweeId());
+                activity.generateFeedback(feedbackModels);
+            }
         }
     }
 

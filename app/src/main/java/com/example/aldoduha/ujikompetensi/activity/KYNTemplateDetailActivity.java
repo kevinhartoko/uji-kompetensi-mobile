@@ -15,6 +15,7 @@ import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
 import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.controller.KYNTemplateDetailController;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
+import com.example.aldoduha.ujikompetensi.connection.KYNSMPUtilities;
 import com.example.aldoduha.ujikompetensi.connection.api.listener.KYNServiceConnection;
 import com.example.aldoduha.ujikompetensi.model.KYNTemplateModel;
 import com.example.aldoduha.ujikompetensi.model.KYNTemplateQuestionModel;
@@ -291,12 +292,20 @@ public class KYNTemplateDetailActivity extends KYNBaseActivity {
         @Override
         public void onOK() {
             List<KYNTemplateQuestionModel> models = database.getTemplateQuestionList(templateId);
-            for(KYNTemplateQuestionModel model : models){
+            for (KYNTemplateQuestionModel model : models) {
                 database.deleteTemplateQuestion(model.getId());
             }
             database.deleteTemplate(templateId);
-            setResult(KYNIntentConstant.RESULT_CODE_TEMPLATE_DETAIL);
-            finish();
+
+            if(KYNSMPUtilities.isConnectServer){
+                KYNTemplateModel model = new KYNTemplateModel();
+                model.setId(templateModel.getId());
+                model.setServerId(templateModel.getServerId());
+                submitTemplate(model);
+            }else {
+                setResult(KYNIntentConstant.RESULT_CODE_TEMPLATE_DETAIL);
+                finish();
+            }
         }
 
         @Override
@@ -309,11 +318,22 @@ public class KYNTemplateDetailActivity extends KYNBaseActivity {
         showConfirmationAlertDialog("Apakah anda yakin ingin menghapus template ini?",listenerHapus);
     }
 
-    public void submitTemplate(KYNTemplateModel model){
+    public void submitTemplate(){
         showLoadingDialog(getResources().getString(R.string.loading));
         KYNUserModel session = database.getSession();
         Intent intent = new Intent(this, KYNServiceConnection.class);
-        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, model);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, templateModel);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME, session.getUsername());
+        intent.setAction(KYNIntentConstant.ACTION_SUBMIT_TEMPLATE);
+        intent.addCategory(KYNIntentConstant.CATEGORY_SUBMIT_TEMPLATE);
+        startService(intent);
+    }
+
+    public void submitTemplate(KYNTemplateModel templateModel){
+        showLoadingDialog(getResources().getString(R.string.loading));
+        KYNUserModel session = database.getSession();
+        Intent intent = new Intent(this, KYNServiceConnection.class);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, templateModel);
         intent.putExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME, session.getUsername());
         intent.setAction(KYNIntentConstant.ACTION_SUBMIT_TEMPLATE);
         intent.addCategory(KYNIntentConstant.CATEGORY_SUBMIT_TEMPLATE);

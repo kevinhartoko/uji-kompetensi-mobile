@@ -16,6 +16,7 @@ import com.example.aldoduha.ujikompetensi.activity.controller.KYNIntervieweeList
 import com.example.aldoduha.ujikompetensi.adapter.KYNIntervieweeListAdapter;
 import com.example.aldoduha.ujikompetensi.alertDialog.KYNConfirmationAlertDialog;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
+import com.example.aldoduha.ujikompetensi.connection.KYNSMPUtilities;
 import com.example.aldoduha.ujikompetensi.connection.api.listener.KYNServiceConnection;
 import com.example.aldoduha.ujikompetensi.model.KYNFeedbackModel;
 import com.example.aldoduha.ujikompetensi.model.KYNIntervieweeModel;
@@ -41,12 +42,15 @@ public class KYNIntervieweeListActivity extends KYNBaseActivity {
     private KYNIntervieweeListAdapter adapter;
     private Button refreshButton;
     private EditText searchEdittext;
+    private Long intervieweeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         activity = this;
         this.database = new KYNDatabaseHelper(activity);
-        insertInterviewee();
+        if(!KYNSMPUtilities.isConnectServer) {
+            insertInterviewee();
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interviewee_list);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -230,5 +234,13 @@ public class KYNIntervieweeListActivity extends KYNBaseActivity {
 
     public KYNIntervieweeListAdapter getAdapter() {
         return adapter;
+    }
+
+    public Long getIntervieweeId() {
+        return intervieweeId;
+    }
+
+    public void setIntervieweeId(Long intervieweeId) {
+        this.intervieweeId = intervieweeId;
     }
 }

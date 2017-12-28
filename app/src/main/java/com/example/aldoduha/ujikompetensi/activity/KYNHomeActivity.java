@@ -13,6 +13,7 @@ import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
 import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.controller.KYNHomeController;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
+import com.example.aldoduha.ujikompetensi.connection.KYNSMPUtilities;
 import com.example.aldoduha.ujikompetensi.connection.api.listener.KYNServiceConnection;
 import com.example.aldoduha.ujikompetensi.model.KYNIntervieweeModel;
 import com.example.aldoduha.ujikompetensi.model.KYNQuestionModel;
@@ -36,6 +37,7 @@ public class KYNHomeActivity extends KYNBaseActivity {
     private LinearLayout intervieweeLinear;
     private LinearLayout adminLinear;
     private KYNDatabaseHelper database;
+    KYNUserModel session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,19 +58,21 @@ public class KYNHomeActivity extends KYNBaseActivity {
     }
 
     public void doLogout() {
-        finish();
-//        showLoadingDialog(activity.getResources().getString(R.string.loading));
-//        KYNUserModel session = database.getSession();
-//        Intent intent = new Intent(this, KYNServiceConnection.class);
-//        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, session);
-//        intent.setAction(KYNIntentConstant.ACTION_LOGOUT);
-//        intent.addCategory(KYNIntentConstant.CATEGORY_LOGOUT);
-//        activity.startService(intent);
+        if (KYNSMPUtilities.isConnectServer) {
+            showLoadingDialog(activity.getResources().getString(R.string.loading));
+            KYNUserModel session = database.getSession();
+            Intent intent = new Intent(this, KYNServiceConnection.class);
+            intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, session);
+            intent.setAction(KYNIntentConstant.ACTION_LOGOUT);
+            intent.addCategory(KYNIntentConstant.CATEGORY_LOGOUT);
+            activity.startService(intent);
+        } else{
+            finish();
+        }
     }
 
     public void getUserList(){
         showLoadingDialog(activity.getResources().getString(R.string.loading));
-        KYNUserModel session = database.getSession();
         Intent intent = new Intent(this, KYNServiceConnection.class);
         intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, session);
         intent.setAction(KYNIntentConstant.ACTION_USER_LIST);
@@ -78,7 +82,6 @@ public class KYNHomeActivity extends KYNBaseActivity {
 
     public void getQuestionList(){
         showLoadingDialog(activity.getResources().getString(R.string.loading));
-        KYNUserModel session = database.getSession();
         Intent intent = new Intent(this, KYNServiceConnection.class);
         intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, session);
         intent.setAction(KYNIntentConstant.ACTION_QUESTION_LIST);
@@ -88,7 +91,6 @@ public class KYNHomeActivity extends KYNBaseActivity {
 
     public void getTemplateList(){
         showLoadingDialog(activity.getResources().getString(R.string.loading));
-        KYNUserModel session = database.getSession();
         Intent intent = new Intent(this, KYNServiceConnection.class);
         intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, session);
         intent.setAction(KYNIntentConstant.ACTION_TEMPLATE_LIST);
@@ -98,7 +100,6 @@ public class KYNHomeActivity extends KYNBaseActivity {
 
     public void getIntervieweeList(){
         showLoadingDialog(activity.getResources().getString(R.string.loading));
-        KYNUserModel session = database.getSession();
         Intent intent = new Intent(this, KYNServiceConnection.class);
         intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, session);
         intent.setAction(KYNIntentConstant.ACTION_INTERVIEWEE_LIST);
@@ -147,9 +148,17 @@ public class KYNHomeActivity extends KYNBaseActivity {
         templateManagementButton.setOnClickListener(controller);
         logoutButton.setOnClickListener(controller);
         database = new KYNDatabaseHelper(this);
-        //insert question
+        session = database.getSession();
+
+        if(!KYNSMPUtilities.isConnectServer) {
+            insertData();
+        }
+    }
+
+    public void insertData(){
         database.deleteInterviewee();
         database.deleteQuestion();
+        //insert question
         for (int i = 1; i <= 10; i++) {
             KYNQuestionModel model = new KYNQuestionModel();
             model.setQuestion("Pertanyaan " + i);
@@ -159,7 +168,7 @@ public class KYNHomeActivity extends KYNBaseActivity {
             model.setAnswer4("answer 4-" + i);
             model.setKeyAnswer("answer 1-" + i);
             model.setBobot(i);
-            model.setName("code"+i);
+            model.setName("code" + i);
             database.insertQuestion(model);
         }
         //insert user
@@ -180,5 +189,13 @@ public class KYNHomeActivity extends KYNBaseActivity {
             model.setJumlahSoal(1 + i);
             database.insertTemplate(model);
         }
+    }
+
+    public KYNUserModel getSession() {
+        return session;
+    }
+
+    public void setSession(KYNUserModel session) {
+        this.session = session;
     }
 }

@@ -11,6 +11,7 @@ import android.view.View;
 import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
 import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.KYNUserDetailActivity;
+import com.example.aldoduha.ujikompetensi.connection.KYNSMPUtilities;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 /**
@@ -40,6 +41,7 @@ public class KYNUserDetailController implements View.OnClickListener {
                 }else if(code==KYNIntentConstant.CODE_FAILED_TOKEN){
                     activity.showErrorTokenDialog();
                 }else if(code==KYNIntentConstant.CODE_SUBMIT_USER_SUCCESS){
+                    activity.setResult(KYNIntentConstant.RESULT_CODE_USER_DETAIL);
                     activity.finish();
                 }
             }
@@ -76,8 +78,12 @@ public class KYNUserDetailController implements View.OnClickListener {
     private void onButtonLanjutClicked(){
         if(activity.validate()){
             activity.setValueToModel();
-            activity.setResult(KYNIntentConstant.RESULT_CODE_USER_DETAIL);
-            activity.finish();
+            if(KYNSMPUtilities.isConnectServer){
+                activity.submitUser();
+            }else {
+                activity.setResult(KYNIntentConstant.RESULT_CODE_USER_DETAIL);
+                activity.finish();
+            }
         }
     }
     private void onButtonHapusClicked(){

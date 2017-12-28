@@ -13,6 +13,7 @@ import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
 import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.KYNHomeActivity;
 import com.example.aldoduha.ujikompetensi.activity.KYNLoginActivity;
+import com.example.aldoduha.ujikompetensi.connection.KYNSMPUtilities;
 import com.example.aldoduha.ujikompetensi.connection.api.listener.KYNServiceConnection;
 import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
@@ -45,9 +46,15 @@ public class KYNLoginController implements View.OnClickListener, View.OnKeyListe
                 switch (code) {
                     case KYNIntentConstant.CODE_LOGIN_SUCCESS:
                         activity.dismisLoadingDialog();
+                        startActivityForLoginSuccess();
                         break;
                     case KYNIntentConstant.CODE_LOGIN_FAILED:
                         activity.dismisLoadingDialog();
+                        if(message!=null && !message.trim().equals("null")){
+                            activity.showAlertDialog("Error", message.trim());
+                        }else{
+                            activity.showAlertDialog("Error", "Gagal Login");
+                        }
                         break;
                     default:
                         activity.dismisLoadingDialog();
@@ -102,16 +109,19 @@ public class KYNLoginController implements View.OnClickListener, View.OnKeyListe
             return;
         }
         activity.hideKeyBoard();
-        KYNUserModel session = new KYNUserModel();
-        session.setUsername(username);
-        session.setPassword(password);
-        session.setNama("hehe");
-        session.setToken("adasda");
-        session.setRole("admin");
-        database.deleteSession();
-        database.insertSession(session);
-        //start service login
-        startActivityForLoginSuccess();
+        if(KYNSMPUtilities.isConnectServer){
+            login();
+        }else {
+            KYNUserModel session = new KYNUserModel();
+            session.setUsername(username);
+            session.setPassword(password);
+            session.setNama("hehe");
+            session.setToken("adasda");
+            session.setRole("admin");
+            database.deleteSession();
+            database.insertSession(session);
+            startActivityForLoginSuccess();
+        }
     }
 
     private void login(){

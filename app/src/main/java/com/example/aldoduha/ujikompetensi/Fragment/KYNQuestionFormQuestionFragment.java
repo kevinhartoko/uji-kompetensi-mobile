@@ -21,6 +21,7 @@ import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.KYNQuestionFormActivity;
 import com.example.aldoduha.ujikompetensi.activity.controller.KYNQuestionFormQuestionController;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
+import com.example.aldoduha.ujikompetensi.connection.KYNSMPUtilities;
 import com.example.aldoduha.ujikompetensi.connection.api.listener.KYNServiceConnection;
 import com.example.aldoduha.ujikompetensi.model.KYNIntervieweeModel;
 import com.example.aldoduha.ujikompetensi.model.KYNQuestionModel;
@@ -172,7 +173,11 @@ public class KYNQuestionFormQuestionFragment extends KYNBaseFragment {
             for(KYNQuestionModel model:questionList){
                 database.updateQuestionIntervieweeAnswer(model);
             }
-            activity.finish();
+            if(KYNSMPUtilities.isConnectServer){
+                submitIntervieweeData(activity.getIntervieweeModel());
+            }else {
+                activity.finish();
+            }
         }
 
         @Override

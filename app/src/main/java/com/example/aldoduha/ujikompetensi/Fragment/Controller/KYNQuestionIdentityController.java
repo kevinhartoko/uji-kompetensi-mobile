@@ -15,6 +15,7 @@ import com.example.aldoduha.ujikompetensi.activity.KYNQuestionFormActivity;
 import com.example.aldoduha.ujikompetensi.activity.KYNQuestionFormQuestionActivity;
 import com.example.aldoduha.ujikompetensi.activity.controller.KYNQuestionFormIdentityController;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNDatePickerDialogListener;
+import com.example.aldoduha.ujikompetensi.connection.KYNSMPUtilities;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 import java.text.ParseException;
@@ -124,7 +125,11 @@ public class KYNQuestionIdentityController implements View.OnClickListener {
     private void onButtonLanjutClicked() {
         if (fragment.validate()) {
             fragment.setValueToModel();
-            fragment.getNewActivity().onNextButtonClicked(1);
+            if(KYNSMPUtilities.isConnectServer){
+                fragment.generateQuestion();
+            }else {
+                fragment.getNewActivity().onNextButtonClicked(1);
+            }
         }
     }
 

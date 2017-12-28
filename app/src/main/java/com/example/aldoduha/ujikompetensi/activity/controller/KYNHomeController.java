@@ -16,6 +16,7 @@ import com.example.aldoduha.ujikompetensi.activity.KYNQuestionFormActivity;
 import com.example.aldoduha.ujikompetensi.activity.KYNQuestionListActivity;
 import com.example.aldoduha.ujikompetensi.activity.KYNTemplateListActivity;
 import com.example.aldoduha.ujikompetensi.activity.KYNUserListActivity;
+import com.example.aldoduha.ujikompetensi.connection.KYNSMPUtilities;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 /**
@@ -58,32 +59,48 @@ public class KYNHomeController implements View.OnClickListener {
     }
 
     private void onJawabPertanyaanClicked() {
-        Intent intent = new Intent(activity, KYNQuestionFormActivity.class);
-        activity.startActivity(intent);
+        if(KYNSMPUtilities.isConnectServer){
+            activity.getTemplateList();
+        }else{
+            Intent intent = new Intent(activity, KYNQuestionFormActivity.class);
+            activity.startActivity(intent);
+        }
     }
 
     private void onListIntervieweeClicked() {
-        Intent intent = new Intent(activity, KYNIntervieweeListActivity.class);
-        activity.startActivity(intent);
-//        activity.getIntervieweeList();
+        if(KYNSMPUtilities.isConnectServer){
+            activity.getIntervieweeList();
+        }else {
+            Intent intent = new Intent(activity, KYNIntervieweeListActivity.class);
+            activity.startActivity(intent);
+        }
     }
 
     private void onUserManagementClicked() {
-        Intent intent = new Intent(activity, KYNUserListActivity.class);
-        activity.startActivity(intent);
-//        activity.getUserList();
+        if(KYNSMPUtilities.isConnectServer){
+            activity.getUserList();
+        }else {
+            Intent intent = new Intent(activity, KYNUserListActivity.class);
+            activity.startActivity(intent);
+        }
     }
 
     private void onQuestionManagementClicked() {
-        Intent intent = new Intent(activity, KYNQuestionListActivity.class);
-        activity.startActivity(intent);
-//        activity.getQuestionList();
+        if(KYNSMPUtilities.isConnectServer){
+            activity.getQuestionList();
+        }else {
+            Intent intent = new Intent(activity, KYNQuestionListActivity.class);
+            activity.startActivity(intent);
+        }
     }
 
     private void onTemplateManagementClicked() {
-        Intent intent = new Intent(activity, KYNTemplateListActivity.class);
-        activity.startActivity(intent);
-//        activity.getTemplateList();
+        if(KYNSMPUtilities.isConnectServer){
+            activity.getTemplateList();
+        }else {
+            Intent intent = new Intent(activity, KYNTemplateListActivity.class);
+            activity.startActivity(intent);
+        }
     }
 
     @Override
@@ -188,8 +205,13 @@ public class KYNHomeController implements View.OnClickListener {
         }else if(code==KYNIntentConstant.CODE_FAILED_TOKEN){
             activity.showErrorTokenDialog();
         }else if(code==KYNIntentConstant.CODE_TEMPLATE_LIST_SUCCESS){
-            Intent intentList = new Intent(activity, KYNTemplateListActivity.class);
-            activity.startActivity(intentList);
+            if(activity.getSession().getRole().equalsIgnoreCase("admin")) {
+                Intent intentList = new Intent(activity, KYNTemplateListActivity.class);
+                activity.startActivity(intentList);
+            }else{
+                Intent intentActivity = new Intent(activity, KYNQuestionFormActivity.class);
+                activity.startActivity(intentActivity);
+            }
         }
     }
 

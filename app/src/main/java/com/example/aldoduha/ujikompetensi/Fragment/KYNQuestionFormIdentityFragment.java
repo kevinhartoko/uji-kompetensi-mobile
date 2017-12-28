@@ -121,9 +121,11 @@ public class KYNQuestionFormIdentityFragment extends KYNBaseFragment {
             Long id = database.insertInterviewee(intervieweeModel);
             intervieweeModel.setId(id);
             activity.setIntervieweeId(id);
+            activity.setIntervieweeModel(intervieweeModel);
             database.updateQuestionIntervieweeId(id);
         } else {
             database.updateInterviewee(intervieweeModel);
+            activity.setIntervieweeModel(intervieweeModel);
         }
     }
 

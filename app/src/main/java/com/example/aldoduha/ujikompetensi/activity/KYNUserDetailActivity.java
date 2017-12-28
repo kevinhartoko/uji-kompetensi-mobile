@@ -16,6 +16,7 @@ import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
 import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.controller.KYNUserDetailController;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
+import com.example.aldoduha.ujikompetensi.connection.KYNSMPUtilities;
 import com.example.aldoduha.ujikompetensi.connection.api.listener.KYNServiceConnection;
 import com.example.aldoduha.ujikompetensi.model.KYNQuestionModel;
 import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
@@ -145,11 +146,22 @@ public class KYNUserDetailActivity extends KYNBaseActivity{
         spinnerRole.setAdapter(adapter);
     }
 
-    public void submitUser(KYNUserModel model){
+    public void submitUser(){
         showLoadingDialog(getResources().getString(R.string.loading));
         KYNUserModel session = database.getSession();
         Intent intent = new Intent(this, KYNServiceConnection.class);
-        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, model);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, userModel);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME, session.getUsername());
+        intent.setAction(KYNIntentConstant.ACTION_SUBMIT_USER);
+        intent.addCategory(KYNIntentConstant.CATEGORY_SUBMIT_USER);
+        startService(intent);
+    }
+
+    public void submitUser(KYNUserModel userModel){
+        showLoadingDialog(getResources().getString(R.string.loading));
+        KYNUserModel session = database.getSession();
+        Intent intent = new Intent(this, KYNServiceConnection.class);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, userModel);
         intent.putExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME, session.getUsername());
         intent.setAction(KYNIntentConstant.ACTION_SUBMIT_USER);
         intent.addCategory(KYNIntentConstant.CATEGORY_SUBMIT_USER);
@@ -177,8 +189,15 @@ public class KYNUserDetailActivity extends KYNBaseActivity{
         @Override
         public void onOK() {
             database.deleteUser(userId);
-            setResult(KYNIntentConstant.RESULT_CODE_USER_DETAIL);
-            finish();
+            if(KYNSMPUtilities.isConnectServer){
+                KYNUserModel model = new KYNUserModel();
+                model.setId(userModel.getId());
+                model.setServerId(userModel.getServerId());
+                submitUser(model);
+            }else {
+                setResult(KYNIntentConstant.RESULT_CODE_USER_DETAIL);
+                finish();
+            }
         }
 
         @Override

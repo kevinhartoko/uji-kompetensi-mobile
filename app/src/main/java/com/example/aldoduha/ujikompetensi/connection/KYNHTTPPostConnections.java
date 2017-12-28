@@ -67,7 +67,6 @@ public abstract class KYNHTTPPostConnections extends AsyncTask<Void, String, Str
         try {
             String url = getRestUrl();
             String request = generateRequest();
-//            Map<String, String> customHeaders = getCustomHeaders(url, request);
             result = KYNHttpPostRest.postData(url, request);
         } catch (Exception e) {
             e.printStackTrace();
@@ -75,7 +74,6 @@ public abstract class KYNHTTPPostConnections extends AsyncTask<Void, String, Str
         return result;
     }
 
-    int[] asd = new int[4];
     @Override
     protected void onPostExecute(String result) {
         try {
@@ -658,41 +656,6 @@ public abstract class KYNHTTPPostConnections extends AsyncTask<Void, String, Str
         }
 
         return responseString;
-    }
-
-//    protected String generateSignature(String relativeUrl, String reqBodyString, String timestamp) {
-//        try {
-//            StringBuilder sb = new StringBuilder();
-//            sb.append("POST").append(KYNConstants.COLON).append(relativeUrl).append(KYNConstants.COLON);
-//            sb.append(KYNConstants.BTPN_API_KEY_VALUE).append(KYNConstants.COLON).append(timestamp);
-//            sb.append(KYNConstants.COLON).append(reqBodyString);
-//            String sbTrim = sb.toString().replaceAll("\\s", "");
-//            Mac mac = Mac.getInstance(KYNConstants.HMAC_256);
-//            mac.init(new SecretKeySpec(session.getSecret().getBytes(), KYNConstants.HMAC_256));
-//            byte[] byteResult = mac.doFinal(sbTrim.getBytes());
-//            return new String(Base64.encodeBase64(byteResult));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return "";
-//    }
-
-//    protected Map<String, String> getCustomHeaders(String url, String requestBody) {
-//        Map<String, String> map = new HashMap<>();
-//        String timestamp = new SimpleDateFormat(KYNConstants.HMAC_DATE_PATTERN).format(Calendar.getInstance().getTime());
-//        map.put(KYNJSONKey.BTPN_API_KEY, KYNConstants.BTPN_API_KEY_VALUE);
-//        map.put(KYNJSONKey.BTPN_TIMESTAMP, timestamp);
-//        map.put(KYNJSONKey.BTPN_JWT, session.getJwt());
-//        map.put(KYNJSONKey.BTPN_SIGNATURE, generateSignature(relativizeURL(url), requestBody, timestamp));
-//        return map;
-//    }
-
-    private static String relativizeURL(String url) {
-        try {
-            String context = KYNSMPUtilities.requestType+KYNSMPUtilities.host+":"+KYNSMPUtilities.port;
-            return url.substring(context.length(), url.length());
-        } catch (Exception e) {}
-        return "";
     }
 
     protected abstract Bundle generateBundleOnRequestSuccess(String responseString) throws JSONException;

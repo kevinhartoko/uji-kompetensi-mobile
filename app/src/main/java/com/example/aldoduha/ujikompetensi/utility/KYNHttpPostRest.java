@@ -30,7 +30,6 @@ public class KYNHttpPostRest {
     public static final String HEADER_CONTENT_TYPE_KEY = "Content-Type";
     public static final String HEADER_CONTENT_LENGTH = "Content-Length";
     public static final String POST_METHOD = "POST";
-    public static final String GET_METHOD = "GET";
 
     public static StringBuilder inputStreamToString(InputStream is) throws IOException {
         String line = null;
@@ -40,82 +39,6 @@ public class KYNHttpPostRest {
 
         while ((line = br.readLine()) != null)
             result.append(line);
-
-        return result;
-    }
-
-    public static String getData(String postURI) throws Exception {
-        return getData(postURI, null);
-    }
-
-    public static String getDataHttp(String postURI, Map<String, String> customHeader) throws Exception {
-        String result = null;
-
-        HttpURLConnection httpConn = null;
-        try {
-            if(KYNIntentConstant.isUseGateway && postURI.startsWith("https")) {
-                httpConn = startPinning(postURI, "GET");
-            } else {
-                URL url = new URL(postURI);
-                httpConn = (HttpURLConnection) url.openConnection();
-            }
-            httpConn.setRequestProperty(HEADER_CONTENT_TYPE_KEY, HEADER_CONTENT_TYPE_URL_ENCODED);
-            if (customHeader != null) {
-                for(String key : customHeader.keySet()) {
-                    httpConn.setRequestProperty(key, customHeader.get(key));
-                }
-            }
-
-            int responseCode = httpConn.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                InputStream content = httpConn.getInputStream();
-                result = KYNHttpPostRest.inputStreamToString(content).toString();
-            }
-            else {
-                throw new IOException("Connection to server failed: " + responseCode + " "
-                        + httpConn.getResponseMessage());
-            }
-        }
-        finally {
-            if (httpConn != null)
-                httpConn.disconnect();
-        }
-
-        return result;
-    }
-
-    public static String getData(String postURI, Map<String, String> customHeader) throws Exception {
-        String result = null;
-
-        HttpsURLConnection httpConn = null;
-        try {
-            if(KYNIntentConstant.isUseGateway && postURI.startsWith("https")) {
-                httpConn = startPinning(postURI, "GET");
-            } else {
-                URL url = new URL(postURI);
-                httpConn = (HttpsURLConnection) url.openConnection();
-            }
-            httpConn.setRequestProperty(HEADER_CONTENT_TYPE_KEY, HEADER_CONTENT_TYPE_URL_ENCODED);
-            if (customHeader != null) {
-                for(String key : customHeader.keySet()) {
-                    httpConn.setRequestProperty(key, customHeader.get(key));
-                }
-            }
-
-            int responseCode = httpConn.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                InputStream content = httpConn.getInputStream();
-                result = KYNHttpPostRest.inputStreamToString(content).toString();
-            }
-            else {
-                throw new IOException("Connection to server failed: " + responseCode + " "
-                        + httpConn.getResponseMessage());
-            }
-        }
-        finally {
-            if (httpConn != null)
-                httpConn.disconnect();
-        }
 
         return result;
     }

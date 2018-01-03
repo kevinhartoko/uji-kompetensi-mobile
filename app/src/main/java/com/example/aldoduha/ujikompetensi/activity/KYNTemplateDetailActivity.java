@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.InputType;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -74,6 +75,7 @@ public class KYNTemplateDetailActivity extends KYNBaseActivity {
             templateModel = database.getTemplate(templateId);
         }else{
             templateModel = new KYNTemplateModel();
+            buttonHapus.setVisibility(View.GONE);
         }
         controller = new KYNTemplateDetailController(this);
         if(templateId!=null && templateId!=0){

@@ -3,6 +3,7 @@ package com.example.aldoduha.ujikompetensi.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -74,6 +75,7 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
             questionModel = database.getQuestion(questionId);
         }else{
             questionModel = new KYNQuestionModel();
+            buttonHapus.setVisibility(View.GONE);
         }
         controller = new KYNQuestionDetailController(this);
         buttonLanjut.setOnClickListener(controller);

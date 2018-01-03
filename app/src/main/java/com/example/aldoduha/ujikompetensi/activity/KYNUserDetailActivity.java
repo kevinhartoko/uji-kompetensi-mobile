@@ -3,6 +3,7 @@ package com.example.aldoduha.ujikompetensi.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -74,6 +75,7 @@ public class KYNUserDetailActivity extends KYNBaseActivity{
             userModel = database.getUser(userId);
         }else{
             userModel = new KYNUserModel();
+            buttonHapus.setVisibility(View.GONE);
         }
         controller = new KYNUserDetailController(this);
         buttonLanjut.setOnClickListener(controller);

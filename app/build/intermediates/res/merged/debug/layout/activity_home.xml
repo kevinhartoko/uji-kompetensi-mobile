@@ -10,7 +10,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Jawab Pertanyaan"
+            android:text="Answer Question"
             android:id="@+id/btnJawabPertanyaan"
             android:textAllCaps="false"/>
     </LinearLayout>
@@ -18,7 +18,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="List Interviewee"
+        android:text="Interviewee Management"
         android:id="@+id/btnListInterviewee"
         android:textAllCaps="false"/>
 

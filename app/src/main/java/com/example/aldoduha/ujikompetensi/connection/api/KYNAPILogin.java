@@ -9,6 +9,8 @@ import com.example.aldoduha.ujikompetensi.connection.listener.KYNConnectionListe
 import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 import com.example.aldoduha.ujikompetensi.utility.KYNJSONKey;
+import com.sap.smp.rest.ClientConnection;
+import com.sap.smp.rest.SMPClientListeners;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,7 +20,6 @@ import org.json.JSONObject;
  */
 
 public class KYNAPILogin extends KYNHTTPPostConnections {
-    private String loginUrl = "";
     private KYNUserModel userModel;
 
     public KYNAPILogin(Context applicationContext, KYNConnectionListener listener) {
@@ -99,11 +100,6 @@ public class KYNAPILogin extends KYNHTTPPostConnections {
         return null;
     }
 
-    @Override
-    protected String getAddtionalURL() {
-        loginUrl = "Login";
-        return loginUrl;
-    }
 
     @Override
     protected String getRestUrl() {
@@ -114,35 +110,6 @@ public class KYNAPILogin extends KYNHTTPPostConnections {
             url = KYNSMPUtilities.requestType + KYNSMPUtilities.host + "/" + KYNSMPUtilities.appIdLoginRest;
         }
         return url;
-    }
-
-    @Override
-    protected String getFullUrl() {
-        String url;
-        if (KYNSMPUtilities.port != null) {
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+":"+KYNSMPUtilities.port+"/"+KYNSMPUtilities.appIdLogin +"/"+ getAddtionalURL();
-        }else{
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+"/"+KYNSMPUtilities.appIdLogin +"/"+ getAddtionalURL();
-        }
-
-        return url;
-    }
-
-    @Override
-    protected String getGetUrl() {
-        String url;
-        if (KYNSMPUtilities.port != null) {
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+":"+KYNSMPUtilities.port+"/"+KYNSMPUtilities.appIdLogin;
-        }else{
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+"/"+KYNSMPUtilities.appIdLogin;
-        }
-
-        return url;
-    }
-
-    @Override
-    protected boolean isUseFileUploadUrl() {
-        return false;
     }
 
     public void setData(KYNUserModel userModel){

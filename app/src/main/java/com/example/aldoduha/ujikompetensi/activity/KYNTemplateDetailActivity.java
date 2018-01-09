@@ -75,7 +75,7 @@ public class KYNTemplateDetailActivity extends KYNBaseActivity {
             templateModel = database.getTemplate(templateId);
         }else{
             templateModel = new KYNTemplateModel();
-            buttonHapus.setVisibility(View.GONE);
+            buttonHapusTemplate.setVisibility(View.GONE);
         }
         controller = new KYNTemplateDetailController(this);
         if(templateId!=null && templateId!=0){

@@ -18,7 +18,6 @@ import org.json.JSONObject;
  */
 
 public class KYNAPIGenerateQuestion extends KYNHTTPPostConnections {
-    private String generateQuestionUrl = "";
     private KYNUserModel userModel;
     private String template;
 
@@ -89,11 +88,6 @@ public class KYNAPIGenerateQuestion extends KYNHTTPPostConnections {
         return null;
     }
 
-    @Override
-    protected String getAddtionalURL() {
-        generateQuestionUrl = "GenerateQuestion";
-        return generateQuestionUrl;
-    }
 
     @Override
     protected String getRestUrl() {
@@ -104,35 +98,6 @@ public class KYNAPIGenerateQuestion extends KYNHTTPPostConnections {
             url = KYNSMPUtilities.requestType + KYNSMPUtilities.host + "/" + KYNSMPUtilities.appIdGenerateQuestionRest;
         }
         return url;
-    }
-
-    @Override
-    protected String getFullUrl() {
-        String url;
-        if (KYNSMPUtilities.port != null) {
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+":"+KYNSMPUtilities.port+"/"+KYNSMPUtilities.appIdGenerateQuestion +"/"+ getAddtionalURL();
-        }else{
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+"/"+KYNSMPUtilities.appIdGenerateQuestion +"/"+ getAddtionalURL();
-        }
-
-        return url;
-    }
-
-    @Override
-    protected String getGetUrl() {
-        String url;
-        if (KYNSMPUtilities.port != null) {
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+":"+KYNSMPUtilities.port+"/"+KYNSMPUtilities.appIdGenerateQuestion;
-        }else{
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+"/"+KYNSMPUtilities.appIdGenerateQuestion;
-        }
-
-        return url;
-    }
-
-    @Override
-    protected boolean isUseFileUploadUrl() {
-        return false;
     }
 
     public void setData(KYNUserModel userModel, String template){

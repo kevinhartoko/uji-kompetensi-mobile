@@ -97,12 +97,6 @@ public class KYNAPISubmitFeedback extends KYNHTTPPostConnections {
     }
 
     @Override
-    protected String getAddtionalURL() {
-        submitFeedbackUrl = "SubmitFeedback";
-        return submitFeedbackUrl;
-    }
-
-    @Override
     protected String getRestUrl() {
         String url;
         if (KYNSMPUtilities.port != null) {
@@ -111,35 +105,6 @@ public class KYNAPISubmitFeedback extends KYNHTTPPostConnections {
             url = KYNSMPUtilities.requestType + KYNSMPUtilities.host + "/" + KYNSMPUtilities.appIdSubmitFeedbackRest;
         }
         return url;
-    }
-
-    @Override
-    protected String getFullUrl() {
-        String url;
-        if (KYNSMPUtilities.port != null) {
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+":"+KYNSMPUtilities.port+"/"+KYNSMPUtilities.appIdSubmitFeedback +"/"+ getAddtionalURL();
-        }else{
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+"/"+KYNSMPUtilities.appIdSubmitFeedback +"/"+ getAddtionalURL();
-        }
-
-        return url;
-    }
-
-    @Override
-    protected String getGetUrl() {
-        String url;
-        if (KYNSMPUtilities.port != null) {
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+":"+KYNSMPUtilities.port+"/"+KYNSMPUtilities.appIdSubmitFeedback;
-        }else{
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+"/"+KYNSMPUtilities.appIdSubmitFeedback;
-        }
-
-        return url;
-    }
-
-    @Override
-    protected boolean isUseFileUploadUrl() {
-        return false;
     }
 
     public void setData(String username, KYNFeedbackModel feedbackModel){

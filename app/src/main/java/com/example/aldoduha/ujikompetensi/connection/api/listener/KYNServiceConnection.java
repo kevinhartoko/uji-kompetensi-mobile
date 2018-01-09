@@ -72,7 +72,6 @@ public class KYNServiceConnection extends Service {
     public void onCreate() {
         super.onCreate();
 
-//        System.loadLibrary("stlport_shared");
         SQLiteDatabase.loadLibs(getApplicationContext());
 
         database = new KYNDatabaseHelper(getApplicationContext());

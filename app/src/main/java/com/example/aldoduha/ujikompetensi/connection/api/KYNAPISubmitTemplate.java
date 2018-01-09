@@ -24,7 +24,6 @@ import java.util.List;
  */
 
 public class KYNAPISubmitTemplate extends KYNHTTPPostConnections {
-    private String submitTemplateUrl = "";
     private String username;
     private KYNTemplateModel templateModel;
     private KYNDatabaseHelper database;
@@ -102,12 +101,6 @@ public class KYNAPISubmitTemplate extends KYNHTTPPostConnections {
     }
 
     @Override
-    protected String getAddtionalURL() {
-        submitTemplateUrl = "SubmitTemplate";
-        return submitTemplateUrl;
-    }
-
-    @Override
     protected String getRestUrl() {
         String url;
         if (KYNSMPUtilities.port != null) {
@@ -116,35 +109,6 @@ public class KYNAPISubmitTemplate extends KYNHTTPPostConnections {
             url = KYNSMPUtilities.requestType + KYNSMPUtilities.host + "/" + KYNSMPUtilities.appIdSubmitTemplateRest;
         }
         return url;
-    }
-
-    @Override
-    protected String getFullUrl() {
-        String url;
-        if (KYNSMPUtilities.port != null) {
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+":"+KYNSMPUtilities.port+"/"+KYNSMPUtilities.appIdSubmitTemplate +"/"+ getAddtionalURL();
-        }else{
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+"/"+KYNSMPUtilities.appIdSubmitTemplate +"/"+ getAddtionalURL();
-        }
-
-        return url;
-    }
-
-    @Override
-    protected String getGetUrl() {
-        String url;
-        if (KYNSMPUtilities.port != null) {
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+":"+KYNSMPUtilities.port+"/"+KYNSMPUtilities.appIdSubmitTemplate;
-        }else{
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+"/"+KYNSMPUtilities.appIdSubmitTemplate;
-        }
-
-        return url;
-    }
-
-    @Override
-    protected boolean isUseFileUploadUrl() {
-        return false;
     }
 
     public void setData(String username, KYNTemplateModel templateModel){

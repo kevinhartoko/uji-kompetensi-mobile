@@ -18,7 +18,6 @@ import org.json.JSONObject;
  */
 
 public class KYNAPIUserList extends KYNHTTPPostConnections {
-    private String userListUrl = "";
     private KYNUserModel userModel;
 
     public KYNAPIUserList(Context applicationContext, KYNConnectionListener listener) {
@@ -88,12 +87,6 @@ public class KYNAPIUserList extends KYNHTTPPostConnections {
     }
 
     @Override
-    protected String getAddtionalURL() {
-        userListUrl = "UserList";
-        return userListUrl;
-    }
-
-    @Override
     protected String getRestUrl() {
         String url;
         if (KYNSMPUtilities.port != null) {
@@ -102,35 +95,6 @@ public class KYNAPIUserList extends KYNHTTPPostConnections {
             url = KYNSMPUtilities.requestType + KYNSMPUtilities.host + "/" + KYNSMPUtilities.appIdUserListRest;
         }
         return url;
-    }
-
-    @Override
-    protected String getFullUrl() {
-        String url;
-        if (KYNSMPUtilities.port != null) {
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+":"+KYNSMPUtilities.port+"/"+KYNSMPUtilities.appIdUserList +"/"+ getAddtionalURL();
-        }else{
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+"/"+KYNSMPUtilities.appIdUserList +"/"+ getAddtionalURL();
-        }
-
-        return url;
-    }
-
-    @Override
-    protected String getGetUrl() {
-        String url;
-        if (KYNSMPUtilities.port != null) {
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+":"+KYNSMPUtilities.port+"/"+KYNSMPUtilities.appIdUserList;
-        }else{
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+"/"+KYNSMPUtilities.appIdUserList;
-        }
-
-        return url;
-    }
-
-    @Override
-    protected boolean isUseFileUploadUrl() {
-        return false;
     }
 
     public void setData(KYNUserModel userModel){

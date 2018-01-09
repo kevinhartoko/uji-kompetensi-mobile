@@ -43,88 +43,17 @@ public class KYNHttpPostRest {
         return result;
     }
 
-    private static HttpsURLConnection startPinning(String postURI, String httpMethod) throws Exception {
-        HttpsURLConnection httpConn = null;
-        X509TrustManager easyTrustManager = new X509TrustManager() {
-            public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-                System.out.println("here");
-            }
-            public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-                boolean isValid = false;
-                for (int i = 0; i < chain.length; i++) {
-                    RSAPublicKey pubkey = (RSAPublicKey) chain[i].getPublicKey();
-                    String encoded = new BigInteger(1, pubkey.getEncoded()).toString(16);
-                    System.out.println(encoded);
-                    if (KYNIntentConstant.SSL_PUBLIC_KEY.equalsIgnoreCase(encoded)) {
-                        isValid = true;
-                        break;
-                    }
-                }
-                if(!isValid) {
-                    throw new IllegalArgumentException("public key invalid");
-                }
-            }
-            public X509Certificate[] getAcceptedIssuers() {
-                return new X509Certificate[0];
-            }
-        };
-        try {
-            SSLContext sc = SSLContext.getInstance("TLSv1");
-            httpConn = makeAConnection(postURI, httpMethod);
-            sc.init(null, new X509TrustManager[]{easyTrustManager}, new java.security.SecureRandom());
-            httpConn.setDefaultSSLSocketFactory(sc.getSocketFactory());
-            if(!KYNSMPUtilities.isHandShake) {
-                httpConn.connect();
-                KYNSMPUtilities.isHandShake = true;
-                SSLContext sc1 = SSLContext.getInstance("TLSv1");
-                httpConn = makeAConnection(postURI, httpMethod);
-                sc1.init(null, new X509TrustManager[]{easyTrustManager}, new java.security.SecureRandom());
-                httpConn.setDefaultSSLSocketFactory(sc1.getSocketFactory());
-            }
-            return httpConn;
-        } catch (SSLHandshakeException ex) {
-            httpConn.disconnect();
-            if(!KYNSMPUtilities.isHandShake) {
-                KYNSMPUtilities.isHandShake = true;
-                SSLContext sc = SSLContext.getInstance("TLSv1");
-                httpConn = makeAConnection(postURI, httpMethod);
-                sc.init(null, new X509TrustManager[]{easyTrustManager}, new java.security.SecureRandom());
-                httpConn.setDefaultSSLSocketFactory(sc.getSocketFactory());
-                return httpConn;
-            } else {
-                throw ex;
-            }
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-
-    private static HttpsURLConnection makeAConnection(String postURI, String httpMethod) throws Exception {
-        URL url = new URL(postURI);
-        URLConnection conn = url.openConnection();
-        if(httpMethod != null && httpMethod.equalsIgnoreCase("POST")) {
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-        }
-        HttpsURLConnection httpConn = (HttpsURLConnection) conn;
-        return httpConn;
-    }
-
     public static String postData(String postURI, String data) throws Exception {
         String result = null;
         byte[] bytesOfData = data.getBytes();
         String contentLength = String.valueOf(bytesOfData.length);
         HttpURLConnection httpConn = null;
         try {
-            if(KYNIntentConstant.isUseGateway && postURI.toString().startsWith("https")) {
-                httpConn = startPinning(postURI, "POST");
-            } else {
-                URL url = new URL(postURI);
-                URLConnection conn = url.openConnection();
-                conn.setDoInput(true);
-                conn.setDoOutput(true);
-                httpConn = (HttpURLConnection) conn;
-            }
+            URL url = new URL(postURI);
+            URLConnection conn = url.openConnection();
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+            httpConn = (HttpURLConnection) conn;
             httpConn.setRequestMethod(POST_METHOD);
             httpConn.setRequestProperty(HEADER_CONTENT_TYPE_KEY, HEADER_CONTENT_TYPE_URL_ENCODED);
             httpConn.setRequestProperty(HEADER_CONTENT_LENGTH, contentLength);

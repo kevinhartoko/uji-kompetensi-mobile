@@ -19,7 +19,6 @@ import org.json.JSONObject;
  */
 
 public class KYNAPIIntervieweeDetail extends KYNHTTPPostConnections {
-    private String intervieweeDetailUrl = "";
     private KYNIntervieweeModel intervieweeModel;
     private String username ="";
 
@@ -91,12 +90,6 @@ public class KYNAPIIntervieweeDetail extends KYNHTTPPostConnections {
     }
 
     @Override
-    protected String getAddtionalURL() {
-        intervieweeDetailUrl = "IntervieweeDetail";
-        return intervieweeDetailUrl;
-    }
-
-    @Override
     protected String getRestUrl() {
         String url;
         if (KYNSMPUtilities.port != null) {
@@ -105,39 +98,5 @@ public class KYNAPIIntervieweeDetail extends KYNHTTPPostConnections {
             url = KYNSMPUtilities.requestType + KYNSMPUtilities.host + "/" + KYNSMPUtilities.appIdIntervieweeDetailRest;
         }
         return url;
-    }
-
-    @Override
-    protected String getFullUrl() {
-        String url;
-        if (KYNSMPUtilities.port != null) {
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+":"+KYNSMPUtilities.port+"/"+KYNSMPUtilities.appIdIntervieweeDetail +"/"+ getAddtionalURL();
-        }else{
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+"/"+KYNSMPUtilities.appIdIntervieweeDetail +"/"+ getAddtionalURL();
-        }
-
-        return url;
-    }
-
-    @Override
-    protected String getGetUrl() {
-        String url;
-        if (KYNSMPUtilities.port != null) {
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+":"+KYNSMPUtilities.port+"/"+KYNSMPUtilities.appIdIntervieweeDetail;
-        }else{
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+"/"+KYNSMPUtilities.appIdIntervieweeDetail;
-        }
-
-        return url;
-    }
-
-    @Override
-    protected boolean isUseFileUploadUrl() {
-        return false;
-    }
-
-    public void setData(KYNIntervieweeModel intervieweeModel, String username){
-        this.intervieweeModel = intervieweeModel;
-        this.username = username;
     }
 }

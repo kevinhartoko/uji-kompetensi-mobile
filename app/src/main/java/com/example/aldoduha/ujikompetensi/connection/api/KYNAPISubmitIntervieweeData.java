@@ -24,7 +24,6 @@ import java.util.List;
  */
 
 public class KYNAPISubmitIntervieweeData extends KYNHTTPPostConnections {
-    private String submitIntervieweeDataUrl = "";
     private String username;
     private KYNIntervieweeModel intervieweeModel;
     private KYNDatabaseHelper database;
@@ -102,12 +101,6 @@ public class KYNAPISubmitIntervieweeData extends KYNHTTPPostConnections {
     }
 
     @Override
-    protected String getAddtionalURL() {
-        submitIntervieweeDataUrl = "SubmitIntervieweeData";
-        return submitIntervieweeDataUrl;
-    }
-
-    @Override
     protected String getRestUrl() {
         String url;
         if (KYNSMPUtilities.port != null) {
@@ -116,35 +109,6 @@ public class KYNAPISubmitIntervieweeData extends KYNHTTPPostConnections {
             url = KYNSMPUtilities.requestType + KYNSMPUtilities.host + "/" + KYNSMPUtilities.appIdSubmitIntervieweeDataRest;
         }
         return url;
-    }
-
-    @Override
-    protected String getFullUrl() {
-        String url;
-        if (KYNSMPUtilities.port != null) {
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+":"+KYNSMPUtilities.port+"/"+KYNSMPUtilities.appIdSubmitIntervieweeData +"/"+ getAddtionalURL();
-        }else{
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+"/"+KYNSMPUtilities.appIdSubmitIntervieweeData +"/"+ getAddtionalURL();
-        }
-
-        return url;
-    }
-
-    @Override
-    protected String getGetUrl() {
-        String url;
-        if (KYNSMPUtilities.port != null) {
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+":"+KYNSMPUtilities.port+"/"+KYNSMPUtilities.appIdSubmitIntervieweeData;
-        }else{
-            url = KYNSMPUtilities.requestType+KYNSMPUtilities.host+"/"+KYNSMPUtilities.appIdSubmitIntervieweeData;
-        }
-
-        return url;
-    }
-
-    @Override
-    protected boolean isUseFileUploadUrl() {
-        return false;
     }
 
     public void setData(String username, KYNIntervieweeModel intervieweeModel){

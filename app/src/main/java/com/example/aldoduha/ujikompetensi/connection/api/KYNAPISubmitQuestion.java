@@ -70,9 +70,7 @@ public class KYNAPISubmitQuestion extends KYNHTTPPostConnections {
             Gson gson = new GsonBuilder().setDateFormat(KYNIntentConstant.DATE_FORMAT).create();
 
             String question = gson.toJson(questionModel);
-            JSONObject json = new JSONObject();
-            json.put(KYNJSONKey.KEY_USERNAME, username);
-            json.put(KYNJSONKey.KEY_JSON, question);
+            JSONObject json = new JSONObject(question);
             return json.toString();
         } catch (JSONException e) {
 

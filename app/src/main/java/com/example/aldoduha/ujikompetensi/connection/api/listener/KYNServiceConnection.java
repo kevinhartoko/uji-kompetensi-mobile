@@ -9,6 +9,10 @@ import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
+import com.example.aldoduha.ujikompetensi.connection.api.KYNAPIDeleteFeedback;
+import com.example.aldoduha.ujikompetensi.connection.api.KYNAPIDeleteQuestion;
+import com.example.aldoduha.ujikompetensi.connection.api.KYNAPIDeleteTemplate;
+import com.example.aldoduha.ujikompetensi.connection.api.KYNAPIDeleteUser;
 import com.example.aldoduha.ujikompetensi.connection.api.KYNAPIGenerateQuestion;
 import com.example.aldoduha.ujikompetensi.connection.api.KYNAPIIntervieweeDetail;
 import com.example.aldoduha.ujikompetensi.connection.api.KYNAPIIntervieweeList;
@@ -22,6 +26,10 @@ import com.example.aldoduha.ujikompetensi.connection.api.KYNAPISubmitTemplate;
 import com.example.aldoduha.ujikompetensi.connection.api.KYNAPISubmitUser;
 import com.example.aldoduha.ujikompetensi.connection.api.KYNAPITemplateList;
 import com.example.aldoduha.ujikompetensi.connection.api.KYNAPIUserList;
+import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPIDeleteFeedbackListener;
+import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPIDeleteQuestionListener;
+import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPIDeleteTemplateListener;
+import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPIDeleteUserListener;
 import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPIGenerateQuestionListener;
 import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPIIntervieweeDetailListener;
 import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPIIntervieweeListListener;
@@ -116,6 +124,14 @@ public class KYNServiceConnection extends Service {
             requestSubmitIntervieweeData(intent);
         }else if (intent.getAction().equals(KYNIntentConstant.ACTION_INTERVIEWEE_DETAIL)) {
             requestIntervieweeDetail(intent);
+        }else if (intent.getAction().equals(KYNIntentConstant.ACTION_DELETE_QUESTION)) {
+            requestDeleteQuestion(intent);
+        }else if (intent.getAction().equals(KYNIntentConstant.ACTION_DELETE_USER)) {
+            requestDeleteUser(intent);
+        }else if (intent.getAction().equals(KYNIntentConstant.ACTION_DELETE_TEMPLATE)) {
+            requestDeleteTemplate(intent);
+        }else if (intent.getAction().equals(KYNIntentConstant.ACTION_DELETE_FEEDBACK)) {
+            requestDeleteFeedback(intent);
         }
 
         return super.onStartCommand(intent, flags, startId);
@@ -228,8 +244,40 @@ public class KYNServiceConnection extends Service {
         String username = intent.getStringExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME);
 
         KYNAPIIntervieweeDetail requestIntervieweeDetail = new KYNAPIIntervieweeDetail(getApplicationContext(), new KYNAPIIntervieweeDetailListener());
-        requestIntervieweeDetail.setData(intervieweeModel, username);
+        requestIntervieweeDetail.setData(username, intervieweeModel);
         requestIntervieweeDetail.execute();
+    }
+    private void requestDeleteQuestion(Intent intent){
+        KYNQuestionModel questionModel = (KYNQuestionModel) intent.getSerializableExtra(KYNIntentConstant.INTENT_EXTRA_DATA);
+        String username = intent.getStringExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME);
+
+        KYNAPIDeleteQuestion requestDeleteQuestion = new KYNAPIDeleteQuestion(getApplicationContext(), new KYNAPIDeleteQuestionListener());
+        requestDeleteQuestion.setData(username, questionModel);
+        requestDeleteQuestion.execute();
+    }
+    private void requestDeleteUser(Intent intent){
+        KYNUserModel userModel = (KYNUserModel) intent.getSerializableExtra(KYNIntentConstant.INTENT_EXTRA_DATA);
+        String username = intent.getStringExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME);
+
+        KYNAPIDeleteUser requestDeleteUser = new KYNAPIDeleteUser(getApplicationContext(), new KYNAPIDeleteUserListener());
+        requestDeleteUser.setData(username, userModel);
+        requestDeleteUser.execute();
+    }
+    private void requestDeleteTemplate(Intent intent){
+        KYNTemplateModel templateModel = (KYNTemplateModel) intent.getSerializableExtra(KYNIntentConstant.INTENT_EXTRA_DATA);
+        String username = intent.getStringExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME);
+
+        KYNAPIDeleteTemplate requestDeleteTemplate = new KYNAPIDeleteTemplate(getApplicationContext(), new KYNAPIDeleteTemplateListener());
+        requestDeleteTemplate.setData(username, templateModel);
+        requestDeleteTemplate.execute();
+    }
+    private void requestDeleteFeedback(Intent intent){
+        KYNFeedbackModel feedbackModel = (KYNFeedbackModel) intent.getSerializableExtra(KYNIntentConstant.INTENT_EXTRA_DATA);
+        String username = intent.getStringExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME);
+
+        KYNAPIDeleteFeedback requestDeleteFeedback = new KYNAPIDeleteFeedback(getApplicationContext(), new KYNAPIDeleteFeedbackListener());
+        requestDeleteFeedback.setData(username, feedbackModel);
+        requestDeleteFeedback.execute();
     }
 
 //    private void startTimeCounterForClearData(){

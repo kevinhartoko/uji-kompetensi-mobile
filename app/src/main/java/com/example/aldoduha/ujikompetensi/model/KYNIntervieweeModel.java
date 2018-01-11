@@ -1,6 +1,12 @@
 package com.example.aldoduha.ujikompetensi.model;
 
+import com.example.aldoduha.ujikompetensi.utility.KYNJSONKey;
+
+import org.json.JSONObject;
+
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -10,15 +16,53 @@ import java.util.List;
 
 public class KYNIntervieweeModel  implements Serializable {
     private Long id;
-    private Long serverId;
+    private String serverId;
     private String nama;
     private String email;
     private String handphone;
     private String address;
     private Date dob;
     private String gender;
+    private int score;
     //untuk kirim data
     private List<KYNQuestionModel> questionModels;
+
+    public KYNIntervieweeModel(){
+
+    }
+
+    public KYNIntervieweeModel(JSONObject object){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+        try {
+            if(object.has(KYNJSONKey.KEY_SERVER_ID))
+                setServerId(object.getString(KYNJSONKey.KEY_SERVER_ID));
+            if(object.has(KYNJSONKey.KEY_INTERVIEWEE_NAME))
+                setNama(object.getString(KYNJSONKey.KEY_INTERVIEWEE_NAME));
+            if(object.has(KYNJSONKey.KEY_INTERVIEWEE_EMAIL))
+                setEmail(object.getString(KYNJSONKey.KEY_INTERVIEWEE_EMAIL));
+            if(object.has(KYNJSONKey.KEY_INTERVIEWEE_PHONE))
+                setHandphone(object.getString(KYNJSONKey.KEY_INTERVIEWEE_PHONE));
+//            if(object.has(KYNJSONKey.KEY_INTERVIEWEE_ADDRESS))
+//                setAddress(object.getString(KYNJSONKey.KEY_INTERVIEWEE_ADDRESS));
+            if(object.has(KYNJSONKey.KEY_INTERVIEWEE_DOB)) {
+                String date = object.getString(KYNJSONKey.KEY_INTERVIEWEE_DOB);
+                if(date != null && !date.equals("")) {
+                    try {
+                        setDob(dateFormat.parse(date));
+                    }catch (ParseException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+            if(object.has(KYNJSONKey.KEY_INTERVIEWEE_GENDER))
+                setGender(object.getString(KYNJSONKey.KEY_INTERVIEWEE_GENDER));
+            if(object.has(KYNJSONKey.KEY_INTERVIEWEE_SCORE))
+                setScore(object.getInt(KYNJSONKey.KEY_INTERVIEWEE_SCORE));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     public Long getId() {
         return id;
@@ -76,11 +120,11 @@ public class KYNIntervieweeModel  implements Serializable {
         this.gender = gender;
     }
 
-    public Long getServerId() {
+    public String getServerId() {
         return serverId;
     }
 
-    public void setServerId(Long serverId) {
+    public void setServerId(String serverId) {
         this.serverId = serverId;
     }
 
@@ -90,5 +134,13 @@ public class KYNIntervieweeModel  implements Serializable {
 
     public void setQuestionModels(List<KYNQuestionModel> questionModels) {
         this.questionModels = questionModels;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }

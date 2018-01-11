@@ -1,5 +1,9 @@
 package com.example.aldoduha.ujikompetensi.model;
 
+import com.example.aldoduha.ujikompetensi.utility.KYNJSONKey;
+
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 /**
@@ -8,7 +12,7 @@ import java.io.Serializable;
 
 public class KYNQuestionModel  implements Serializable {
     private Long id;
-    private Long serverId;
+    private String serverId;
     private String name;
     private String question;
     private String answer1;
@@ -19,6 +23,35 @@ public class KYNQuestionModel  implements Serializable {
     private String keyAnswer;
     private int bobot;
     private KYNIntervieweeModel intervieweeModel;
+
+    public KYNQuestionModel(){
+
+    }
+
+    public KYNQuestionModel(JSONObject object){
+        try {
+            if(object.has(KYNJSONKey.KEY_SERVER_ID))
+                setServerId(object.getString(KYNJSONKey.KEY_SERVER_ID));
+            if(object.has(KYNJSONKey.KEY_QUESTION_CODE))
+                setName(object.getString(KYNJSONKey.KEY_QUESTION_CODE));
+            if(object.has(KYNJSONKey.KEY_QUESTION_DESCRIPTION))
+                setQuestion(object.getString(KYNJSONKey.KEY_QUESTION_DESCRIPTION));
+            if(object.has(KYNJSONKey.KEY_QUESTION_ANSWER_A))
+                setAnswer1(object.getString(KYNJSONKey.KEY_QUESTION_ANSWER_A));
+            if(object.has(KYNJSONKey.KEY_QUESTION_ANSWER_B))
+                setAnswer2(object.getString(KYNJSONKey.KEY_QUESTION_ANSWER_B));
+            if(object.has(KYNJSONKey.KEY_QUESTION_ANSWER_C))
+                setAnswer3(object.getString(KYNJSONKey.KEY_QUESTION_ANSWER_C));
+            if(object.has(KYNJSONKey.KEY_QUESTION_ANSWER_D))
+                setAnswer4(object.getString(KYNJSONKey.KEY_QUESTION_ANSWER_D));
+            if(object.has(KYNJSONKey.KEY_QUESTION_TRUE_ANSWER))
+                setKeyAnswer(object.getString(KYNJSONKey.KEY_QUESTION_TRUE_ANSWER));
+            if(object.has(KYNJSONKey.KEY_QUESTION_BOBOT))
+                setBobot(object.getInt(KYNJSONKey.KEY_QUESTION_BOBOT));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     public Long getId() {
         return id;
@@ -108,11 +141,11 @@ public class KYNQuestionModel  implements Serializable {
         this.bobot = bobot;
     }
 
-    public Long getServerId() {
+    public String getServerId() {
         return serverId;
     }
 
-    public void setServerId(Long serverId) {
+    public void setServerId(String serverId) {
         this.serverId = serverId;
     }
 }

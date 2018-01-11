@@ -179,9 +179,11 @@ public class KYNIntervieweeListActivity extends KYNBaseActivity {
             if(i==0) {
                 model.setNama("Richard");
                 model.setGender("L");
+                model.setScore(90);
             } else {
                 model.setNama("Natasha");
                 model.setGender("P");
+                model.setScore(100);
             }
             model.setDob(new Date());
             model.setAddress("jln sunter hijau 1 blok y1 no"+i);

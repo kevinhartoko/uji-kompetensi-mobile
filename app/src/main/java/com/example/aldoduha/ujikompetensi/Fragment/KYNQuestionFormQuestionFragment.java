@@ -21,6 +21,7 @@ import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.KYNQuestionFormActivity;
 import com.example.aldoduha.ujikompetensi.activity.controller.KYNQuestionFormQuestionController;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
+import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNInfoAlertDialogListener;
 import com.example.aldoduha.ujikompetensi.connection.KYNSMPUtilities;
 import com.example.aldoduha.ujikompetensi.connection.api.listener.KYNServiceConnection;
 import com.example.aldoduha.ujikompetensi.model.KYNIntervieweeModel;
@@ -92,6 +93,11 @@ public class KYNQuestionFormQuestionFragment extends KYNBaseFragment {
                 linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
                 linearLayout.setOrientation(LinearLayout.VERTICAL);
 
+                final TextView textViewBobot = new TextView(activity);
+                textViewBobot.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
+                textViewBobot.setText("bobot : "+model.getBobot());
+                textViewBobot.setTextSize(12);
+
                 final TextView textView = new TextView(activity);
                 textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
                 textView.setText(model.getQuestion());
@@ -148,6 +154,7 @@ public class KYNQuestionFormQuestionFragment extends KYNBaseFragment {
                 radioGroup.addView(radioButton2);
                 radioGroup.addView(radioButton3);
                 radioGroup.addView(radioButton4);
+                linearLayout.addView(textViewBobot);
                 linearLayout.addView(textView);
                 linearLayout.addView(radioGroup);
                 linearLayoutRoot.addView(linearLayout);
@@ -176,7 +183,12 @@ public class KYNQuestionFormQuestionFragment extends KYNBaseFragment {
             if(KYNSMPUtilities.isConnectServer){
                 submitIntervieweeData(activity.getIntervieweeModel());
             }else {
-                activity.finish();
+                activity.showAlertDialog("Your Score :", "95", new KYNInfoAlertDialogListener() {
+                    @Override
+                    public void onOk() {
+                        activity.finish();
+                    }
+                }, true);
             }
         }
 

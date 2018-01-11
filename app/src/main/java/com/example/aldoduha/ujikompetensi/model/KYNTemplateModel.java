@@ -1,5 +1,9 @@
 package com.example.aldoduha.ujikompetensi.model;
 
+import com.example.aldoduha.ujikompetensi.utility.KYNJSONKey;
+
+import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -9,12 +13,29 @@ import java.util.List;
 
 public class KYNTemplateModel  implements Serializable {
     private Long id;
-    private Long serverId;
+    private String serverId;
     private String nama;
     private int jumlahSoal;
 
     //untuk pengiriman data
     private List<KYNTemplateQuestionModel> templateQuestionModels;
+
+    public KYNTemplateModel(){
+
+    }
+
+    public KYNTemplateModel(JSONObject object){
+        try {
+            if(object.has(KYNJSONKey.KEY_TEMPLATE_DESCRIPTION))
+                setNama(object.getString(KYNJSONKey.KEY_TEMPLATE_DESCRIPTION));
+            if(object.has(KYNJSONKey.KEY_SERVER_ID))
+                setServerId(object.getString(KYNJSONKey.KEY_SERVER_ID));
+            if(object.has(KYNJSONKey.KEY_TEMPLATE_TOTAL_QUESTION))
+                setJumlahSoal(object.getInt(KYNJSONKey.KEY_TEMPLATE_TOTAL_QUESTION));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
 
     public Long getId() {
@@ -41,11 +62,11 @@ public class KYNTemplateModel  implements Serializable {
         this.jumlahSoal = jumlahSoal;
     }
 
-    public Long getServerId() {
+    public String getServerId() {
         return serverId;
     }
 
-    public void setServerId(Long serverId) {
+    public void setServerId(String serverId) {
         this.serverId = serverId;
     }
 

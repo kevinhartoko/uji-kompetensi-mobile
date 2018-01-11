@@ -74,6 +74,27 @@
                     android:layout_weight="0.7"
                     android:textColor="@color/black"/>
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    style="@android:style/TextAppearance.Small"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:text="Score"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/textviewScore"
+                    style="@android:style/TextAppearance.Small"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

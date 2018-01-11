@@ -1,5 +1,9 @@
 package com.example.aldoduha.ujikompetensi.model;
 
+import com.example.aldoduha.ujikompetensi.utility.KYNJSONKey;
+
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 /**
@@ -8,12 +12,33 @@ import java.io.Serializable;
 
 public class KYNUserModel implements Serializable{
     private Long id;
-    private Long serverId;
+    private String serverId;
     private String nama;
     private String username;
     private String password;
     private String role;
     private String token;
+
+    public KYNUserModel(){
+
+    }
+
+    public KYNUserModel(JSONObject object){
+        try {
+            if(object.has(KYNJSONKey.KEY_USER_NAME))
+                setNama(object.getString(KYNJSONKey.KEY_USER_NAME));
+            if(object.has(KYNJSONKey.KEY_USER_USERNAME))
+                setUsername(object.getString(KYNJSONKey.KEY_USER_USERNAME));
+            if(object.has(KYNJSONKey.KEY_USER_PASSWORD))
+                setPassword(object.getString(KYNJSONKey.KEY_USER_PASSWORD));
+            if(object.has(KYNJSONKey.KEY_USER_ROLE))
+                setRole(object.getString(KYNJSONKey.KEY_USER_ROLE));
+            if(object.has(KYNJSONKey.KEY_SERVER_ID))
+                setServerId(object.getString(KYNJSONKey.KEY_SERVER_ID));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     public Long getId() {
         return id;
@@ -63,11 +88,11 @@ public class KYNUserModel implements Serializable{
         this.token = token;
     }
 
-    public Long getServerId() {
+    public String getServerId() {
         return serverId;
     }
 
-    public void setServerId(Long serverId) {
+    public void setServerId(String serverId) {
         this.serverId = serverId;
     }
 }

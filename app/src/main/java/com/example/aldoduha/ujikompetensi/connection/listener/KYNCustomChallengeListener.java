@@ -21,9 +21,9 @@ public class KYNCustomChallengeListener implements HttpChannelListeners.ISSLChal
             String str1 = new BigInteger(1,
                     ((RSAPublicKey) paramArrayOfX509Certificate[i]
                             .getPublicKey()).getEncoded()).toString(16);
-            if (KYNIntentConstant.SSL_PUBLIC_KEY.equalsIgnoreCase(str1)) {
-                return true;
-            }
+//            if (KYNIntentConstant.SSL_PUBLIC_KEY.equalsIgnoreCase(str1)) {
+//                return true;
+//            }
         }
     }
 

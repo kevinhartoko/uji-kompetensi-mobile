@@ -131,6 +131,24 @@
                 android:layout_weight="0.4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:text="Score :"
+                android:textColor="#FF000000"
+                android:layout_marginLeft="5dp"/>
+            <TextView
+                android:id="@+id/textViewScore"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="#FF000000"
+                android:layout_weight="0.6"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip">
+            <TextView
+                android:layout_weight="0.4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:text="Interviewee result :"
                 android:textColor="#FF000000"
                 android:layout_marginLeft="5dp"/>

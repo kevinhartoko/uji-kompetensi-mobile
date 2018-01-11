@@ -65,7 +65,6 @@ public class KYNAPIGenerateQuestion extends KYNHTTPPostConnections {
     protected String generateRequest(){
         try {
             JSONObject json = new JSONObject();
-            json.put(KYNJSONKey.KEY_USERNAME, userModel.getUsername());
             json.put(KYNJSONKey.KEY_TEMPLATE, template);
             return json.toString();
         } catch (JSONException e) {

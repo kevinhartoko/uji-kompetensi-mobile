@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.example.aldoduha.ujikompetensi.KYNBaseActivity;
 import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
@@ -18,6 +20,8 @@ import com.example.aldoduha.ujikompetensi.connection.api.listener.KYNServiceConn
 import com.example.aldoduha.ujikompetensi.model.KYNQuestionModel;
 import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
+
+import org.w3c.dom.Text;
 
 /**
  * Created by aldoduha on 11/12/2017.
@@ -31,7 +35,7 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
     private EditText editTextJawaban2;
     private EditText editTextJawaban3;
     private EditText editTextJawaban4;
-    private EditText editTextKunciJawaban;
+//    private EditText editTextKunciJawaban;
     private EditText editTextBobot;
     private Button buttonLanjut;
     private Button buttonKembali;
@@ -39,6 +43,11 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
     private KYNDatabaseHelper database;
     private Long questionId;
     private KYNQuestionModel questionModel;
+    private RadioButton radio1;
+    private RadioButton radio2;
+    private RadioButton radio3;
+    private RadioButton radio4;
+    private TextView kunciJawabanErrTextview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,11 +71,16 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
         editTextJawaban2 = (EditText)findViewById(R.id.edittextJawaban2);
         editTextJawaban3 = (EditText)findViewById(R.id.edittextJawaban3);
         editTextJawaban4 = (EditText)findViewById(R.id.edittextJawaban4);
-        editTextKunciJawaban = (EditText)findViewById(R.id.edittextKunciJawaban);
+//        editTextKunciJawaban = (EditText)findViewById(R.id.edittextKunciJawaban);
         editTextBobot = (EditText)findViewById(R.id.edittextBobot);
         buttonLanjut = (Button)findViewById(R.id.btnLanjut);
         buttonKembali = (Button)findViewById(R.id.btnKembali);
         buttonHapus = (Button)findViewById(R.id.btnHapus);
+        radio1 = (RadioButton)findViewById(R.id.radio1);
+        radio2 = (RadioButton)findViewById(R.id.radio2);
+        radio3 = (RadioButton)findViewById(R.id.radio3);
+        radio4 = (RadioButton)findViewById(R.id.radio4);
+        kunciJawabanErrTextview = (TextView)findViewById(R.id.kunciJawabanErrorTextview);
     }
 
     private void initDefaultValue(){
@@ -90,7 +104,16 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
         questionModel.setAnswer2(editTextJawaban2.getText().toString());
         questionModel.setAnswer3(editTextJawaban3.getText().toString());
         questionModel.setAnswer4(editTextJawaban4.getText().toString());
-        questionModel.setKeyAnswer(editTextKunciJawaban.getText().toString());
+        if(radio1.isChecked()){
+            questionModel.setKeyAnswer(editTextJawaban1.getText().toString());
+        }else if(radio2.isChecked()) {
+            questionModel.setKeyAnswer(editTextJawaban2.getText().toString());
+        }else if(radio3.isChecked()) {
+            questionModel.setKeyAnswer(editTextJawaban3.getText().toString());
+        }else if(radio4.isChecked()) {
+            questionModel.setKeyAnswer(editTextJawaban4.getText().toString());
+        }
+//        questionModel.setKeyAnswer(editTextKunciJawaban.getText().toString());
         questionModel.setBobot(Integer.parseInt(editTextBobot.getText().toString()));
         if(questionId==null || questionId==0){
             questionId = database.insertQuestion(questionModel);
@@ -119,7 +142,16 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
             editTextJawaban4.setText(questionModel.getAnswer4());
         }
         if(questionModel.getKeyAnswer()!=null){
-            editTextKunciJawaban.setText(questionModel.getKeyAnswer());
+//            editTextKunciJawaban.setText(questionModel.getKeyAnswer());
+            if(questionModel.getKeyAnswer().equals(questionModel.getAnswer1())){
+                radio1.setChecked(true);
+            }else if(questionModel.getKeyAnswer().equals(questionModel.getAnswer2())){
+                radio2.setChecked(true);
+            }else if(questionModel.getKeyAnswer().equals(questionModel.getAnswer3())){
+                radio3.setChecked(true);
+            }else if(questionModel.getKeyAnswer().equals(questionModel.getAnswer4())){
+                radio4.setChecked(true);
+            }
         }
         if(questionModel.getBobot()!=0){
             editTextBobot.setText(questionModel.getBobot()+"");
@@ -134,7 +166,7 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
         String jawaban2 = editTextJawaban2.getText().toString();
         String jawaban3 = editTextJawaban3.getText().toString();
         String jawaban4 = editTextJawaban4.getText().toString();
-        String kunciJawaban = editTextKunciJawaban.getText().toString();
+//        String kunciJawaban = editTextKunciJawaban.getText().toString();
         String bobot = editTextBobot.getText().toString();
         editTextKode.setError(null);
         editTextPertanyaan.setError(null);
@@ -142,7 +174,7 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
         editTextJawaban2.setError(null);
         editTextJawaban3.setError(null);
         editTextJawaban4.setError(null);
-        editTextKunciJawaban.setError(null);
+//        editTextKunciJawaban.setError(null);
         editTextBobot.setError(null);
         if (kode==null||kode.equals("")){
             editTextKode.setError(Html.fromHtml("Kode Tidak Boleh Kosong"));
@@ -168,13 +200,26 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
             editTextJawaban4.setError(Html.fromHtml("Jawaban 4 Tidak Boleh Kosong"));
             result =false;
         }
-        if(kunciJawaban==null||kunciJawaban.equals("")){
-            editTextKunciJawaban.setError(Html.fromHtml("Kunci Jawaban Tidak Boleh Kosong"));
-            result =false;
-        }
+//        if(kunciJawaban==null||kunciJawaban.equals("")){
+//            editTextKunciJawaban.setError(Html.fromHtml("Kunci Jawaban Tidak Boleh Kosong"));
+//            result =false;
+//        }
         if(bobot==null||bobot.equals("")){
-            editTextBobot.setError(Html.fromHtml("Boobot Tidak Boleh Kosong"));
+            editTextBobot.setError(Html.fromHtml("Bobot Tidak Boleh Kosong"));
             result =false;
+        }else{
+            int bobotInt = Integer.parseInt(bobot);
+            if(bobotInt<1||bobotInt>10){
+                editTextBobot.setError(Html.fromHtml("Bobot Harus bernilai 1-10"));
+                result =false;
+            }
+        }
+
+        if(!radio1.isChecked() && !radio2.isChecked() && !radio3.isChecked() && !radio4.isChecked()){
+            kunciJawabanErrTextview.setVisibility(View.VISIBLE);
+            result =false;
+        }else {
+            kunciJawabanErrTextview.setVisibility(View.GONE);
         }
         return result;
     }

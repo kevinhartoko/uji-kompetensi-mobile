@@ -44,6 +44,7 @@ public class KYNIntervieweeListAdapter extends ArrayAdapter<KYNIntervieweeModel>
         TextView dob = (TextView) convertView.findViewById(R.id.textviewDOB);
         TextView gender = (TextView)convertView.findViewById(R.id.textviewGender);
         TextView address = (TextView)convertView.findViewById(R.id.textviewAddress);
+        TextView score = (TextView)convertView.findViewById(R.id.textviewScore);
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 
         if(intervieweeModel.getNama()!=null){
@@ -63,6 +64,7 @@ public class KYNIntervieweeListAdapter extends ArrayAdapter<KYNIntervieweeModel>
         if(intervieweeModel.getAddress()!=null){
             address.setText(intervieweeModel.getAddress());
         }
+        score.setText(intervieweeModel.getScore()+"");
         return convertView;
     }
 }

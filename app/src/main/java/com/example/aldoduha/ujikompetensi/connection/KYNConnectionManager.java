@@ -2,12 +2,9 @@ package com.example.aldoduha.ujikompetensi.connection;
 
 import android.content.Context;
 
-import com.example.aldoduha.ujikompetensi.connection.listener.KYNCustomChallengeListener;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 import com.sap.mobile.lib.configuration.Preferences;
 import com.sap.mobile.lib.request.ConnectivityParameters;
-import com.sap.mobile.lib.request.HttpChannelListeners;
-import com.sap.mobile.lib.request.HttpsTrustManager;
 import com.sap.mobile.lib.request.RequestManager;
 import com.sap.mobile.lib.supportability.Logger;
 import com.sap.smp.rest.ClientConnection;
@@ -35,12 +32,13 @@ public class KYNConnectionManager {
     private Context mContext;
     public static RequestManager requestManager;
     public UserManager userManager;
-    private KYNCustomChallengeListener localCustomChallengeListener;
+//    private KYNCustomChallengeListener localCustomChallengeListener;
     public ConnectivityParameters param;
     protected DataVault dataVault;
 
     static {
-        configureNEWSIT();
+        configure();
+//        configureLocal();
     }
 
     /**
@@ -48,17 +46,28 @@ public class KYNConnectionManager {
      */
     public static void  init(){}
 
-    private static void configureNEWSIT(){
+    private static void configure(){
         KYNSMPUtilities.isHttpRequest = false;
-        KYNSMPUtilities.requestType = requestType = "https://";
-        KYNSMPUtilities.host = host = "google.co.id";
-        KYNSMPUtilities.port = port = "9501";
+        KYNSMPUtilities.requestType = requestType = "http://";
+        KYNSMPUtilities.host = host = "competency.metamorf.co.id";
+        KYNSMPUtilities.port = port = "8090";
 
         KYNSMPUtilities.portHttps = portHttps = Preferences.DEFAULT_HTTPS_PORT;
         KYNSMPUtilities.secConfig = secConfig = "UJI-KOMPETENSI";
-        dataKYN = "data.KYN";
         KYNIntentConstant.SSL_PUBLIC_KEY = "30820122300d06092a864886f70d01010105000382010f003082010a0282010100e149f7f5d57ac3047d7d72fe603e08c8ca88172b36d146e81410acb76523a710b7404f7859f1034b91f2a0d9712eb9de36dba4d9cbe4c539bfbe09f68bba6163ddfcf3aecc3dba2131fb0833f60c59ea6a6488c42e77b7cfb99271c55bedd9751479aeff120c9bbf4a15d3f62c2536fe40ba8aeee28a0de36a956cbba6036edddb7bbf3ffd78da95495393561f2bb8b1c47fad918386013b986ff8f5c2ef90380468ffcf22899299587a6826a9dca6247a79ddd3f8cf04aa729c1dfa2813e19bc48ebb4d9a1625426daa5a7acf60041365c222c6dbab0a4efde32ae98bbef6098cbd7adba3d3cc4de5bd44c32c48a7c2f92299f2394f132d4b1e98fc4766c4270203010001";
-        KYNIntentConstant.SSL_CHECK_SUM 	= "174653844";
+        dbVersion = 1;
+        KYNIntentConstant.needSS = true;
+    }
+
+    private static void configureLocal(){
+        KYNSMPUtilities.isHttpRequest = false;
+        KYNSMPUtilities.requestType = requestType = "http://";
+        KYNSMPUtilities.host = host = "192.168.1.192";
+        KYNSMPUtilities.port = port = "8090";
+
+        KYNSMPUtilities.portHttps = portHttps = Preferences.DEFAULT_HTTPS_PORT;
+        KYNSMPUtilities.secConfig = secConfig = "UJI-KOMPETENSI";
+        KYNIntentConstant.SSL_PUBLIC_KEY = "30820122300d06092a864886f70d01010105000382010f003082010a0282010100e149f7f5d57ac3047d7d72fe603e08c8ca88172b36d146e81410acb76523a710b7404f7859f1034b91f2a0d9712eb9de36dba4d9cbe4c539bfbe09f68bba6163ddfcf3aecc3dba2131fb0833f60c59ea6a6488c42e77b7cfb99271c55bedd9751479aeff120c9bbf4a15d3f62c2536fe40ba8aeee28a0de36a956cbba6036edddb7bbf3ffd78da95495393561f2bb8b1c47fad918386013b986ff8f5c2ef90380468ffcf22899299587a6826a9dca6247a79ddd3f8cf04aa729c1dfa2813e19bc48ebb4d9a1625426daa5a7acf60041365c222c6dbab0a4efde32ae98bbef6098cbd7adba3d3cc4de5bd44c32c48a7c2f92299f2394f132d4b1e98fc4766c4270203010001";
         dbVersion = 1;
         KYNIntentConstant.needSS = true;
     }
@@ -96,13 +105,13 @@ public class KYNConnectionManager {
         param.setUserPassword(KYNSMPUtilities.password);
         param.setBaseUrl(requestType + host);
         requestManager = new RequestManager(localLogger, localPreferences,param, 1);
-        localCustomChallengeListener = new KYNCustomChallengeListener();
-        requestManager.setMutualSSLChallengeListener(new HttpChannelListeners.IMutualSSLChallengeListener() {
-            public HttpsTrustManager.HttpsClientCertInfo getClientCertificate() {
-                return null;
-            }
-        });
-        requestManager.setSSLChallengeListener(localCustomChallengeListener);
+//        localCustomChallengeListener = new KYNCustomChallengeListener();
+//        requestManager.setMutualSSLChallengeListener(new HttpChannelListeners.IMutualSSLChallengeListener() {
+//            public HttpsTrustManager.HttpsClientCertInfo getClientCertificate() {
+//                return null;
+//            }
+//        });
+//        requestManager.setSSLChallengeListener(localCustomChallengeListener);
         this.clientConnection = new ClientConnection(this.mContext, appId, domain, secConfig, requestManager);
         this.clientConnection.setConnectionProfile(requestType + host);
         this.userManager = new UserManager(this.clientConnection);

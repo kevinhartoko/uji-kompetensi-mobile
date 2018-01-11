@@ -35,12 +35,14 @@ public class KYNAPILogin extends KYNHTTPPostConnections {
             String result = jsonResponse.getString(KYNJSONKey.KEY_RESULT);
 
             bundle.putString(KYNIntentConstant.BUNDLE_KEY_RESULT, result);
-            bundle.putString(KYNIntentConstant.BUNDLE_KEY_MESSAGE, jsonResponse.getString(KYNJSONKey.KEY_MESSAGE));
+            if(jsonResponse.has(KYNJSONKey.KEY_MESSAGE)){
+                bundle.putString(KYNIntentConstant.BUNDLE_KEY_MESSAGE, jsonResponse.getString(KYNJSONKey.KEY_MESSAGE));
+            }
 
             if (result.equalsIgnoreCase(KYNJSONKey.VAL_SUCCESS)) {
-                bundle.putString(KYNIntentConstant.BUNDLE_KEY_USERNAME, jsonResponse.getString(KYNJSONKey.KEY_USERNAME));
+                KYNIntentConstant.TOKEN = jsonResponse.getString(KYNJSONKey.KEY_TOKEN);
+                KYNIntentConstant.USERNAME = userModel.getUsername();
                 bundle.putString(KYNIntentConstant.BUNDLE_KEY_TOKEN, jsonResponse.getString(KYNJSONKey.KEY_TOKEN));
-                bundle.putString(KYNIntentConstant.BUNDLE_KEY_JSON, jsonResponse.getString(KYNJSONKey.KEY_JSON));
 
                 bundle.putInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_LOGIN_SUCCESS);
             }else{

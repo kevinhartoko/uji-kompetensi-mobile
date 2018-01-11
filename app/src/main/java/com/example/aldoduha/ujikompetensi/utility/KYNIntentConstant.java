@@ -6,14 +6,16 @@ package com.example.aldoduha.ujikompetensi.utility;
 
 public class    KYNIntentConstant {
     public static String SSL_PUBLIC_KEY;
-    public static String SSL_CHECK_SUM;
-    public static final boolean isUseGateway = true;
+//    public static String SSL_CHECK_SUM;
+    public static String TOKEN;
+    public static String USERNAME;
     public static boolean needSS = false;
     public static final String DATE_FORMAT = "dd-MM-yyyy";
 
     public static final String BUNDLE_KEY_LOADING_SHOW = "loading_show";
     public static final String BUNDLE_KEY_ALERT_SHOW = "alert_show";
     public static final String BUNDLE_KEY_MESSAGE = "message";
+    public static final String BUNDLE_KEY_SCORE = "score";
     public static final String BUNDLE_KEY_RESULT = "result";
     public static final String BUNDLE_KEY_CODE = "code";
     public static final String BUNDLE_KEY_TITLE = "title";
@@ -43,6 +45,10 @@ public class    KYNIntentConstant {
     public static final String ACTION_SUBMIT_TEMPLATE = "submit_template";
     public static final String ACTION_SUBMIT_FEEDBACK = "submit_feedback";
     public static final String ACTION_GENERATE_QUESTION = "generate_question";
+    public static final String ACTION_DELETE_QUESTION = "delete_question";
+    public static final String ACTION_DELETE_USER = "delete_user";
+    public static final String ACTION_DELETE_TEMPLATE = "delete_template";
+    public static final String ACTION_DELETE_FEEDBACK = "delete_feedback";
 
     //category
     public static final String CATEGORY_LOGIN = "category_login";
@@ -61,6 +67,10 @@ public class    KYNIntentConstant {
     public static final String CATEGORY_SUBMIT_TEMPLATE = "category_submit_template";
     public static final String CATEGORY_SUBMIT_FEEDBACK = "category_submit_feedback";
     public static final String CATEGORY_GENERATE_QEUSTION = "category_generate_question";
+    public static final String CATEGORY_DELETE_QUESTION = "category_delete_question";
+    public static final String CATEGORY_DELETE_USER = "category_delete_user";
+    public static final String CATEGORY_DELETE_TEMPLATE = "category_delete_template";
+    public static final String CATEGORY_DELETE_FEEDBACK = "category_delete_feedback";
 
     public static final int CODE_FAILED = 0;
     public static final int CODE_FAILED_TOKEN = 215;
@@ -108,4 +118,12 @@ public class    KYNIntentConstant {
     public static final int CODE_SUBMIT_FEEDBACK_FAILED = 329;
     public static final int CODE_GENERATE_QUESTION_SUCCESS = 330;
     public static final int CODE_GENERATE_QUESTION_FAILED = 331;
+    public static final int CODE_DELETE_QUESTION_SUCCESS = 332;
+    public static final int CODE_DELETE_QUESTION_FAILED = 333;
+    public static final int CODE_DELETE_USER_SUCCESS = 334;
+    public static final int CODE_DELETE_USER_FAILED = 335;
+    public static final int CODE_DELETE_TEMPLATE_SUCCESS = 336;
+    public static final int CODE_DELETE_TEMPLATE_FAILED = 337;
+    public static final int CODE_DELETE_FEEDBACK_SUCCESS = 338;
+    public static final int CODE_DELETE_FEEDBACK_FAILED = 339;
 }

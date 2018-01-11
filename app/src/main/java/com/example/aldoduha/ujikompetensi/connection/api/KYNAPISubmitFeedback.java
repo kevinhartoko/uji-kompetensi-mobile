@@ -72,9 +72,7 @@ public class KYNAPISubmitFeedback extends KYNHTTPPostConnections {
         try {
             Gson gson = new GsonBuilder().setDateFormat(KYNIntentConstant.DATE_FORMAT).create();
             String feedback = gson.toJson(feedbackModel);
-            JSONObject json = new JSONObject();
-            json.put(KYNJSONKey.KEY_USERNAME, username);
-            json.put(KYNJSONKey.KEY_JSON, feedback);
+            JSONObject json = new JSONObject(feedback);
             return json.toString();
         } catch (JSONException e) {
 

@@ -10,7 +10,7 @@ public class KYNJSONKey {
     public static String KEY_USER_ID = "userId";
     public static String KEY_USERNAME = "username";
     public static String KEY_PASSWORD = "password";
-    public static String KEY_RESULT = "result";
+    public static String KEY_RESULT = "status";
     public static String KEY_TOKEN = "token";
     public static String KEY_D = "d";
     public static String KEY_INTERVIEWEE_SERVER_ID = "id";
@@ -19,6 +19,7 @@ public class KYNJSONKey {
     public static String VAL_ERROR = "error";
     public static String VAL_MESSAGE_FAILED = "Permintaan Gagal";
 
+    public static String KEY_SERVER_ID = "id";
     //answer
     public static String KEY_ANSWER_ANSWER = "answer";
     public static String KEY_ANSWER_IS_TRUE = "is_true";
@@ -55,6 +56,13 @@ public class KYNJSONKey {
     public static String KEY_USER_PASSWORD = "password";
     public static String KEY_USER_ROLE = "role";
 
+    //interviewee
+    public static String KEY_INTERVIEWEE_NAME = "name";
+    public static String KEY_INTERVIEWEE_EMAIL = "email";
+    public static String KEY_INTERVIEWEE_PHONE = "phone";
+    public static String KEY_INTERVIEWEE_DOB = "dob";
+    public static String KEY_INTERVIEWEE_SCORE = "score";
+    public static String KEY_INTERVIEWEE_GENDER = "gender";
     //generate question
     public static String KEY_TEMPLATE = "template";
 }

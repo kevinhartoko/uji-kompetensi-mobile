@@ -39,28 +39,31 @@ public class KYNSMPUtilities {
     public static String appPasscode = "a#sb$2sdv";
     public static String appSaltcode = "Dnx3srik1zse0e";
 
+    public static boolean isHandShake =false;
+
     public static Boolean isHttpRequest;
     public static String requestType;
     public static String host;
     public static String port;
     public static int portHttps;
 
-    public static String appIdLoginRest = "/users/login";
+    public static String appIdLoginRest = "users/login";
     public static String appIdLogoutRest = "eformws/rest/user/logout";
-    public static String appIdUserListRest = "/users/getUserList";
-    public static String appIdQuestionListRest = "/questions/getQuestionList";
-    public static String appIdTemplateListRest = "/templates/getTemplateList";
-    public static String appIdIntervieweeListRest = "/interviewee/getIntervieweeList";
-    public static String appIdGenerateQuestionRest = "/questions/generateQuestion";
-    public static String appIdSubmitQuestionRest = "/questions/saveQuestion";
-    public static String appIdSubmitUserRest = "/users/saveUser";
-    public static String appIdSubmitTemplateRest = "/templates/saveTemplate";
-    public static String appIdSubmitFeedbackRest = "/feedbacks/saveFeedback";
+    public static String appIdUserListRest = "users/getUserList";
+    public static String appIdQuestionListRest = "questions/getQuestionList";
+    public static String appIdTemplateListRest = "templates/getTemplateList";
+    public static String appIdIntervieweeListRest = "interviewee/getIntervieweeList";
+    public static String appIdGenerateQuestionRest = "questions/generateQuestion";
+    public static String appIdSubmitQuestionRest = "questions/saveQuestion";
+    public static String appIdSubmitUserRest = "users/saveUser";
+    public static String appIdSubmitTemplateRest = "templates/saveTemplate";
+    public static String appIdSubmitFeedbackRest = "feedbacks/saveFeedback";
     public static String appIdSubmitIntervieweeDataRest = "eformws/rest/user/submitintervieweedata";
-    public static String appIdIntervieweeDetailRest = "/interviewee/findDetailInterviewee";
-    public static String appIdDeleteUserRest = "/users/deleteUser   ";
-    public static String appIdDeleteQuestionRest = "/questions/deleteQuestion";
-    public static String appIdDeleteTemplateRest = "/templates/deleteTemplate";
+    public static String appIdIntervieweeDetailRest = "interviewee/findDetailInterviewee";
+    public static String appIdDeleteUserRest = "users/deleteUser   ";
+    public static String appIdDeleteQuestionRest = "questions/deleteQuestion";
+    public static String appIdDeleteTemplateRest = "templates/deleteTemplate";
+    public static String appIdDeleteFeedbackRest = "feedbacks/deleteFeedback";
     
     public static String secConfig = "";
     public static String appId = "";

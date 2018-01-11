@@ -76,9 +76,7 @@ public class KYNAPISubmitTemplate extends KYNHTTPPostConnections {
             List<KYNTemplateQuestionModel> templateQuestionModels = database.getTemplateQuestionList(templateModel.getId());
             templateModel.setTemplateQuestionModels(templateQuestionModels);
             String template = gson.toJson(templateModel);
-            JSONObject json = new JSONObject();
-            json.put(KYNJSONKey.KEY_USERNAME, username);
-            json.put(KYNJSONKey.KEY_JSON, template);
+            JSONObject json = new JSONObject(template);
             return json.toString();
         } catch (JSONException e) {
 

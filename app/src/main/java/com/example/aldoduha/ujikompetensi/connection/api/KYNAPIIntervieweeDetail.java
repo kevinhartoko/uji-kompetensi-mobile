@@ -7,6 +7,7 @@ import com.example.aldoduha.ujikompetensi.connection.KYNHTTPPostConnections;
 import com.example.aldoduha.ujikompetensi.connection.KYNSMPUtilities;
 import com.example.aldoduha.ujikompetensi.connection.listener.KYNConnectionListener;
 import com.example.aldoduha.ujikompetensi.model.KYNIntervieweeModel;
+import com.example.aldoduha.ujikompetensi.model.KYNQuestionModel;
 import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 import com.example.aldoduha.ujikompetensi.utility.KYNJSONKey;
@@ -66,7 +67,6 @@ public class KYNAPIIntervieweeDetail extends KYNHTTPPostConnections {
     protected String generateRequest(){
         try {
             JSONObject json = new JSONObject();
-            json.put(KYNJSONKey.KEY_USERNAME, username);
             json.put(KYNJSONKey.KEY_INTERVIEWEE_SERVER_ID, intervieweeModel.getServerId());
             return json.toString();
         } catch (JSONException e) {
@@ -98,5 +98,9 @@ public class KYNAPIIntervieweeDetail extends KYNHTTPPostConnections {
             url = KYNSMPUtilities.requestType + KYNSMPUtilities.host + "/" + KYNSMPUtilities.appIdIntervieweeDetailRest;
         }
         return url;
+    }
+    public void setData(String username, KYNIntervieweeModel intervieweeModel){
+        this.username = username;
+        this.intervieweeModel = intervieweeModel;
     }
 }

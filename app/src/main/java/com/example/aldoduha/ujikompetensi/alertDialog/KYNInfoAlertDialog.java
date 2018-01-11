@@ -21,11 +21,18 @@ public class KYNInfoAlertDialog extends AlertDialog implements View.OnClickListe
     private TextView messageTextView;
     private Button okButton;
     private KYNInfoAlertDialogListener listener;
+    private int textSize = 0;
 
     public KYNInfoAlertDialog(Context context, String title, String message) {
         super(context);
         this.title = title;
         this.message = message;
+    }
+    public KYNInfoAlertDialog(Context context, String title, String message, boolean score) {
+        super(context);
+        this.title = title;
+        this.message = message;
+        this.textSize = 25;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +59,9 @@ public class KYNInfoAlertDialog extends AlertDialog implements View.OnClickListe
     private void initiateDefaultValue(){
         titleTextView.setText(title);
         messageTextView.setText(message);
+        if(textSize!=0){
+            messageTextView.setTextSize(textSize);
+        }
         okButton.setOnClickListener(this);
     }
 

@@ -1,5 +1,9 @@
 package com.example.aldoduha.ujikompetensi.model;
 
+import com.example.aldoduha.ujikompetensi.utility.KYNJSONKey;
+
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 /**
@@ -8,10 +12,26 @@ import java.io.Serializable;
 
 public class KYNFeedbackModel implements Serializable {
     private Long id;
-    private Long serverId;
+    private String serverId;
     private String description;
     private String name;
     private KYNIntervieweeModel intervieweeModel;
+
+    public KYNFeedbackModel(){
+
+    }
+
+    public KYNFeedbackModel(JSONObject object){
+        try {
+            if(object.has(KYNJSONKey.KEY_SERVER_ID))
+                setServerId(object.getString(KYNJSONKey.KEY_SERVER_ID));
+            if(object.has(KYNJSONKey.KEY_FEEDBACK_FEEDBACK))
+                setDescription(object.getString(KYNJSONKey.KEY_FEEDBACK_FEEDBACK));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
 
     public Long getId() {
         return id;
@@ -45,11 +65,11 @@ public class KYNFeedbackModel implements Serializable {
         this.intervieweeModel = intervieweeModel;
     }
 
-    public Long getServerId() {
-        return serverId;
+    public void setServerId(String serverId) {
+        this.serverId = serverId;
     }
 
-    public void setServerId(Long serverId) {
-        this.serverId = serverId;
+    public String getServerId() {
+        return serverId;
     }
 }

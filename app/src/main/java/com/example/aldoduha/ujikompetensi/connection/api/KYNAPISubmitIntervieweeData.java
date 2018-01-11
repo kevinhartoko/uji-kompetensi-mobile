@@ -76,9 +76,9 @@ public class KYNAPISubmitIntervieweeData extends KYNHTTPPostConnections {
             List<KYNQuestionModel> questionModels = database.getListQuestion(intervieweeModel.getId());
             intervieweeModel.setQuestionModels(questionModels);
             String interviewee = gson.toJson(intervieweeModel);
-            JSONObject json = new JSONObject();
-            json.put(KYNJSONKey.KEY_USERNAME, username);
-            json.put(KYNJSONKey.KEY_JSON, interviewee);
+            JSONObject json = new JSONObject(interviewee);
+//            json.put(KYNJSONKey.KEY_USERNAME, username);
+//            json.put(KYNJSONKey.KEY_JSON, interviewee);
             return json.toString();
         } catch (JSONException e) {
 

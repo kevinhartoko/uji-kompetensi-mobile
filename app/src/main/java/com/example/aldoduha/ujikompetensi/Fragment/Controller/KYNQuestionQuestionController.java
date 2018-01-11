@@ -12,6 +12,7 @@ import com.example.aldoduha.ujikompetensi.Fragment.KYNQuestionFormQuestionFragme
 import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
 import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.KYNQuestionFormQuestionActivity;
+import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNInfoAlertDialogListener;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 /**
@@ -31,6 +32,13 @@ public class KYNQuestionQuestionController implements View.OnClickListener {
                 Bundle bundle = intent.getExtras();
                 int code = bundle.getInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_FAILED);
                 String message = bundle .getString(KYNIntentConstant.BUNDLE_KEY_MESSAGE);
+                String score = bundle.getString(KYNIntentConstant.BUNDLE_KEY_SCORE);
+                fragment.getNewActivity().showAlertDialog("Your Score :", score, new KYNInfoAlertDialogListener() {
+                    @Override
+                    public void onOk() {
+                        fragment.getNewActivity().finish();
+                    }
+                }, true);
 
                 if(code==KYNIntentConstant.CODE_FAILED ||
                         code==KYNIntentConstant.CODE_SUBMIT_INTERVIEWEE_DATA_FAILED){

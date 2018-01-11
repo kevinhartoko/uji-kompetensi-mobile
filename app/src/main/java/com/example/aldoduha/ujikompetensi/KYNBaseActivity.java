@@ -11,6 +11,7 @@ import com.example.aldoduha.ujikompetensi.alertDialog.KYNInfoAlertDialog;
 import com.example.aldoduha.ujikompetensi.alertDialog.KYNLoadingAlertDialog;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNInfoAlertDialogListener;
+import com.example.aldoduha.ujikompetensi.connection.KYNConnectionManager;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 import net.sqlcipher.database.SQLiteDatabase;
@@ -34,7 +35,7 @@ public class KYNBaseActivity extends FragmentActivity {
 //        System.loadLibrary("stlport_shared");
         SQLiteDatabase.loadLibs(getApplicationContext());
         super.onCreate(savedInstanceState);
-
+        KYNConnectionManager conMan= new KYNConnectionManager(this);
         if (savedInstanceState != null) {
             isShowLoading = (boolean) savedInstanceState.getBoolean(KYNIntentConstant.BUNDLE_KEY_LOADING_SHOW);
             isShowAlert = (boolean) savedInstanceState.getBoolean(KYNIntentConstant.BUNDLE_KEY_ALERT_SHOW);
@@ -135,12 +136,12 @@ public class KYNBaseActivity extends FragmentActivity {
             infoAlertDialog.show();
     }
 
-    public void showAlertDialog(String title, String message, KYNInfoAlertDialogListener listener) {
+    public void showAlertDialog(String title, String message, KYNInfoAlertDialogListener listener, boolean score) {
         dismisLoadingDialog();
         this.title = title;
         this.message = message;
         isShowAlert = true;
-        infoAlertDialog = new KYNInfoAlertDialog(this, title, message);
+        infoAlertDialog = new KYNInfoAlertDialog(this, title, message, score);
         infoAlertDialog.setListener(listener);
         infoAlertDialog.show();
     }

@@ -1,8 +1,10 @@
 package com.example.aldoduha.ujikompetensi.activity;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -45,6 +47,7 @@ public class KYNIntervieweeDetailActivity extends KYNBaseActivity{
     private TextView textViewHandphone;
     private TextView textViewAddress;
     private TextView textViewDOB;
+    private TextView textViewScore;
     private EditText editTextFeedback;
     private Button buttonKirim;
     private LinearLayout linearLayoutFeedback;
@@ -78,6 +81,7 @@ public class KYNIntervieweeDetailActivity extends KYNBaseActivity{
         textViewHandphone = (TextView)findViewById(R.id.textViewHandphone);
         textViewAddress = (TextView)findViewById(R.id.textViewAddress);
         textViewDOB = (TextView)findViewById(R.id.textViewDOB);
+        textViewScore = (TextView)findViewById(R.id.textViewScore);
         editTextFeedback = (EditText)findViewById(R.id.edittextFeedback);
         linearLayoutFeedback = (LinearLayout)findViewById(R.id.linearFeedback);
         linearLayoutQuestion =(LinearLayout)findViewById(R.id.linearQuestion);
@@ -114,6 +118,7 @@ public class KYNIntervieweeDetailActivity extends KYNBaseActivity{
         textViewHandphone.setText(intervieweeModel.getHandphone());
         textViewAddress.setText(intervieweeModel.getAddress());
         textViewDOB.setText(format.format(intervieweeModel.getDob()));
+        textViewScore.setText(intervieweeModel.getScore()+"");
     }
 
     public void generateFeedback(List<KYNFeedbackModel> models){
@@ -125,10 +130,21 @@ public class KYNIntervieweeDetailActivity extends KYNBaseActivity{
             linearLayout.setLayoutParams(layoutParams);
             linearLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-            LinearLayout.LayoutParams layoutParamsTextview = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.8f);
+            final LinearLayout linearLayoutUsername = new LinearLayout(this);
+            LinearLayout.LayoutParams layoutParamsUsername = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT,0.8f);
+            linearLayoutUsername.setLayoutParams(layoutParamsUsername);
+            linearLayoutUsername.setOrientation(LinearLayout.VERTICAL);
+
+            LinearLayout.LayoutParams layoutParamsTextview = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             layoutParamsTextview.setMargins(5, 0, 0, 0);
 
             LinearLayout.LayoutParams layoutParamsButton = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.2f);
+
+            final TextView textViewUsername = new TextView(this);
+            textViewUsername.setLayoutParams(layoutParamsTextview);
+            textViewUsername.setTextColor(getResources().getColor(R.color.black));
+            textViewUsername.setText(feedbackModel.getName()+":");
+            textViewUsername.setTypeface(Typeface.DEFAULT_BOLD);
 
             final TextView textView = new TextView(this);
             textView.setLayoutParams(layoutParamsTextview);
@@ -165,9 +181,10 @@ public class KYNIntervieweeDetailActivity extends KYNBaseActivity{
                 }
             });
 
-            linearLayout.addView(textView);
+            linearLayoutUsername.addView(textViewUsername);
+            linearLayoutUsername.addView(textView);
+            linearLayout.addView(linearLayoutUsername);
             linearLayout.addView(button);
-
             linearLayoutFeedback.addView(linearLayout);
         }
     }

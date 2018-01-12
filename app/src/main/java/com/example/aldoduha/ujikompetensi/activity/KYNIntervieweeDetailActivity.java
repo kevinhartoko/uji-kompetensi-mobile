@@ -273,7 +273,7 @@ public class KYNIntervieweeDetailActivity extends KYNBaseActivity{
 
     @Override
     public void onBackPressed() {
-        showConfirmationAlertDialog("Apakah anda ingin keluar?", listener);
+        showConfirmationAlertDialog("Are you sure to go back?", listener);
     }
 
     public void submitFeedback(KYNFeedbackModel model){

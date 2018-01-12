@@ -106,7 +106,7 @@ public class KYNQuestionFormIdentityActivity extends KYNBaseActivity {
 
     @Override
     public void onBackPressed() {
-        showConfirmationAlertDialog("Apakah anda ingin keluar?", listener);
+        showConfirmationAlertDialog("Are you sure to go back?", listener);
     }
 
     public boolean validate(){
@@ -122,23 +122,23 @@ public class KYNQuestionFormIdentityActivity extends KYNBaseActivity {
         editTextAddress.setError(null);
         textViewDOB.setError(null);
         if(nama==null||nama.equals("")){
-            editTextNama.setError(Html.fromHtml("Nama Tidak Boleh Kosong"));
+            editTextNama.setError(Html.fromHtml("Name must be filled"));
             result=false;
         }
         if(email==null||email.equals("")){
-            editTextEmail.setError(Html.fromHtml("Email Tidak Boleh Kosong"));
+            editTextEmail.setError(Html.fromHtml("Email must be filled"));
             result=false;
         }
         if(handphone==null||handphone.equals("")){
-            editTextHandphone.setError(Html.fromHtml("Handphone Tidak Boleh Kosong"));
+            editTextHandphone.setError(Html.fromHtml("Handphone must be filled"));
             result=false;
         }
         if(address==null||address.equals("")){
-            editTextAddress.setError(Html.fromHtml("Address Tidak Boleh Kosong"));
+            editTextAddress.setError(Html.fromHtml("Address must be filled"));
             result=false;
         }
         if(dob==null||dob.equals("")){
-            textViewDOB.setError(Html.fromHtml("DOB Tidak Boleh Kosong"));
+            textViewDOB.setError(Html.fromHtml("DOB must be filled"));
             result=false;
         }
         return result;

@@ -128,30 +128,36 @@ public class KYNTemplateDetailActivity extends KYNBaseActivity {
         String jumlahSoal = editTextJumlahSoal.getText().toString();
         editTextNama.setError(null);
         editTextJumlahSoal.setError(null);
+
         if (nama==null||nama.equals("")){
-            editTextNama.setError(Html.fromHtml("Nama Tidak Boleh Kosong"));
+            editTextNama.setError(Html.fromHtml("Name must be filled"));
             result = false;
         }
         if(jumlahSoal==null||jumlahSoal.equals("")){
-            editTextJumlahSoal.setError(Html.fromHtml("Jumlah Soal Tidak Boleh Kosong"));
+            editTextJumlahSoal.setError(Html.fromHtml("Total question must be filled"));
             result =false;
         }
-        if(!cekKolomSoal() || linearLayoutSoal.getChildCount()==0){
-            result = false;
-            showAlertDialog("Info","Isi kolom soal yang ada terlebih dahulu");
-        }else{
-            if(jumlahSoal!=null && !jumlahSoal.equals("")) {
-                int jumlah = 0;
-                for (int i = 0; i < linearLayoutSoal.getChildCount(); i++) {
-                    LinearLayout linearCheck1 = (LinearLayout) linearLayoutSoal.getChildAt(i);
-                    EditText editTextCheck2 = (EditText) linearCheck1.getChildAt(3);
-                    String check2 = editTextCheck2.getText().toString();
-                    jumlah = jumlah + Integer.parseInt(check2);
-                }
-                int soal = Integer.parseInt(jumlahSoal);
-                if (jumlah != soal) {
-                    result = false;
-                    showAlertDialog("Info", "Jumlah soal tidak sesuai");
+        if(result == true) {
+            if (!cekKolomSoal()) {
+                result = false;
+                showAlertDialog("Error", "Fill the existing template questions first");
+            } else if(linearLayoutSoal.getChildCount() == 0){
+                result = false;
+                showAlertDialog("Error", "Please configure the template questions");
+            }else{
+                if (jumlahSoal != null && !jumlahSoal.equals("")) {
+                    int jumlah = 0;
+                    for (int i = 0; i < linearLayoutSoal.getChildCount(); i++) {
+                        LinearLayout linearCheck1 = (LinearLayout) linearLayoutSoal.getChildAt(i);
+                        EditText editTextCheck2 = (EditText) linearCheck1.getChildAt(3);
+                        String check2 = editTextCheck2.getText().toString();
+                        jumlah = jumlah + Integer.parseInt(check2);
+                    }
+                    int soal = Integer.parseInt(jumlahSoal);
+                    if (jumlah != soal) {
+                        result = false;
+                        showAlertDialog("Error", "Total quantity and total question must be equal");
+                    }
                 }
             }
         }
@@ -192,7 +198,7 @@ public class KYNTemplateDetailActivity extends KYNBaseActivity {
             final TextView textView = new TextView(this);
             textView.setLayoutParams(layoutParamsTextview);
             textView.setTextColor(getResources().getColor(R.color.black));
-            textView.setText("Bobot");
+            textView.setText("Weight");
 
             final EditText editText = new EditText(this);
             editText.setLayoutParams(layoutParamsEdittext);
@@ -204,7 +210,7 @@ public class KYNTemplateDetailActivity extends KYNBaseActivity {
             final TextView textView1 = new TextView(this);
             textView1.setLayoutParams(layoutParamsTextview);
             textView1.setTextColor(getResources().getColor(R.color.black));
-            textView1.setText("Banyaknya");
+            textView1.setText("Quantity");
 
             final EditText editText1 = new EditText(this);
             editText1.setLayoutParams(layoutParamsEdittext);
@@ -238,7 +244,7 @@ public class KYNTemplateDetailActivity extends KYNBaseActivity {
             final TextView textView = new TextView(this);
             textView.setLayoutParams(layoutParamsTextview);
             textView.setTextColor(getResources().getColor(R.color.black));
-            textView.setText("Bobot");
+            textView.setText("Weight");
 
             final EditText editText = new EditText(this);
             editText.setLayoutParams(layoutParamsEdittext);
@@ -249,7 +255,7 @@ public class KYNTemplateDetailActivity extends KYNBaseActivity {
             final TextView textView1 = new TextView(this);
             textView1.setLayoutParams(layoutParamsTextview);
             textView1.setTextColor(getResources().getColor(R.color.black));
-            textView1.setText("Banyaknya");
+            textView1.setText("Quantity");
 
             final EditText editText1 = new EditText(this);
             editText1.setLayoutParams(layoutParamsEdittext);
@@ -264,7 +270,7 @@ public class KYNTemplateDetailActivity extends KYNBaseActivity {
 
             linearLayoutSoal.addView(linearLayout);
         }else{
-            showAlertDialog("Info","Isi kolom soal yang ada terlebih dahulu");
+            showAlertDialog("Error","Fill the existing template questions first");
         }
     }
 
@@ -287,7 +293,7 @@ public class KYNTemplateDetailActivity extends KYNBaseActivity {
 
     @Override
     public void onBackPressed() {
-        showConfirmationAlertDialog("Apakah anda ingin keluar?", listener);
+        showConfirmationAlertDialog("Are you sure to go back?", listener);
     }
 
     KYNConfirmationAlertDialogListener listenerHapus = new KYNConfirmationAlertDialogListener() {
@@ -317,7 +323,7 @@ public class KYNTemplateDetailActivity extends KYNBaseActivity {
     };
 
     public void onButtonHapusTemplateClicked(){
-        showConfirmationAlertDialog("Apakah anda yakin ingin menghapus template ini?",listenerHapus);
+        showConfirmationAlertDialog("Are you sure to delete this template?",listenerHapus);
     }
 
     public void submitTemplate(){

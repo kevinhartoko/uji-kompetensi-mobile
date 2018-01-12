@@ -112,7 +112,7 @@ public class KYNQuestionFormActivity extends KYNBaseActivity {
 
     @Override
     public void onBackPressed() {
-        showConfirmationAlertDialog("Apakah anda ingin keluar?", listener);
+        showConfirmationAlertDialog("All of your data will not be saved, are you sure to go back?", listener);
     }
 
     private void initDefaultValue(){

@@ -16,8 +16,8 @@ public class    KYNIntentConstant {
     public static boolean needSS = false;
     public static final String DATE_FORMAT = "dd-MM-yyyy";
     public  static final List<String> role = Arrays.asList("Admin", "Interviewee", "Interviewer");
-    public  static final List<String> category = Arrays.asList("Pilih", "Developer", "QA", "BA");
-    public  static final List<String> categoryDetail = Arrays.asList("Developer", "QA", "BA");
+    public  static final List<String> category = Arrays.asList("Pilih", "Developer", "Quality Assurance", "Business Analyst");
+    public  static final List<String> categoryDetail = Arrays.asList("Developer", "Quality Assurance", "Business Analyst");
 
     public static final String BUNDLE_KEY_LOADING_SHOW = "loading_show";
     public static final String BUNDLE_KEY_ALERT_SHOW = "alert_show";

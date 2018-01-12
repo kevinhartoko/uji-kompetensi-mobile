@@ -73,7 +73,7 @@ public class KYNQuestionFormQuestionActivity extends KYNBaseActivity {
 
     @Override
     public void onBackPressed() {
-        showConfirmationAlertDialog("Apakah anda ingin keluar?", listener);
+        showConfirmationAlertDialog("All of your data will not be saved, are you sure to go back?", listener);
     }
 
     private void generateQuestion(){
@@ -165,7 +165,7 @@ public class KYNQuestionFormQuestionActivity extends KYNBaseActivity {
         }
     };
     public void onButtonSubmitClicked(){
-        showConfirmationAlertDialog("Apakah anda sudah yakin dengan semua jawaban anda?", submitListener);
+        showConfirmationAlertDialog("Are you sure with all your answer?", submitListener);
     }
 
     KYNConfirmationAlertDialogListener kembaliListener = new KYNConfirmationAlertDialogListener() {
@@ -180,6 +180,6 @@ public class KYNQuestionFormQuestionActivity extends KYNBaseActivity {
         }
     };
     public void onButtonKembaliClicked(){
-        showConfirmationAlertDialog("Semua jawaban anda akan hilang, apakah anda yakin ingin kembali?", kembaliListener);
+        showConfirmationAlertDialog("All of your data will not be saved, are you sure to go back?", kembaliListener);
     }
 }

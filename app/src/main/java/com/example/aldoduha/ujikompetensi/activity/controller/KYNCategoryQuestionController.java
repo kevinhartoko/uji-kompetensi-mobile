@@ -11,6 +11,7 @@ import android.view.View;
 import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.KYNCategoryQuestionActivity;
 import com.example.aldoduha.ujikompetensi.activity.KYNQuestionListActivity;
+import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 /**
@@ -27,6 +28,17 @@ public class KYNCategoryQuestionController implements View.OnClickListener {
             if(action.equals(KYNIntentConstant.ACTION_QUESTION_LIST)){
                 onReceiveBroadCastForQuestionList(intent);
             }
+        }
+    };
+    private KYNConfirmationAlertDialogListener backPressListener = new KYNConfirmationAlertDialogListener() {
+        @Override
+        public void onOK() {
+            activity.finish();
+        }
+
+        @Override
+        public void onCancel() {
+
         }
     };
     public KYNCategoryQuestionController(KYNCategoryQuestionActivity activity){
@@ -53,7 +65,7 @@ public class KYNCategoryQuestionController implements View.OnClickListener {
 //        Intent intentList = new Intent(activity, KYNIntervieweeListActivity.class);
 //        intentList.putExtra(KYNIntentConstant.INTENT_EXTRA_CATEGORY, "QA");
 //        activity.startActivity(intentList);
-        category = "QA";
+        category = "Quality Assurance";
         activity.getQuestionList(category);
     }
 
@@ -61,7 +73,7 @@ public class KYNCategoryQuestionController implements View.OnClickListener {
 //        Intent intentList = new Intent(activity, KYNIntervieweeListActivity.class);
 //        intentList.putExtra(KYNIntentConstant.INTENT_EXTRA_CATEGORY, "BA");
 //        activity.startActivity(intentList);
-        category = "BA";
+        category = "Business Analyst";
         activity.getQuestionList(category);
     }
 
@@ -86,6 +98,10 @@ public class KYNCategoryQuestionController implements View.OnClickListener {
         }
     }
 
+    public void showOnBackPressAlertDialog() {
+        activity.showOnBackPressAlertDialog(backPressListener);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -97,6 +113,9 @@ public class KYNCategoryQuestionController implements View.OnClickListener {
                 break;
             case R.id.btnBA:
                 onBaClicked();
+                break;
+            case R.id.buttonKembali:
+                showOnBackPressAlertDialog();
                 break;
             default:
                 break;

@@ -92,7 +92,7 @@ public class KYNQuestionFormQuestionFragment extends KYNBaseFragment {
 
                 final TextView textViewBobot = new TextView(activity);
                 textViewBobot.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
-                textViewBobot.setText("bobot : "+model.getBobot());
+                textViewBobot.setText("Weight : "+model.getBobot());
                 textViewBobot.setTextSize(12);
 
                 final TextView textView = new TextView(activity);
@@ -207,7 +207,7 @@ public class KYNQuestionFormQuestionFragment extends KYNBaseFragment {
     }
 
     public void onButtonSubmitClicked(){
-        activity.showConfirmationAlertDialog("Apakah anda sudah yakin dengan semua jawaban anda?", submitListener);
+        activity.showConfirmationAlertDialog("Are you sure with your answer?", submitListener);
     }
     public void onButtonKembaliClicked(){
         activity.onNextButtonClicked(0);

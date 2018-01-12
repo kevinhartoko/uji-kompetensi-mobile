@@ -123,10 +123,10 @@ public class KYNIntervieweeDetailController implements View.OnClickListener{
     private void onButtonQuestionClicked(){
         if(activity.getLinearLayoutQuestion().getVisibility() == View.VISIBLE){
             activity.getLinearLayoutQuestion().setVisibility(View.GONE);
-            activity.getBtnQuestion().setText("Tampilkan");
+            activity.getBtnQuestion().setText("Show");
         }else{
             activity.getLinearLayoutQuestion().setVisibility(View.VISIBLE);
-            activity.getBtnQuestion().setText("Sembunyikan");
+            activity.getBtnQuestion().setText("Hide");
         }
     }
 

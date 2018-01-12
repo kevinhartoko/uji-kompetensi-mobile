@@ -6,6 +6,7 @@ import android.view.View;
 import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.KYNCategoryIntervieweeActivity;
 import com.example.aldoduha.ujikompetensi.activity.KYNIntervieweeListActivity;
+import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 /**
@@ -17,6 +18,17 @@ public class KYNCategoryIntervieweeController implements View.OnClickListener {
     public KYNCategoryIntervieweeController(KYNCategoryIntervieweeActivity activity){
         this.activity = activity;
     }
+    private KYNConfirmationAlertDialogListener backPressListener = new KYNConfirmationAlertDialogListener() {
+        @Override
+        public void onOK() {
+            activity.finish();
+        }
+
+        @Override
+        public void onCancel() {
+
+        }
+    };
     private void onDeveloperClicked(){
         Intent intentList = new Intent(activity, KYNIntervieweeListActivity.class);
         intentList.putExtra(KYNIntentConstant.INTENT_EXTRA_CATEGORY, "Developer");
@@ -25,15 +37,20 @@ public class KYNCategoryIntervieweeController implements View.OnClickListener {
 
     private void onQaClicked(){
         Intent intentList = new Intent(activity, KYNIntervieweeListActivity.class);
-        intentList.putExtra(KYNIntentConstant.INTENT_EXTRA_CATEGORY, "QA");
+        intentList.putExtra(KYNIntentConstant.INTENT_EXTRA_CATEGORY, "Quality Assurance");
         activity.startActivity(intentList);
     }
 
     private void onBaClicked(){
         Intent intentList = new Intent(activity, KYNIntervieweeListActivity.class);
-        intentList.putExtra(KYNIntentConstant.INTENT_EXTRA_CATEGORY, "BA");
+        intentList.putExtra(KYNIntentConstant.INTENT_EXTRA_CATEGORY, "Business Analyst");
         activity.startActivity(intentList);
     }
+
+    public void showOnBackPressAlertDialog() {
+        activity.showOnBackPressAlertDialog(backPressListener);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -45,6 +62,9 @@ public class KYNCategoryIntervieweeController implements View.OnClickListener {
                 break;
             case R.id.btnBA:
                 onBaClicked();
+                break;
+            case R.id.buttonKembali:
+                showOnBackPressAlertDialog();
                 break;
             default:
                 break;

@@ -202,27 +202,27 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
 //        editTextKunciJawaban.setError(null);
         editTextBobot.setError(null);
         if (kode==null||kode.equals("")){
-            editTextKode.setError(Html.fromHtml("Kode Tidak Boleh Kosong"));
+            editTextKode.setError(Html.fromHtml("Code must be filled"));
             result = false;
         }
         if(pertanyaan==null||pertanyaan.equals("")){
-            editTextPertanyaan.setError(Html.fromHtml("Pertanyaan Tidak Boleh Kosong"));
+            editTextPertanyaan.setError(Html.fromHtml("Question must be filled"));
             result =false;
         }
         if(jawaban1==null||jawaban1.equals("")){
-            editTextJawaban1.setError(Html.fromHtml("Jawaban 1 Tidak Boleh Kosong"));
+            editTextJawaban1.setError(Html.fromHtml("Answer 1 must be filled"));
             result =false;
         }
         if(jawaban2==null||jawaban2.equals("")){
-            editTextJawaban2.setError(Html.fromHtml("Jawaban 2 Tidak Boleh Kosong"));
+            editTextJawaban2.setError(Html.fromHtml("Answer 2 must be filled"));
             result =false;
         }
         if(jawaban3==null||jawaban3.equals("")){
-            editTextJawaban3.setError(Html.fromHtml("Jawaban 3 Tidak Boleh Kosong"));
+            editTextJawaban3.setError(Html.fromHtml("Answer 3 must be filled"));
             result =false;
         }
         if(jawaban4==null||jawaban4.equals("")){
-            editTextJawaban4.setError(Html.fromHtml("Jawaban 4 Tidak Boleh Kosong"));
+            editTextJawaban4.setError(Html.fromHtml("Answer 4 must be filled"));
             result =false;
         }
 //        if(kunciJawaban==null||kunciJawaban.equals("")){
@@ -230,12 +230,12 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
 //            result =false;
 //        }
         if(bobot==null||bobot.equals("")){
-            editTextBobot.setError(Html.fromHtml("Bobot Tidak Boleh Kosong"));
+            editTextBobot.setError(Html.fromHtml("Weight must be filled"));
             result =false;
         }else{
             int bobotInt = Integer.parseInt(bobot);
             if(bobotInt<1||bobotInt>10){
-                editTextBobot.setError(Html.fromHtml("Bobot Harus bernilai 1-10"));
+                editTextBobot.setError(Html.fromHtml("Weight must between 1-10"));
                 result =false;
             }
         }
@@ -263,7 +263,7 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
 
     @Override
     public void onBackPressed() {
-        showConfirmationAlertDialog("Apakah anda ingin keluar?", listener);
+        showConfirmationAlertDialog("Are you sure to go back?", listener);
     }
 
     KYNConfirmationAlertDialogListener listenerHapus = new KYNConfirmationAlertDialogListener() {
@@ -326,6 +326,6 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
     }
 
     public void onButtonHapusClicked(){
-        showConfirmationAlertDialog("Apakah anda yakin ingin menhapus pertanyaan ini?", listenerHapus);
+        showConfirmationAlertDialog("Are you sure to delete this question?", listenerHapus);
     }
 }

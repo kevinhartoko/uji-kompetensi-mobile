@@ -135,16 +135,16 @@ public class KYNUserDetailActivity extends KYNBaseActivity{
         editTextUsername.setError(null);
         editTextPassword.setError(null);
         if (nama==null||nama.equals("")){
-            editTextNama.setError(Html.fromHtml("Nama Tidak Boleh Kosong"));
+            editTextNama.setError(Html.fromHtml("Name must be filled"));
             result = false;
         }
         if(username==null||username.equals("")){
-            editTextUsername.setError(Html.fromHtml("Username Tidak Boleh Kosong"));
+            editTextUsername.setError(Html.fromHtml("Username must be filled"));
             result =false;
         }
         if(linearPassword.getVisibility()==View.VISIBLE) {
             if (password == null || password.equals("")) {
-                editTextPassword.setError(Html.fromHtml("Password Tidak Boleh Kosong"));
+                editTextPassword.setError(Html.fromHtml("Password must be filled"));
                 result = false;
             }
         }
@@ -204,7 +204,7 @@ public class KYNUserDetailActivity extends KYNBaseActivity{
 
     @Override
     public void onBackPressed() {
-        showConfirmationAlertDialog("Apakah anda ingin keluar?", listener);
+        showConfirmationAlertDialog("Are you sure to go back?", listener);
     }
 
     KYNConfirmationAlertDialogListener listenerHapus = new KYNConfirmationAlertDialogListener() {

@@ -196,7 +196,7 @@ public class KYNQuestionListActivity extends KYNBaseActivity {
 
     public void showOnBackPressAlertDialog(KYNConfirmationAlertDialogListener listener) {
         if (confirmationAlertDialog == null) {
-            confirmationAlertDialog = new KYNConfirmationAlertDialog(this, listener, "Apakah anda ingin keluar?");
+            confirmationAlertDialog = new KYNConfirmationAlertDialog(this, listener, "Are you sure to go back?");
         }
         confirmationAlertDialog.setCancelable(false);
         confirmationAlertDialog.setCanceledOnTouchOutside(false);

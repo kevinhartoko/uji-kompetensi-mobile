@@ -198,6 +198,11 @@ public class KYNIntervieweeDetailActivity extends KYNBaseActivity{
                 linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
                 linearLayout.setOrientation(LinearLayout.VERTICAL);
 
+                final TextView textViewBobot = new TextView(this);
+                textViewBobot.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
+                textViewBobot.setText("Weight : "+model.getBobot());
+                textViewBobot.setTextSize(12);
+
                 final TextView textView = new TextView(this);
                 textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
                 textView.setText(model.getQuestion());
@@ -231,6 +236,7 @@ public class KYNIntervieweeDetailActivity extends KYNBaseActivity{
                 radioGroup.addView(radioButton2);
                 radioGroup.addView(radioButton3);
                 radioGroup.addView(radioButton4);
+                linearLayout.addView(textViewBobot);
                 linearLayout.addView(textView);
                 linearLayout.addView(radioGroup);
                 linearLayoutQuestion.addView(linearLayout);

@@ -48,7 +48,7 @@
                             android:layout_gravity="center_vertical"
                             android:gravity="center"
                             android:layout_column="0"
-                            android:text="Nama"/>
+                            android:text="Name"/>
 
                         <TextView
                             android:id="@+id/textViewJumlah"
@@ -59,7 +59,7 @@
                             android:paddingLeft="3dip"
                             android:paddingRight="3dip"
                             android:layout_column="0"
-                            android:text="Jumlah Soal"/>
+                            android:text="Total Quesiton"/>
                     </TableRow>
                 </TableLayout>
             </HorizontalScrollView>
@@ -78,7 +78,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.3"
-                        android:text="kembali"
+                        android:text="Back"
                         android:textAllCaps="false"/>
 
                     <LinearLayout
@@ -92,8 +92,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.3"
-                        android:text="Tambah"
-                        android:textAllCaps="false"/>
+                        android:text="Add"
+                        android:textAllCaps="false" />
 
                 </LinearLayout>
             </RelativeLayout>

@@ -24,6 +24,7 @@ import com.example.aldoduha.ujikompetensi.connection.api.KYNAPISubmitInterviewee
 import com.example.aldoduha.ujikompetensi.connection.api.KYNAPISubmitQuestion;
 import com.example.aldoduha.ujikompetensi.connection.api.KYNAPISubmitTemplate;
 import com.example.aldoduha.ujikompetensi.connection.api.KYNAPISubmitUser;
+import com.example.aldoduha.ujikompetensi.connection.api.KYNAPITemplateDetail;
 import com.example.aldoduha.ujikompetensi.connection.api.KYNAPITemplateList;
 import com.example.aldoduha.ujikompetensi.connection.api.KYNAPIUserList;
 import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPIDeleteFeedbackListener;
@@ -41,6 +42,7 @@ import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPISub
 import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPISubmitQuestionListener;
 import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPISubmitTemplateListener;
 import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPISubmitUserListener;
+import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPITemplateDetailListener;
 import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPITemplateListListener;
 import com.example.aldoduha.ujikompetensi.connection.api.listener.impl.KYNAPIUserListListener;
 import com.example.aldoduha.ujikompetensi.model.KYNFeedbackModel;
@@ -132,6 +134,8 @@ public class KYNServiceConnection extends Service {
             requestDeleteTemplate(intent);
         }else if (intent.getAction().equals(KYNIntentConstant.ACTION_DELETE_FEEDBACK)) {
             requestDeleteFeedback(intent);
+        }else if (intent.getAction().equals(KYNIntentConstant.ACTION_TEMPLATE_DETAIL)) {
+            requestTemplateDetail(intent);
         }
 
         return super.onStartCommand(intent, flags, startId);
@@ -162,10 +166,10 @@ public class KYNServiceConnection extends Service {
     }
 
     private void requestQuestionList(Intent intent){
-        KYNUserModel userModel = (KYNUserModel)intent.getSerializableExtra(KYNIntentConstant.INTENT_EXTRA_DATA);
+        String category = intent.getStringExtra(KYNIntentConstant.INTENT_EXTRA_CATEGORY);
 
         KYNAPIQuestionList requestQuestionList = new KYNAPIQuestionList(getApplicationContext(), new KYNAPIQuestionListListener());
-        requestQuestionList.setData(userModel);
+        requestQuestionList.setData(category);
         requestQuestionList.execute();
     }
 
@@ -186,11 +190,12 @@ public class KYNServiceConnection extends Service {
     }
 
     private void requestGenerateQuestion(Intent intent){
-        KYNUserModel userModel = (KYNUserModel)intent.getSerializableExtra(KYNIntentConstant.INTENT_EXTRA_DATA);
-        String template = intent.getStringExtra(KYNIntentConstant.INTENT_EXTRA_STRING);
+        KYNIntervieweeModel intervieweeModel= (KYNIntervieweeModel)intent.getSerializableExtra(KYNIntentConstant.INTENT_EXTRA_DATA);
+        String template = intent.getStringExtra(KYNIntentConstant.INTENT_EXTRA_TEMPLATE);
+        String category = intent.getStringExtra(KYNIntentConstant.INTENT_EXTRA_CATEGORY);
 
         KYNAPIGenerateQuestion requestGenerateQuestion = new KYNAPIGenerateQuestion(getApplicationContext(), new KYNAPIGenerateQuestionListener());
-        requestGenerateQuestion.setData(userModel, template);
+        requestGenerateQuestion.setData(intervieweeModel, template, category);
         requestGenerateQuestion.execute();
     }
 
@@ -278,6 +283,14 @@ public class KYNServiceConnection extends Service {
         KYNAPIDeleteFeedback requestDeleteFeedback = new KYNAPIDeleteFeedback(getApplicationContext(), new KYNAPIDeleteFeedbackListener());
         requestDeleteFeedback.setData(username, feedbackModel);
         requestDeleteFeedback.execute();
+    }
+    private void requestTemplateDetail(Intent intent){
+        KYNTemplateModel templateModel = (KYNTemplateModel) intent.getSerializableExtra(KYNIntentConstant.INTENT_EXTRA_DATA);
+        String username = intent.getStringExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME);
+
+        KYNAPITemplateDetail requestTemplateDetail = new KYNAPITemplateDetail(getApplicationContext(), new KYNAPITemplateDetailListener());
+        requestTemplateDetail.setData(username, templateModel);
+        requestTemplateDetail.execute();
     }
 
 //    private void startTimeCounterForClearData(){

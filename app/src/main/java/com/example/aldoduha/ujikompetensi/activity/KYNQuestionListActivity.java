@@ -18,7 +18,10 @@ import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.controller.KYNQuestionListController;
 import com.example.aldoduha.ujikompetensi.alertDialog.KYNConfirmationAlertDialog;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
+import com.example.aldoduha.ujikompetensi.connection.KYNSMPUtilities;
+import com.example.aldoduha.ujikompetensi.connection.api.listener.KYNServiceConnection;
 import com.example.aldoduha.ujikompetensi.model.KYNQuestionModel;
+import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 import java.util.List;
@@ -39,10 +42,12 @@ public class KYNQuestionListActivity extends KYNBaseActivity {
     private TextView textViewNama;
     private TextView textViewBobot;
     private TextView textViewFunction;
+    private String category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         activity = this;
+        category = getIntent().getStringExtra(KYNIntentConstant.INTENT_EXTRA_CATEGORY);
         this.database = new KYNDatabaseHelper(activity);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_list);
@@ -104,8 +109,17 @@ public class KYNQuestionListActivity extends KYNBaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode){
             case KYNIntentConstant.REQUEST_CODE_QUESTION_DETAIL:
-                List<KYNQuestionModel> questions = database.getListQuestion();
-                generateTable(questions);
+                if(KYNSMPUtilities.isConnectServer){
+                    showLoadingDialog(activity.getResources().getString(R.string.loading));
+                    Intent intent = new Intent(this, KYNServiceConnection.class);
+                    intent.putExtra(KYNIntentConstant.INTENT_EXTRA_CATEGORY, category);
+                    intent.setAction(KYNIntentConstant.ACTION_QUESTION_LIST);
+                    intent.addCategory(KYNIntentConstant.CATEGORY_QUESTION_LIST);
+                    activity.startService(intent);
+                }else {
+                    List<KYNQuestionModel> questions = database.getListQuestion();
+                    generateTable(questions);
+                }
                 break;
             default:
                 break;
@@ -192,6 +206,7 @@ public class KYNQuestionListActivity extends KYNBaseActivity {
     public void onAddButtonClicked() {
         Bundle b = new Bundle();
         Intent i = new Intent(this, KYNQuestionDetailActivity.class);
+        b.putString(KYNIntentConstant.INTENT_EXTRA_CATEGORY, category);
         i.putExtras(b);
         this.startActivityForResult(i, KYNIntentConstant.REQUEST_CODE_QUESTION_DETAIL);
     }

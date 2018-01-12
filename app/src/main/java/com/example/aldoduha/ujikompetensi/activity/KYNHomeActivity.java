@@ -51,10 +51,17 @@ public class KYNHomeActivity extends KYNBaseActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onPause() {
         if(controller!=null)
-            controller.onDestroy();
-        super.onDestroy();
+            controller.onPause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(controller!=null)
+            controller.onResume();
     }
 
     public void doLogout() {

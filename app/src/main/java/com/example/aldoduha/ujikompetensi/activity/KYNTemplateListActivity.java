@@ -18,8 +18,11 @@ import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.controller.KYNTemplateListController;
 import com.example.aldoduha.ujikompetensi.alertDialog.KYNConfirmationAlertDialog;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
+import com.example.aldoduha.ujikompetensi.connection.KYNSMPUtilities;
+import com.example.aldoduha.ujikompetensi.connection.api.listener.KYNServiceConnection;
 import com.example.aldoduha.ujikompetensi.model.KYNQuestionModel;
 import com.example.aldoduha.ujikompetensi.model.KYNTemplateModel;
+import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
 import java.util.List;
@@ -104,8 +107,18 @@ public class KYNTemplateListActivity extends KYNBaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode){
             case KYNIntentConstant.REQUEST_CODE_TEMPLATE_DETAIL:
-                List<KYNTemplateModel> templateModels = database.getTemplateList();
-                generateTable(templateModels);
+                if(KYNSMPUtilities.isConnectServer){
+                    showLoadingDialog(activity.getResources().getString(R.string.loading));
+                    Intent intent = new Intent(this, KYNServiceConnection.class);
+                    KYNUserModel session = database.getSession();
+                    intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, session);
+                    intent.setAction(KYNIntentConstant.ACTION_TEMPLATE_LIST);
+                    intent.addCategory(KYNIntentConstant.CATEGORY_TEMPLATE_LIST);
+                    activity.startService(intent);
+                }else {
+                    List<KYNTemplateModel> templateModels = database.getTemplateList();
+                    generateTable(templateModels);
+                }
                 break;
             default:
                 break;
@@ -147,8 +160,7 @@ public class KYNTemplateListActivity extends KYNBaseActivity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Long id = templateModel.getId();
-                    viewClicked(id);
+                    viewClicked(templateModel);
                 }
             });
             // Creation textView nama
@@ -172,12 +184,22 @@ public class KYNTemplateListActivity extends KYNBaseActivity {
         }
     }
 
-    public void viewClicked(Long id) {
-        Bundle b = new Bundle();
-        b.putLong("templateId", id);
-        Intent i = new Intent(this, KYNTemplateDetailActivity.class);
-        i.putExtras(b);
-        this.startActivityForResult(i, KYNIntentConstant.REQUEST_CODE_TEMPLATE_DETAIL);
+    public void viewClicked(KYNTemplateModel templateModel) {
+        if(KYNSMPUtilities.isConnectServer) {
+            showLoadingDialog(getResources().getString(R.string.loading));
+            Intent intent = new Intent(activity, KYNServiceConnection.class);
+            intent.setAction(KYNIntentConstant.ACTION_TEMPLATE_DETAIL);
+            intent.addCategory(KYNIntentConstant.CATEGORY_TEMPLATE_DETAIL);
+            intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, templateModel);
+            intent.putExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME, KYNIntentConstant.USERNAME);
+            activity.startService(intent);
+        }else {
+            Bundle b = new Bundle();
+            b.putLong("templateId", templateModel.getId());
+            Intent i = new Intent(this, KYNTemplateDetailActivity.class);
+            i.putExtras(b);
+            this.startActivityForResult(i, KYNIntentConstant.REQUEST_CODE_TEMPLATE_DETAIL);
+        }
     }
 
     public void showOnBackPressAlertDialog(KYNConfirmationAlertDialogListener listener) {

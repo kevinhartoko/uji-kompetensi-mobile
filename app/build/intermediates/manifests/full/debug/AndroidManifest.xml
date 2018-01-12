@@ -13,7 +13,7 @@
     <application
         android:name="com.example.aldoduha.ujikompetensi.KYNApplicationContext"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
@@ -70,6 +70,14 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="com.example.aldoduha.ujikompetensi.activity.KYNIntervieweeDetailActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="com.example.aldoduha.ujikompetensi.activity.KYNCategoryQuestionActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="com.example.aldoduha.ujikompetensi.activity.KYNCategoryIntervieweeActivity"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="stateHidden" />
 

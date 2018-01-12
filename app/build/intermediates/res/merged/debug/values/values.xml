@@ -152,6 +152,7 @@
     <color name="material_grey_850">#ff303030</color>
     <color name="material_grey_900">#ff212121</color>
     <color name="orange">#FFFB632E</color>
+    <color name="orangelogo">#FF6501</color>
     <color name="primary_dark_material_dark">@android:color/black</color>
     <color name="primary_dark_material_light">@color/material_grey_600</color>
     <color name="primary_material_dark">@color/material_grey_900</color>
@@ -308,11 +309,11 @@
     <string name="abc_shareactionprovider_share_with">Share with</string>
     <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
     <string name="abc_toolbar_collapse_description">Collapse</string>
-    <string name="app_name">UjiKompetensi</string>
+    <string name="app_name">CompetencyTest</string>
     <string name="failed_to_connect">Gagal, Tidak bisa menghubungi server</string>
     <string name="failed_to_register">Gagal Register ke Server</string>
     <string name="invalid_token">Sesi Anda telah Berakhir. Mohon Login kembali</string>
-    <string name="loading">Harap tunggu...</string>
+    <string name="loading">Please wait...</string>
     <string name="status_bar_notification_info_overflow">999+</string>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>
     <style name="AlertDialog.AppCompat.Light" parent="Base.AlertDialog.AppCompat.Light"/>

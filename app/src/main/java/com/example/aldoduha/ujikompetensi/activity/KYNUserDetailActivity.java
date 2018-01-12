@@ -8,6 +8,7 @@ import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -43,6 +44,7 @@ public class KYNUserDetailActivity extends KYNBaseActivity{
     private Long userId;
     private KYNUserModel userModel;
     private ArrayAdapter adapter;
+    private LinearLayout linearPassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,15 +69,22 @@ public class KYNUserDetailActivity extends KYNBaseActivity{
         buttonLanjut = (Button)findViewById(R.id.btnLanjut);
         buttonKembali = (Button)findViewById(R.id.btnKembali);
         buttonHapus = (Button)findViewById(R.id.btnHapus);
+        linearPassword = (LinearLayout)findViewById(R.id.linearPassword);
     }
 
     private void initDefaultValue(){
         database = new KYNDatabaseHelper(this);
         if(userId!=null && userId!=0){
             userModel = database.getUser(userId);
+            linearPassword.setVisibility(View.GONE);
+            buttonHapus.setVisibility(View.VISIBLE);
+            editTextUsername.setEnabled(false);
+            editTextUsername.setBackgroundColor(getResources().getColor(R.color.light_gray));
         }else{
+            editTextUsername.setEnabled(true);
             userModel = new KYNUserModel();
             buttonHapus.setVisibility(View.GONE);
+            linearPassword.setVisibility(View.VISIBLE);
         }
         controller = new KYNUserDetailController(this);
         buttonLanjut.setOnClickListener(controller);
@@ -86,7 +95,9 @@ public class KYNUserDetailActivity extends KYNBaseActivity{
     public void setValueToModel(){
         userModel.setNama(editTextNama.getText().toString());
         userModel.setUsername(editTextUsername.getText().toString());
-        userModel.setPassword(editTextPassword.getText().toString());
+        if(linearPassword.getVisibility()==View.VISIBLE) {
+            userModel.setPassword(editTextPassword.getText().toString());
+        }
         userModel.setRole(spinnerRole.getSelectedItem().toString());
         if(userId==null || userId==0){
             userId = database.insertUser(userModel);
@@ -102,9 +113,9 @@ public class KYNUserDetailActivity extends KYNBaseActivity{
         if(userModel.getUsername()!=null && !userModel.getUsername().equals("")){
             editTextUsername.setText(userModel.getUsername());
         }
-        if(userModel.getPassword()!=null && !userModel.getPassword().equals("")){
-            editTextPassword.setText(userModel.getPassword());
-        }
+//        if(userModel.getPassword()!=null && !userModel.getPassword().equals("")){
+//            editTextPassword.setText(userModel.getPassword());
+//        }
         if(userModel.getRole()!=null && !userModel.getRole().equals("")){
             int position = 0;
             for(int i=0;i<spinnerRole.getCount();i++){
@@ -131,19 +142,17 @@ public class KYNUserDetailActivity extends KYNBaseActivity{
             editTextUsername.setError(Html.fromHtml("Username Tidak Boleh Kosong"));
             result =false;
         }
-        if(password==null||password.equals("")){
-            editTextPassword.setError(Html.fromHtml("Password Tidak Boleh Kosong"));
-            result =false;
+        if(linearPassword.getVisibility()==View.VISIBLE) {
+            if (password == null || password.equals("")) {
+                editTextPassword.setError(Html.fromHtml("Password Tidak Boleh Kosong"));
+                result = false;
+            }
         }
         return result;
     }
 
     public void initiateRole(){
-        List<String> listRole = new ArrayList<>();
-        listRole.add("Interviewee");
-        listRole.add("Interviewer");
-        listRole.add("Admin");
-        adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, listRole);
+        adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, KYNIntentConstant.role);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerRole.setAdapter(adapter);
     }
@@ -170,6 +179,17 @@ public class KYNUserDetailActivity extends KYNBaseActivity{
         startService(intent);
     }
 
+    public void deleteUser(KYNUserModel userModel){
+        showLoadingDialog(getResources().getString(R.string.loading));
+        KYNUserModel session = database.getSession();
+        Intent intent = new Intent(this, KYNServiceConnection.class);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, userModel);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME, session.getUsername());
+        intent.setAction(KYNIntentConstant.ACTION_DELETE_USER);
+        intent.addCategory(KYNIntentConstant.CATEGORY_DELETE_USER);
+        startService(intent);
+    }
+
     KYNConfirmationAlertDialogListener listener = new KYNConfirmationAlertDialogListener() {
         @Override
         public void onOK() {
@@ -192,10 +212,14 @@ public class KYNUserDetailActivity extends KYNBaseActivity{
         public void onOK() {
             database.deleteUser(userId);
             if(KYNSMPUtilities.isConnectServer){
-                KYNUserModel model = new KYNUserModel();
-                model.setId(userModel.getId());
-                model.setServerId(userModel.getServerId());
-                submitUser(model);
+                if(userModel.getUsername().equals(KYNIntentConstant.USERNAME)){
+                    showAlertDialog("Error", "This user is being used");
+                }else {
+                    KYNUserModel model = new KYNUserModel();
+                    model.setId(userModel.getId());
+                    model.setServerId(userModel.getServerId());
+                    deleteUser(model);
+                }
             }else {
                 setResult(KYNIntentConstant.RESULT_CODE_USER_DETAIL);
                 finish();
@@ -209,6 +233,6 @@ public class KYNUserDetailActivity extends KYNBaseActivity{
     };
 
     public void onButtonHapusClicked(){
-        showConfirmationAlertDialog("Apakah anda yakin ingin menghapus user ini?", listenerHapus);
+        showConfirmationAlertDialog("Are you sure to delete this user?", listenerHapus);
     }
 }

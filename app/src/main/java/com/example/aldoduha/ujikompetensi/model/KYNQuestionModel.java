@@ -1,6 +1,7 @@
 package com.example.aldoduha.ujikompetensi.model;
 
 import com.example.aldoduha.ujikompetensi.utility.KYNJSONKey;
+import com.google.gson.annotations.SerializedName;
 
 import org.json.JSONObject;
 
@@ -11,17 +12,27 @@ import java.io.Serializable;
  */
 
 public class KYNQuestionModel  implements Serializable {
+    @SerializedName(value = "localId")
     private Long id;
+    @SerializedName(value = "id")
     private String serverId;
+    @SerializedName(value = "code")
     private String name;
+    @SerializedName(value = "description")
     private String question;
+    @SerializedName(value = "answer_a")
     private String answer1;
+    @SerializedName(value = "answer_b")
     private String answer2;
+    @SerializedName(value = "answer_c")
     private String answer3;
+    @SerializedName(value = "answer_d")
     private String answer4;
     private String intervieweeAnswer;
+    @SerializedName(value = "trueAnswer")
     private String keyAnswer;
     private int bobot;
+    private String category;
     private KYNIntervieweeModel intervieweeModel;
 
     public KYNQuestionModel(){
@@ -48,6 +59,8 @@ public class KYNQuestionModel  implements Serializable {
                 setKeyAnswer(object.getString(KYNJSONKey.KEY_QUESTION_TRUE_ANSWER));
             if(object.has(KYNJSONKey.KEY_QUESTION_BOBOT))
                 setBobot(object.getInt(KYNJSONKey.KEY_QUESTION_BOBOT));
+            if(object.has(KYNJSONKey.KEY_QUESTION_CATEGORY))
+                setCategory(object.getString(KYNJSONKey.KEY_QUESTION_CATEGORY));
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -147,5 +160,13 @@ public class KYNQuestionModel  implements Serializable {
 
     public void setServerId(String serverId) {
         this.serverId = serverId;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

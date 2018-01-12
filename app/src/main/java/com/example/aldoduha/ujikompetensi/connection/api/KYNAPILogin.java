@@ -3,6 +3,7 @@ package com.example.aldoduha.ujikompetensi.connection.api;
 import android.content.Context;
 import android.os.Bundle;
 
+import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
 import com.example.aldoduha.ujikompetensi.connection.KYNHTTPPostConnections;
 import com.example.aldoduha.ujikompetensi.connection.KYNSMPUtilities;
 import com.example.aldoduha.ujikompetensi.connection.listener.KYNConnectionListener;
@@ -21,9 +22,11 @@ import org.json.JSONObject;
 
 public class KYNAPILogin extends KYNHTTPPostConnections {
     private KYNUserModel userModel;
+    private KYNDatabaseHelper database;
 
     public KYNAPILogin(Context applicationContext, KYNConnectionListener listener) {
         super(applicationContext, listener);
+        database = new KYNDatabaseHelper(applicationContext);
     }
 
     @Override
@@ -40,9 +43,17 @@ public class KYNAPILogin extends KYNHTTPPostConnections {
             }
 
             if (result.equalsIgnoreCase(KYNJSONKey.VAL_SUCCESS)) {
+                String role = jsonResponse.getString(KYNJSONKey.KEY_USER_ROLE);
+                KYNUserModel session = new KYNUserModel();
+                session.setUsername(userModel.getUsername());
+                session.setPassword(userModel.getPassword());
+                session.setRole(role);
+                database.deleteSession();
+                database.insertSession(session);
                 KYNIntentConstant.TOKEN = jsonResponse.getString(KYNJSONKey.KEY_TOKEN);
                 KYNIntentConstant.USERNAME = userModel.getUsername();
                 bundle.putString(KYNIntentConstant.BUNDLE_KEY_TOKEN, jsonResponse.getString(KYNJSONKey.KEY_TOKEN));
+
 
                 bundle.putInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_LOGIN_SUCCESS);
             }else{

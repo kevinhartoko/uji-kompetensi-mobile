@@ -1,6 +1,7 @@
 package com.example.aldoduha.ujikompetensi.model;
 
 import com.example.aldoduha.ujikompetensi.utility.KYNJSONKey;
+import com.google.gson.annotations.SerializedName;
 
 import org.json.JSONObject;
 
@@ -11,8 +12,11 @@ import java.io.Serializable;
  */
 
 public class KYNFeedbackModel implements Serializable {
+    @SerializedName(value = "localId")
     private Long id;
+    @SerializedName(value = "id")
     private String serverId;
+    @SerializedName(value = "feedback")
     private String description;
     private String name;
     private KYNIntervieweeModel intervieweeModel;

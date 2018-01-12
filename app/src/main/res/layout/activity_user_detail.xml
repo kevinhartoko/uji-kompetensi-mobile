@@ -19,29 +19,6 @@
             android:layout_marginBottom="15dip">
 
             <TextView
-                android:id="@+id/textView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="0.4"
-                android:text="Nama :"
-                android:textColor="#FF000000" />
-
-            <EditText
-                android:id="@+id/edittextNama"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.6"
-                android:background="@drawable/edittext_style"
-                android:textColor="#FF000000" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dip">
-
-            <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -59,6 +36,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dip">
@@ -76,6 +54,28 @@
                 android:textColor="#FF000000"
                 android:layout_weight="0.6"
                 android:background="@drawable/edittext_style"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dip">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="0.4"
+                android:text="Name :"
+                android:textColor="#FF000000" />
+
+            <EditText
+                android:id="@+id/edittextNama"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.6"
+                android:background="@drawable/edittext_style"
+                android:textColor="#FF000000" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -106,7 +106,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hapus"
+                android:text="Delete"
                 android:id="@+id/btnHapus"
                 android:layout_marginBottom="5dip"
                 android:textAllCaps="false"/>
@@ -115,7 +115,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Kembali"
+                android:text="Back"
                 android:id="@+id/btnKembali"
                 android:layout_marginBottom="5dip"
                 android:textAllCaps="false"/>
@@ -124,7 +124,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Simpan"
+                android:text="Save"
                 android:id="@+id/btnLanjut"
                 android:layout_marginBottom="5dip"
                 android:textAllCaps="false"/>

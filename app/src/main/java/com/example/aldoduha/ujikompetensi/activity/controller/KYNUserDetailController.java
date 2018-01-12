@@ -37,10 +37,27 @@ public class KYNUserDetailController implements View.OnClickListener {
                     if(message!=null && !message.equals(""))
                         activity.showAlertDialog("Error", message);
                     else
-                        activity.showAlertDialog("Error", "Gagal Submit User");
+                        activity.showAlertDialog("Error", "Submit User Failed");
                 }else if(code==KYNIntentConstant.CODE_FAILED_TOKEN){
                     activity.showErrorTokenDialog();
                 }else if(code==KYNIntentConstant.CODE_SUBMIT_USER_SUCCESS){
+                    activity.setResult(KYNIntentConstant.RESULT_CODE_USER_DETAIL);
+                    activity.finish();
+                }
+            }else if (action.equals(KYNIntentConstant.ACTION_DELETE_USER)) {
+                Bundle bundle = intent.getExtras();
+                int code = bundle.getInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_FAILED);
+                String message = bundle .getString(KYNIntentConstant.BUNDLE_KEY_MESSAGE);
+
+                if(code==KYNIntentConstant.CODE_FAILED ||
+                        code==KYNIntentConstant.CODE_DELETE_USER_FAILED){
+                    if(message!=null && !message.equals(""))
+                        activity.showAlertDialog("Error", message);
+                    else
+                        activity.showAlertDialog("Error", "Delete User Failed");
+                }else if(code==KYNIntentConstant.CODE_FAILED_TOKEN){
+                    activity.showErrorTokenDialog();
+                }else if(code==KYNIntentConstant.CODE_DELETE_USER_SUCCESS){
                     activity.setResult(KYNIntentConstant.RESULT_CODE_USER_DETAIL);
                     activity.finish();
                 }
@@ -97,6 +114,8 @@ public class KYNUserDetailController implements View.OnClickListener {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(KYNIntentConstant.ACTION_SUBMIT_USER);
         intentFilter.addCategory(KYNIntentConstant.CATEGORY_SUBMIT_USER);
+        intentFilter.addAction(KYNIntentConstant.ACTION_DELETE_USER);
+        intentFilter.addCategory(KYNIntentConstant.CATEGORY_DELETE_USER);
         LocalBroadcastManager.getInstance(activity.getApplicationContext()).registerReceiver(localBroadCastReceiver, intentFilter);
     }
 

@@ -42,7 +42,9 @@ public class KYNAPISubmitIntervieweeData extends KYNHTTPPostConnections {
             String result = jsonResponse.getString(KYNJSONKey.KEY_RESULT);
 
             bundle.putString(KYNIntentConstant.BUNDLE_KEY_RESULT, result);
-            bundle.putString(KYNIntentConstant.BUNDLE_KEY_MESSAGE, jsonResponse.getString(KYNJSONKey.KEY_MESSAGE));
+            if(jsonResponse.has(KYNJSONKey.KEY_MESSAGE)){
+                bundle.putString(KYNIntentConstant.BUNDLE_KEY_MESSAGE, jsonResponse.getString(KYNJSONKey.KEY_MESSAGE));
+            }
 
             if (result.equalsIgnoreCase(KYNJSONKey.VAL_SUCCESS)) {
                 bundle.putInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_SUBMIT_INTERVIEWEE_DATA_SUCCESS);
@@ -74,6 +76,9 @@ public class KYNAPISubmitIntervieweeData extends KYNHTTPPostConnections {
         try {
             Gson gson = new GsonBuilder().setDateFormat(KYNIntentConstant.DATE_FORMAT).create();
             List<KYNQuestionModel> questionModels = database.getListQuestion(intervieweeModel.getId());
+            for(KYNQuestionModel model : questionModels){
+                model.setIntervieweeModel(null);
+            }
             intervieweeModel.setQuestionModels(questionModels);
             String interviewee = gson.toJson(intervieweeModel);
             JSONObject json = new JSONObject(interviewee);

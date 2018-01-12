@@ -47,13 +47,13 @@ public class KYNIntervieweeDetailActivity extends KYNBaseActivity{
     private TextView textViewHandphone;
     private TextView textViewAddress;
     private TextView textViewDOB;
+    private TextView textViewCategory;
     private TextView textViewScore;
     private EditText editTextFeedback;
     private Button buttonKirim;
     private LinearLayout linearLayoutFeedback;
     private LinearLayout linearLayoutQuestion;
     private Button btnQuestion;
-    private boolean isDeleteFeedback = false;
     private Long feedbackId;//untuk delete feedback
 
     @Override
@@ -81,6 +81,7 @@ public class KYNIntervieweeDetailActivity extends KYNBaseActivity{
         textViewHandphone = (TextView)findViewById(R.id.textViewHandphone);
         textViewAddress = (TextView)findViewById(R.id.textViewAddress);
         textViewDOB = (TextView)findViewById(R.id.textViewDOB);
+        textViewCategory = (TextView)findViewById(R.id.textViewCategory);
         textViewScore = (TextView)findViewById(R.id.textViewScore);
         editTextFeedback = (EditText)findViewById(R.id.edittextFeedback);
         linearLayoutFeedback = (LinearLayout)findViewById(R.id.linearFeedback);
@@ -118,6 +119,7 @@ public class KYNIntervieweeDetailActivity extends KYNBaseActivity{
         textViewHandphone.setText(intervieweeModel.getHandphone());
         textViewAddress.setText(intervieweeModel.getAddress());
         textViewDOB.setText(format.format(intervieweeModel.getDob()));
+        textViewCategory.setText(intervieweeModel.getCategory());
         textViewScore.setText(intervieweeModel.getScore()+"");
     }
 
@@ -170,9 +172,8 @@ public class KYNIntervieweeDetailActivity extends KYNBaseActivity{
                         KYNFeedbackModel model = new KYNFeedbackModel();
                         model.setId(feedbackModel.getId());
                         model.setServerId(feedbackModel.getServerId());
-                        isDeleteFeedback = true;
                         feedbackId = feedbackModel.getId();
-                        submitFeedback(model);
+                        deleteFeedback(model);
                     }else{
                         database.deleteFeedback(feedbackModel.getId());
                         List<KYNFeedbackModel> feedbackModels = database.getFeedbackList(intervieweeId);
@@ -286,6 +287,17 @@ public class KYNIntervieweeDetailActivity extends KYNBaseActivity{
         startService(intent);
     }
 
+    public void deleteFeedback(KYNFeedbackModel model){
+        showLoadingDialog(getResources().getString(R.string.loading));
+        KYNUserModel session = database.getSession();
+        Intent intent = new Intent(this, KYNServiceConnection.class);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, model);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME, session.getUsername());
+        intent.setAction(KYNIntentConstant.ACTION_DELETE_FEEDBACK);
+        intent.addCategory(KYNIntentConstant.CATEGORY_DELETE_FEEDBACK);
+        startService(intent);
+    }
+
     public EditText getEditTextFeedback() {
         return editTextFeedback;
     }
@@ -304,14 +316,6 @@ public class KYNIntervieweeDetailActivity extends KYNBaseActivity{
 
     public Button getBtnQuestion() {
         return btnQuestion;
-    }
-
-    public boolean isDeleteFeedback() {
-        return isDeleteFeedback;
-    }
-
-    public void setDeleteFeedback(boolean deleteFeedback) {
-        isDeleteFeedback = deleteFeedback;
     }
 
     public Long getFeedbackId() {

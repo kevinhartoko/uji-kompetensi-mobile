@@ -21,7 +21,7 @@
                 android:layout_weight="0.3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Nama :"
+                android:text="Name :"
                 android:textColor="#FF000000"
                 android:layout_marginLeft="5dp"/>
             <EditText
@@ -49,7 +49,7 @@
                 android:layout_weight="0.3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:text="Jenis Kelamin :"
+                android:text="Gender :"
                 android:textColor="#FF000000"
                 android:layout_marginLeft="5dp"
                 android:gravity="center_vertical"/>
@@ -119,7 +119,7 @@
                 android:layout_weight="0.3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Alamat"
+                android:text="Address"
                 android:textColor="#FF000000"
                 android:layout_marginLeft="5dp"/>
             <EditText
@@ -141,7 +141,7 @@
                 android:layout_weight="0.3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Tanggal Lahir :"
+                android:text="DOB :"
                 android:textColor="#FF000000"
                 android:layout_marginLeft="5dp"/>
             <TextView
@@ -154,10 +154,38 @@
                 android:background="@drawable/edittext_style"/>
         </LinearLayout>
         <TextView
+            android:id="@+id/category_error_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/red"
+            android:gravity="right"
+            android:textSize="12sp"
+            android:text="Category Harus Dipilih"
+            android:visibility="gone"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip">
+            <TextView
+                android:layout_weight="0.3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Position :"
+                android:textColor="#FF000000"
+                android:layout_marginLeft="5dp"/>
+            <Spinner
+                android:id="@+id/categorySpinner"
+                android:layout_width="0dp"
+                android:layout_height="23dip"
+                android:textColor="#FF000000"
+                android:layout_weight="0.7"
+                android:background="@drawable/edittext_style"/>
+        </LinearLayout>
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dip"
-            android:text="*Template diisi oleh interviewer"/>
+            android:text="*Template filled by intervewer"/>
         <TextView
             android:id="@+id/template_error_message"
             android:layout_width="match_parent"
@@ -192,7 +220,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mulai"
+                android:text="Start"
                 android:id="@+id/btnLanjut"
                 android:layout_marginBottom="7dp"
                 android:textAllCaps="false"

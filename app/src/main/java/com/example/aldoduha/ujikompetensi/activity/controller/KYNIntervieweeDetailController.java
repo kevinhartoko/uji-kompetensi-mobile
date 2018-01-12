@@ -42,15 +42,30 @@ public class KYNIntervieweeDetailController implements View.OnClickListener{
                     if(message!=null && !message.equals(""))
                         activity.showAlertDialog("Error", message);
                     else
-                        activity.showAlertDialog("Error", "Gagal Submit Feedback");
+                        activity.showAlertDialog("Error", "Submit Feedback Failed");
                 }else if(code==KYNIntentConstant.CODE_FAILED_TOKEN){
                     activity.showErrorTokenDialog();
                 }else if(code==KYNIntentConstant.CODE_SUBMIT_FEEDBACK_SUCCESS){
-                    if(activity.isDeleteFeedback()){
-                        database.deleteFeedback(activity.getFeedbackId());
-                    }else {
-                        database.insertFeedback(feedbackModel);
-                    }
+                    database.insertFeedback(feedbackModel);
+                    activity.getEditTextFeedback().setText("");
+                    List<KYNFeedbackModel> feedbackModels = database.getFeedbackList(activity.getIntervieweeId());
+                    activity.generateFeedback(feedbackModels);
+                }
+            }else if (action.equals(KYNIntentConstant.ACTION_DELETE_FEEDBACK)) {
+                Bundle bundle = intent.getExtras();
+                int code = bundle.getInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_FAILED);
+                String message = bundle .getString(KYNIntentConstant.BUNDLE_KEY_MESSAGE);
+
+                if(code==KYNIntentConstant.CODE_FAILED ||
+                        code==KYNIntentConstant.CODE_DELETE_FEEDBACK_FAILED){
+                    if(message!=null && !message.equals(""))
+                        activity.showAlertDialog("Error", message);
+                    else
+                        activity.showAlertDialog("Error", "Delete Feedback Failed");
+                }else if(code==KYNIntentConstant.CODE_FAILED_TOKEN){
+                    activity.showErrorTokenDialog();
+                }else if(code==KYNIntentConstant.CODE_DELETE_FEEDBACK_SUCCESS){
+                    database.deleteFeedback(activity.getFeedbackId());
                     activity.getEditTextFeedback().setText("");
                     List<KYNFeedbackModel> feedbackModels = database.getFeedbackList(activity.getIntervieweeId());
                     activity.generateFeedback(feedbackModels);
@@ -95,7 +110,6 @@ public class KYNIntervieweeDetailController implements View.OnClickListener{
             feedbackModel.setIntervieweeModel(activity.getIntervieweeModel());
             feedbackModel.setName(session.getUsername());
             if(KYNSMPUtilities.isConnectServer){
-                activity.setDeleteFeedback(false);
                 activity.submitFeedback(feedbackModel);
             }else {
                 database.insertFeedback(feedbackModel);
@@ -120,6 +134,8 @@ public class KYNIntervieweeDetailController implements View.OnClickListener{
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(KYNIntentConstant.ACTION_SUBMIT_FEEDBACK);
         intentFilter.addCategory(KYNIntentConstant.CATEGORY_SUBMIT_FEEDBACK);
+        intentFilter.addAction(KYNIntentConstant.ACTION_DELETE_FEEDBACK);
+        intentFilter.addCategory(KYNIntentConstant.CATEGORY_DELETE_FEEDBACK);
         LocalBroadcastManager.getInstance(activity.getApplicationContext()).registerReceiver(localBroadCastReceiver, intentFilter);
     }
 

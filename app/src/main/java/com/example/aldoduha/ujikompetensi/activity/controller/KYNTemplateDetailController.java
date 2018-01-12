@@ -37,10 +37,27 @@ public class KYNTemplateDetailController implements View.OnClickListener {
                     if(message!=null && !message.equals(""))
                         activity.showAlertDialog("Error", message);
                     else
-                        activity.showAlertDialog("Error", "Gagal Submit Template");
+                        activity.showAlertDialog("Error", "Submit Template Failed");
                 }else if(code==KYNIntentConstant.CODE_FAILED_TOKEN){
                     activity.showErrorTokenDialog();
                 }else if(code==KYNIntentConstant.CODE_SUBMIT_TEMPLATE_SUCCESS){
+                    activity.finish();
+                }
+            }else if (action.equals(KYNIntentConstant.ACTION_DELETE_TEMPLATE)) {
+                Bundle bundle = intent.getExtras();
+                int code = bundle.getInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_FAILED);
+                String message = bundle .getString(KYNIntentConstant.BUNDLE_KEY_MESSAGE);
+
+                if(code==KYNIntentConstant.CODE_FAILED ||
+                        code==KYNIntentConstant.CODE_DELETE_TEMPLATE_FAILED){
+                    if(message!=null && !message.equals(""))
+                        activity.showAlertDialog("Error", message);
+                    else
+                        activity.showAlertDialog("Error", "Delete Template Failed");
+                }else if(code==KYNIntentConstant.CODE_FAILED_TOKEN){
+                    activity.showErrorTokenDialog();
+                }else if(code==KYNIntentConstant.CODE_DELETE_TEMPLATE_SUCCESS){
+                    activity.setResult(KYNIntentConstant.RESULT_CODE_TEMPLATE_DETAIL);
                     activity.finish();
                 }
             }
@@ -97,6 +114,8 @@ public class KYNTemplateDetailController implements View.OnClickListener {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(KYNIntentConstant.ACTION_SUBMIT_TEMPLATE);
         intentFilter.addCategory(KYNIntentConstant.CATEGORY_SUBMIT_TEMPLATE);
+        intentFilter.addAction(KYNIntentConstant.ACTION_DELETE_TEMPLATE);
+        intentFilter.addCategory(KYNIntentConstant.CATEGORY_DELETE_TEMPLATE);
         LocalBroadcastManager.getInstance(activity.getApplicationContext()).registerReceiver(localBroadCastReceiver, intentFilter);
     }
 

@@ -1,6 +1,5 @@
 package com.example.aldoduha.ujikompetensi.Fragment;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,14 +18,12 @@ import com.example.aldoduha.ujikompetensi.Fragment.Controller.KYNQuestionQuestio
 import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
 import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.KYNQuestionFormActivity;
-import com.example.aldoduha.ujikompetensi.activity.controller.KYNQuestionFormQuestionController;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNInfoAlertDialogListener;
 import com.example.aldoduha.ujikompetensi.connection.KYNSMPUtilities;
 import com.example.aldoduha.ujikompetensi.connection.api.listener.KYNServiceConnection;
 import com.example.aldoduha.ujikompetensi.model.KYNIntervieweeModel;
 import com.example.aldoduha.ujikompetensi.model.KYNQuestionModel;
-import com.example.aldoduha.ujikompetensi.model.KYNTemplateModel;
 import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
@@ -86,7 +83,7 @@ public class KYNQuestionFormQuestionFragment extends KYNBaseFragment {
 
     private void generateQuestion() {
         linearLayoutRoot.removeAllViews();
-        questionList = activity.getQuestionModels();
+        questionList = database.getListQuestion();
         if (questionList.size() > 0) {
             for (final KYNQuestionModel model : questionList) {
                 final LinearLayout linearLayout = new LinearLayout(activity);

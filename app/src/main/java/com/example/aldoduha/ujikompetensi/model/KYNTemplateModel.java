@@ -1,6 +1,7 @@
 package com.example.aldoduha.ujikompetensi.model;
 
 import com.example.aldoduha.ujikompetensi.utility.KYNJSONKey;
+import com.google.gson.annotations.SerializedName;
 
 import org.json.JSONObject;
 
@@ -12,7 +13,9 @@ import java.util.List;
  */
 
 public class KYNTemplateModel  implements Serializable {
+    @SerializedName(value = "localId")
     private Long id;
+    @SerializedName(value = "id")
     private String serverId;
     private String nama;
     private int jumlahSoal;

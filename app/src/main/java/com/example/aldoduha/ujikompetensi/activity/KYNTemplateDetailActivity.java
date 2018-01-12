@@ -303,7 +303,7 @@ public class KYNTemplateDetailActivity extends KYNBaseActivity {
                 KYNTemplateModel model = new KYNTemplateModel();
                 model.setId(templateModel.getId());
                 model.setServerId(templateModel.getServerId());
-                submitTemplate(model);
+                deleteTemplate(model);
             }else {
                 setResult(KYNIntentConstant.RESULT_CODE_TEMPLATE_DETAIL);
                 finish();
@@ -339,6 +339,17 @@ public class KYNTemplateDetailActivity extends KYNBaseActivity {
         intent.putExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME, session.getUsername());
         intent.setAction(KYNIntentConstant.ACTION_SUBMIT_TEMPLATE);
         intent.addCategory(KYNIntentConstant.CATEGORY_SUBMIT_TEMPLATE);
+        startService(intent);
+    }
+
+    public void deleteTemplate(KYNTemplateModel templateModel){
+        showLoadingDialog(getResources().getString(R.string.loading));
+        KYNUserModel session = database.getSession();
+        Intent intent = new Intent(this, KYNServiceConnection.class);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, templateModel);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME, session.getUsername());
+        intent.setAction(KYNIntentConstant.ACTION_DELETE_TEMPLATE);
+        intent.addCategory(KYNIntentConstant.CATEGORY_DELETE_TEMPLATE);
         startService(intent);
     }
 }

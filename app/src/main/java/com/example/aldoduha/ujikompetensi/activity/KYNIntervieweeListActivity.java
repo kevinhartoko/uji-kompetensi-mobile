@@ -43,10 +43,12 @@ public class KYNIntervieweeListActivity extends KYNBaseActivity {
     private Button refreshButton;
     private EditText searchEdittext;
     private Long intervieweeId;
+    private String category="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         activity = this;
+        category = getIntent().getStringExtra(KYNIntentConstant.INTENT_EXTRA_CATEGORY);
         this.database = new KYNDatabaseHelper(activity);
         if(!KYNSMPUtilities.isConnectServer) {
             insertInterviewee();
@@ -111,7 +113,7 @@ public class KYNIntervieweeListActivity extends KYNBaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode){
             case KYNIntentConstant.REQUEST_CODE_INTERVIEWEE_DETAIL:
-                List<KYNIntervieweeModel> intervieweeModels = database.getListInterviewee();
+                List<KYNIntervieweeModel> intervieweeModels = database.getListIntervieweeByCategory(category);
                 generateList(intervieweeModels);
                 break;
             default:
@@ -244,5 +246,13 @@ public class KYNIntervieweeListActivity extends KYNBaseActivity {
 
     public void setIntervieweeId(Long intervieweeId) {
         this.intervieweeId = intervieweeId;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

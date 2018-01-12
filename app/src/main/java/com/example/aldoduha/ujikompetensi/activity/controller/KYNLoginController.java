@@ -53,7 +53,7 @@ public class KYNLoginController implements View.OnClickListener, View.OnKeyListe
                         if(message!=null && !message.trim().equals("null")){
                             activity.showAlertDialog("Error", message.trim());
                         }else{
-                            activity.showAlertDialog("Error", "Gagal Login");
+                            activity.showAlertDialog("Error", "Login Failed");
                         }
                         break;
                     default:
@@ -61,7 +61,7 @@ public class KYNLoginController implements View.OnClickListener, View.OnKeyListe
                         if(message!=null && !message.trim().equals("null")){
                             activity.showAlertDialog("Error", message.trim());
                         }else{
-                            activity.showAlertDialog("Error", "Gagal Login");
+                            activity.showAlertDialog("Error", "Login Failed");
                         }
                         break;
                 }
@@ -100,12 +100,12 @@ public class KYNLoginController implements View.OnClickListener, View.OnKeyListe
         String username = activity.getUsername().getText().toString();
         String password = activity.getPassword().getText().toString();
         if (username == null || username.equals("")) {
-            activity.showAlertDialog("Gagal", "Username dan Password harus diisi");
+            activity.showAlertDialog("Error", "Username and Password must be filled");
             return;
         }
 
         if (password == null || password.equals("")) {
-            activity.showAlertDialog("Gagal", "Username dan Password harus diisi");
+            activity.showAlertDialog("Error", "Username and Password must be filled");
             return;
         }
         activity.hideKeyBoard();

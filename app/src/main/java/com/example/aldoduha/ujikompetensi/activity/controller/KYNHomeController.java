@@ -9,6 +9,8 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 
 import com.example.aldoduha.ujikompetensi.R;
+import com.example.aldoduha.ujikompetensi.activity.KYNCategoryIntervieweeActivity;
+import com.example.aldoduha.ujikompetensi.activity.KYNCategoryQuestionActivity;
 import com.example.aldoduha.ujikompetensi.activity.KYNHomeActivity;
 import com.example.aldoduha.ujikompetensi.activity.KYNIntervieweeListActivity;
 import com.example.aldoduha.ujikompetensi.activity.KYNLoginActivity;
@@ -44,14 +46,17 @@ public class KYNHomeController implements View.OnClickListener {
         }
     };
 
-    public void onDestroy(){
+    public void onResume(){
+        registerLocalBroadCastReceiver();
+    }
+
+    public void onPause(){
         unregisterLocalBroadCastReceiver();
     }
 
     public KYNHomeController(KYNHomeActivity activity) {
         this.activity = activity;
         getView();
-        registerLocalBroadCastReceiver();
     }
 
     public void getView() {
@@ -86,12 +91,12 @@ public class KYNHomeController implements View.OnClickListener {
     }
 
     private void onQuestionManagementClicked() {
-        if(KYNSMPUtilities.isConnectServer){
-            activity.getQuestionList();
-        }else {
-            Intent intent = new Intent(activity, KYNQuestionListActivity.class);
+//        if(KYNSMPUtilities.isConnectServer){
+//            activity.getQuestionList();
+//        }else {
+            Intent intent = new Intent(activity, KYNCategoryQuestionActivity.class);
             activity.startActivity(intent);
-        }
+//        }
     }
 
     private void onTemplateManagementClicked() {
@@ -140,7 +145,7 @@ public class KYNHomeController implements View.OnClickListener {
             if(message!=null && !message.equals(""))
                 activity.showAlertDialog("Error", message);
             else
-                activity.showAlertDialog("Error", "Gagal Logout");
+                activity.showAlertDialog("Error", "Logout Failed");
         }else if(code==KYNIntentConstant.CODE_FAILED_TOKEN){
             activity.showErrorTokenDialog();
         }else if(code==KYNIntentConstant.CODE_LOGOUT_SUCCESS){
@@ -161,7 +166,7 @@ public class KYNHomeController implements View.OnClickListener {
             if(message!=null && !message.equals(""))
                 activity.showAlertDialog("Error", message);
             else
-                activity.showAlertDialog("Error", "Gagal Ambil List");
+                activity.showAlertDialog("Error", "Failed to get list");
         }else if(code==KYNIntentConstant.CODE_FAILED_TOKEN){
             activity.showErrorTokenDialog();
         }else if(code==KYNIntentConstant.CODE_USER_LIST_SUCCESS){
@@ -181,7 +186,7 @@ public class KYNHomeController implements View.OnClickListener {
             if(message!=null && !message.equals(""))
                 activity.showAlertDialog("Error", message);
             else
-                activity.showAlertDialog("Error", "Gagal Ambil List");
+                activity.showAlertDialog("Error", "Failed to get list");
         }else if(code==KYNIntentConstant.CODE_FAILED_TOKEN){
             activity.showErrorTokenDialog();
         }else if(code==KYNIntentConstant.CODE_QUESTION_LIST_SUCCESS){
@@ -201,7 +206,7 @@ public class KYNHomeController implements View.OnClickListener {
             if(message!=null && !message.equals(""))
                 activity.showAlertDialog("Error", message);
             else
-                activity.showAlertDialog("Error", "Gagal Ambil List");
+                activity.showAlertDialog("Error", "Failed to get list");
         }else if(code==KYNIntentConstant.CODE_FAILED_TOKEN){
             activity.showErrorTokenDialog();
         }else if(code==KYNIntentConstant.CODE_TEMPLATE_LIST_SUCCESS){
@@ -226,11 +231,11 @@ public class KYNHomeController implements View.OnClickListener {
             if(message!=null && !message.equals(""))
                 activity.showAlertDialog("Error", message);
             else
-                activity.showAlertDialog("Error", "Gagal Ambil List");
+                activity.showAlertDialog("Error", "Failed to get list");
         }else if(code==KYNIntentConstant.CODE_FAILED_TOKEN){
             activity.showErrorTokenDialog();
         }else if(code==KYNIntentConstant.CODE_INTERVIEWEE_LIST_SUCCESS){
-            Intent intentList = new Intent(activity, KYNIntervieweeListActivity.class);
+            Intent intentList = new Intent(activity, KYNCategoryIntervieweeActivity.class);
             activity.startActivity(intentList);
         }
     }

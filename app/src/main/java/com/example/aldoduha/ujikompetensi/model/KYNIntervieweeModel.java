@@ -24,6 +24,7 @@ public class KYNIntervieweeModel  implements Serializable {
     private Date dob;
     private String gender;
     private int score;
+    private String category;
     //untuk kirim data
     private List<KYNQuestionModel> questionModels;
 
@@ -59,6 +60,8 @@ public class KYNIntervieweeModel  implements Serializable {
                 setGender(object.getString(KYNJSONKey.KEY_INTERVIEWEE_GENDER));
             if(object.has(KYNJSONKey.KEY_INTERVIEWEE_SCORE))
                 setScore(object.getInt(KYNJSONKey.KEY_INTERVIEWEE_SCORE));
+            if(object.has(KYNJSONKey.KEY_INTERVIEWEE_CATEGORY))
+                setCategory(object.getString(KYNJSONKey.KEY_INTERVIEWEE_CATEGORY));
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -142,5 +145,13 @@ public class KYNIntervieweeModel  implements Serializable {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

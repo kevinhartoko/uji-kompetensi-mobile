@@ -32,7 +32,7 @@ import java.security.interfaces.RSAPublicKey;
  */
 
 public class KYNSMPUtilities {
-    public static boolean isConnectServer = false;
+    public static boolean isConnectServer = true;
 
     public static String username = "";
     public static String password = "";
@@ -56,14 +56,15 @@ public class KYNSMPUtilities {
     public static String appIdGenerateQuestionRest = "questions/generateQuestion";
     public static String appIdSubmitQuestionRest = "questions/saveQuestion";
     public static String appIdSubmitUserRest = "users/saveUser";
-    public static String appIdSubmitTemplateRest = "templates/saveTemplate";
+    public static String appIdSubmitTemplateRest = "templateQuestions/saveTemplateQuestion";
     public static String appIdSubmitFeedbackRest = "feedbacks/saveFeedback";
-    public static String appIdSubmitIntervieweeDataRest = "eformws/rest/user/submitintervieweedata";
+    public static String appIdSubmitIntervieweeDataRest = "interviewee/saveInterviewee";
     public static String appIdIntervieweeDetailRest = "interviewee/findDetailInterviewee";
     public static String appIdDeleteUserRest = "users/deleteUser   ";
     public static String appIdDeleteQuestionRest = "questions/deleteQuestion";
     public static String appIdDeleteTemplateRest = "templates/deleteTemplate";
     public static String appIdDeleteFeedbackRest = "feedbacks/deleteFeedback";
+    public static String appIdTemplateDetailRest = "templateQuestions/getTemplateQuestionByTemplate";
     
     public static String secConfig = "";
     public static String appId = "";

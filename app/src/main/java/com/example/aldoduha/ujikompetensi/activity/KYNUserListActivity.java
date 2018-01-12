@@ -18,6 +18,8 @@ import com.example.aldoduha.ujikompetensi.R;
 import com.example.aldoduha.ujikompetensi.activity.controller.KYNUserListController;
 import com.example.aldoduha.ujikompetensi.alertDialog.KYNConfirmationAlertDialog;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
+import com.example.aldoduha.ujikompetensi.connection.KYNSMPUtilities;
+import com.example.aldoduha.ujikompetensi.connection.api.listener.KYNServiceConnection;
 import com.example.aldoduha.ujikompetensi.model.KYNQuestionModel;
 import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
@@ -105,8 +107,18 @@ public class KYNUserListActivity extends KYNBaseActivity{
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode){
             case KYNIntentConstant.REQUEST_CODE_USER_DETAIL:
-                List<KYNUserModel> userModels = database.getUsers();
-                generateTable(userModels);
+                if(KYNSMPUtilities.isConnectServer){
+                    showLoadingDialog(activity.getResources().getString(R.string.loading));
+                    Intent intent = new Intent(this, KYNServiceConnection.class);
+                    KYNUserModel session = database.getSession();
+                    intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, session);
+                    intent.setAction(KYNIntentConstant.ACTION_USER_LIST);
+                    intent.addCategory(KYNIntentConstant.CATEGORY_USER_LIST);
+                    activity.startService(intent);
+                }else {
+                    List<KYNUserModel> userModels = database.getUsers();
+                    generateTable(userModels);
+                }
                 break;
             default:
                 break;

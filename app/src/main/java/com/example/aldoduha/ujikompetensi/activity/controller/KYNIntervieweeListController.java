@@ -47,7 +47,7 @@ public class KYNIntervieweeListController implements View.OnClickListener, Adapt
                     if(message!=null && !message.equals(""))
                         activity.showAlertDialog("Error", message);
                     else
-                        activity.showAlertDialog("Error", "Gagal Ambil Detail");
+                        activity.showAlertDialog("Error", "Failed to get detail");
                 }else if(code==KYNIntentConstant.CODE_FAILED_TOKEN){
                     activity.showErrorTokenDialog();
                 }else if(code==KYNIntentConstant.CODE_INTERVIEWEE_DETAIL_SUCCESS){
@@ -77,7 +77,7 @@ public class KYNIntervieweeListController implements View.OnClickListener, Adapt
         this.activity = activity;
         this.database = new KYNDatabaseHelper(activity);
         intervieweeModels = new ArrayList<>();
-        intervieweeModels = database.getListInterviewee();
+        intervieweeModels = database.getListIntervieweeByCategory(activity.getCategory());
         activity.generateList(intervieweeModels);
     }
 
@@ -87,7 +87,7 @@ public class KYNIntervieweeListController implements View.OnClickListener, Adapt
 
     public void onRefreshButtonClicked(){
         activity.getSearchEdittext().setText("");
-        intervieweeModels = database.getListInterviewee();
+        intervieweeModels = database.getListIntervieweeByCategory(activity.getCategory());
         activity.updateListView(intervieweeModels);
     }
 

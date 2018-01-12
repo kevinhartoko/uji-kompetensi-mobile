@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="0.4"
-                android:text="Kode :"
+                android:text="Code :"
                 android:textColor="#FF000000" />
 
             <EditText
@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="0.4"
-                android:text="Pertanyaan"
+                android:text="Question"
                 android:textColor="#FF000000" />
 
             <EditText
@@ -69,7 +69,7 @@
             android:layout_weight="0.4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Jawaban 1 :"
+            android:text="Answer 1 :"
             android:textColor="#FF000000"
             android:layout_marginLeft="5dp"/>
         <EditText
@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="0.4"
-                android:text="Jawaban 2 :"
+                android:text="Answer 2 :"
                 android:textColor="#FF000000" />
 
             <EditText
@@ -109,7 +109,7 @@
                 android:layout_weight="0.4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Jawaban 3 :"
+                android:text="Answer 3 :"
                 android:textColor="#FF000000"
                 android:layout_marginLeft="5dp"/>
             <EditText
@@ -128,7 +128,7 @@
                 android:layout_weight="0.4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Jawaban 4 :"
+                android:text="Answer 4 :"
                 android:textColor="#FF000000"
                 android:layout_marginLeft="5dp"/>
             <EditText
@@ -156,7 +156,7 @@
                 android:layout_weight="0.4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Kunci Jawaban :"
+                android:text="True Answer :"
                 android:textColor="#FF000000"
                 android:layout_marginLeft="5dp"/>
             <RadioGroup
@@ -199,7 +199,7 @@
                 android:layout_weight="0.4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Bobot"
+                android:text="weight"
                 android:textColor="#FF000000"
                 android:layout_marginLeft="5dp"/>
             <EditText
@@ -210,6 +210,27 @@
                 android:layout_weight="0.6"
                 android:inputType="number"
                 android:background="@drawable/edittext_style"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dip">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="0.4"
+                android:text="Category :"
+                android:textColor="#FF000000" />
+            <Spinner
+                android:layout_width="0dp"
+                android:layout_height="22dp"
+                android:id="@+id/spinnerCategory"
+                android:textColor="#FF000000"
+                android:layout_weight="0.6"
+                android:background="@drawable/edittext_style">
+            </Spinner>
         </LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent"

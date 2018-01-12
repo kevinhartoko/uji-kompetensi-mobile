@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.aldoduha.ujikompetensi.KYNBaseActivity;
@@ -48,12 +50,16 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
     private RadioButton radio3;
     private RadioButton radio4;
     private TextView kunciJawabanErrTextview;
+    private Spinner spinnerCategory;
+    private ArrayAdapter adapter;
+    private String category;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_detail);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         questionId = getIntent().getLongExtra("questionId", 0);
+        category = getIntent().getStringExtra(KYNIntentConstant.INTENT_EXTRA_CATEGORY);
         loadview();
         initDefaultValue();
     }
@@ -81,6 +87,7 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
         radio3 = (RadioButton)findViewById(R.id.radio3);
         radio4 = (RadioButton)findViewById(R.id.radio4);
         kunciJawabanErrTextview = (TextView)findViewById(R.id.kunciJawabanErrorTextview);
+        spinnerCategory = (Spinner)findViewById(R.id.spinnerCategory);
     }
 
     private void initDefaultValue(){
@@ -95,6 +102,15 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
         buttonLanjut.setOnClickListener(controller);
         buttonKembali.setOnClickListener(controller);
         buttonHapus.setOnClickListener(controller);
+        if(category!=null && !category.equals("")){
+            int position = 0;
+            for(int i=0;i<spinnerCategory.getCount();i++){
+                if(category.equalsIgnoreCase(spinnerCategory.getItemAtPosition(i).toString()))
+                    position=i;
+            }
+            spinnerCategory.setSelection(position);
+        }
+        spinnerCategory.setEnabled(false);
     }
 
     public void setValueToModel(){
@@ -115,6 +131,7 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
         }
 //        questionModel.setKeyAnswer(editTextKunciJawaban.getText().toString());
         questionModel.setBobot(Integer.parseInt(editTextBobot.getText().toString()));
+        questionModel.setCategory(spinnerCategory.getSelectedItem().toString());
         if(questionId==null || questionId==0){
             questionId = database.insertQuestion(questionModel);
         }else{
@@ -155,6 +172,14 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
         }
         if(questionModel.getBobot()!=0){
             editTextBobot.setText(questionModel.getBobot()+"");
+        }
+        if(questionModel.getCategory()!=null && !questionModel.getCategory().equals("")){
+            int position = 0;
+            for(int i=0;i<spinnerCategory.getCount();i++){
+                if(questionModel.getCategory().equalsIgnoreCase(spinnerCategory.getItemAtPosition(i).toString()))
+                    position=i;
+            }
+            spinnerCategory.setSelection(position);
         }
     }
 
@@ -249,7 +274,7 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
                 KYNQuestionModel model = new KYNQuestionModel();
                 model.setId(questionModel.getId());
                 model.setServerId(questionModel.getServerId());
-                submitQuestion(model);
+                deleteQuestion(model);
             }else {
                 setResult(KYNIntentConstant.RESULT_CODE_QUESTION_DETAIL);
                 finish();
@@ -261,6 +286,12 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
 
         }
     };
+
+    public void initiateCategory(){
+        adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, KYNIntentConstant.categoryDetail);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCategory.setAdapter(adapter);
+    }
 
     public void submitQuestion(){
         showLoadingDialog(getResources().getString(R.string.loading));
@@ -281,6 +312,16 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
         intent.putExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME, session.getUsername());
         intent.setAction(KYNIntentConstant.ACTION_SUBMIT_QUESTION);
         intent.addCategory(KYNIntentConstant.CATEGORY_SUBMIT_QUESTION);
+        startService(intent);
+    }
+    public void deleteQuestion(KYNQuestionModel questionModel){
+        showLoadingDialog(getResources().getString(R.string.loading));
+        KYNUserModel session = database.getSession();
+        Intent intent = new Intent(this, KYNServiceConnection.class);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, questionModel);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME, session.getUsername());
+        intent.setAction(KYNIntentConstant.ACTION_DELETE_QUESTION);
+        intent.addCategory(KYNIntentConstant.CATEGORY_DELETE_QUESTION);
         startService(intent);
     }
 

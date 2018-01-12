@@ -147,7 +147,7 @@ public class KYNBaseActivity extends FragmentActivity {
     }
     public void showErrorTokenDialog() {
         if (errorTokenAlertDialog == null) {
-            errorTokenAlertDialog = new KYNInfoAlertDialog(this, "Gagal", "Akun anda digunakan di perangkat lain, Harap login kembali");
+            errorTokenAlertDialog = new KYNInfoAlertDialog(this, "Error", "Akun anda digunakan di perangkat lain, Harap login kembali");
             errorTokenAlertDialog.setCancelable(false);
             errorTokenAlertDialog.setCanceledOnTouchOutside(false);
         }

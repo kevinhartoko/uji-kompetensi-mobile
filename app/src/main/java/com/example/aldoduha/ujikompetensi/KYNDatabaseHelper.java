@@ -48,6 +48,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
     private static final String INTERVIEWEE_DOB = "dob";
     private static final String INTERVIEWEE_GENDER = "gender";
     private static final String INTERVIEWEE_SCORE = "score";
+    private static final String INTERVIEWEE_CATEGORY = "category";
 
     //question
     private static final String QUESTION_ID = "id";
@@ -62,6 +63,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
     private static final String QUESTION_BOBOT = "bobot";
     private static final String QUESTION_INTERVIEWEE_ANSWER = "interviewee_answer";
     private static final String QUESTION_KEY_ANSWER = "key_answer";
+    private static final String QUESTION_CATEGORY = "category";
 
     //user
     private static final String USER_ID = "id";
@@ -109,6 +111,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
                     INTERVIEWEE_ADDRESS + " TEXT, " +
                     INTERVIEWEE_GENDER + " TEXT, " +
                     INTERVIEWEE_SCORE + " INTEGER, " +
+                    INTERVIEWEE_CATEGORY + " TEXT, " +
                     INTERVIEWEE_DOB + " NUMERIC);";
 
     private static final String QUERY_CREATE_TABLE_QUESTION =
@@ -124,6 +127,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
                     QUESTION_ANSWER_4 + " TEXT, " +
                     QUESTION_INTERVIEWEE_ANSWER + " TEXT, " +
                     QUESTION_BOBOT + " NUMERIC, " +
+                    QUESTION_CATEGORY + " TEXT, " +
                     QUESTION_KEY_ANSWER + " TEXT);";
 
     private static final String QUERY_CREATE_TABLE_USER =
@@ -268,6 +272,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
             }
             values.put(INTERVIEWEE_GENDER, model.getGender());
             values.put(INTERVIEWEE_SCORE, model.getScore());
+            values.put(INTERVIEWEE_CATEGORY, model.getCategory());
 
             id = db.insert(TABLE_INTERVIEWEE, null, values);
             db.setTransactionSuccessful();
@@ -303,6 +308,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
             values.put(QUESTION_INTERVIEWEE_ANSWER, model.getIntervieweeAnswer());
             values.put(QUESTION_KEY_ANSWER, model.getKeyAnswer());
             values.put(QUESTION_BOBOT, model.getBobot());
+            values.put(QUESTION_CATEGORY, model.getCategory());
             if (model.getIntervieweeModel() != null && model.getIntervieweeModel().getId() != null) {
                 values.put(QUESTION_FK_INTERVIEWEE, model.getIntervieweeModel().getId());
             }
@@ -356,6 +362,8 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
         if (model == null) {
             return null;
         }
+
+        deleteSession();
 
         Long id = -1l;
 
@@ -493,6 +501,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
             }
             values.put(INTERVIEWEE_GENDER, model.getGender());
             values.put(INTERVIEWEE_SCORE, model.getScore());
+            values.put(INTERVIEWEE_CATEGORY, model.getCategory());
 
             db.update(TABLE_INTERVIEWEE, values, INTERVIEWEE_ID + " =? ", new String[]{model.getId() + ""});
             db.setTransactionSuccessful();
@@ -525,6 +534,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
                 values.put(QUESTION_FK_INTERVIEWEE, model.getIntervieweeModel().getId());
             }
             values.put(QUESTION_BOBOT, model.getBobot());
+            values.put(QUESTION_CATEGORY, model.getCategory());
 
             db.update(TABLE_QUESTION, values, QUESTION_ID + " =? ", new String[]{model.getId() + ""});
             db.setTransactionSuccessful();
@@ -662,6 +672,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
                 result.setHandphone(mCursor.getString(mCursor.getColumnIndex(INTERVIEWEE_HANDPHONE)));
                 result.setGender(mCursor.getString(mCursor.getColumnIndex(INTERVIEWEE_GENDER)));
                 result.setScore(mCursor.getInt(mCursor.getColumnIndex(INTERVIEWEE_SCORE)));
+                result.setCategory(mCursor.getString(mCursor.getColumnIndex(INTERVIEWEE_CATEGORY)));
             }
         } catch (Exception e) {
 
@@ -693,6 +704,41 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
                     model.setHandphone(mCursor.getString(mCursor.getColumnIndex(INTERVIEWEE_HANDPHONE)));
                     model.setGender(mCursor.getString(mCursor.getColumnIndex(INTERVIEWEE_GENDER)));
                     model.setScore(mCursor.getInt(mCursor.getColumnIndex(INTERVIEWEE_SCORE)));
+                    model.setCategory(mCursor.getString(mCursor.getColumnIndex(INTERVIEWEE_CATEGORY)));
+                    result.add(model);
+                }while (mCursor.moveToNext());
+            }
+        } catch (Exception e) {
+
+        } finally {
+            mCursor.close();
+        }
+        return result;
+    }
+
+    public List<KYNIntervieweeModel> getListIntervieweeByCategory(String category) {
+        ArrayList result = new ArrayList();
+        String mQuery = "SELECT * FROM " + TABLE_INTERVIEWEE + " WHERE " + INTERVIEWEE_CATEGORY + " = '" + category + "'";
+        SQLiteDatabase mReadableDatabase = getReadableDatabase();
+        Cursor mCursor = mReadableDatabase.rawQuery(mQuery, null);
+        try {
+            if (mCursor.moveToFirst()) {
+                do {
+                    KYNIntervieweeModel model = new KYNIntervieweeModel();
+                    model.setId(mCursor.getLong(mCursor.getColumnIndex(INTERVIEWEE_ID)));
+                    model.setServerId(mCursor.getString(mCursor.getColumnIndex(INTERVIEWEE_SERVER_ID)));
+                    model.setNama(mCursor.getString(mCursor.getColumnIndex(INTERVIEWEE_NAMA)));
+                    model.setEmail(mCursor.getString(mCursor.getColumnIndex(INTERVIEWEE_EMAIL)));
+                    model.setAddress(mCursor.getString(mCursor.getColumnIndex(INTERVIEWEE_ADDRESS)));
+                    try {
+                        model.setDob(format.parse(mCursor.getString(mCursor.getColumnIndex(INTERVIEWEE_DOB))));
+                    } catch (Exception e) {
+
+                    }
+                    model.setHandphone(mCursor.getString(mCursor.getColumnIndex(INTERVIEWEE_HANDPHONE)));
+                    model.setGender(mCursor.getString(mCursor.getColumnIndex(INTERVIEWEE_GENDER)));
+                    model.setScore(mCursor.getInt(mCursor.getColumnIndex(INTERVIEWEE_SCORE)));
+                    model.setCategory(mCursor.getString(mCursor.getColumnIndex(INTERVIEWEE_CATEGORY)));
                     result.add(model);
                 }while (mCursor.moveToNext());
             }
@@ -720,6 +766,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
                 result.setAnswer3(mCursor.getString(mCursor.getColumnIndex(QUESTION_ANSWER_3)));
                 result.setAnswer4(mCursor.getString(mCursor.getColumnIndex(QUESTION_ANSWER_4)));
                 result.setBobot(mCursor.getInt(mCursor.getColumnIndex(QUESTION_BOBOT)));
+                result.setCategory(mCursor.getString(mCursor.getColumnIndex(QUESTION_CATEGORY)));
                 result.setIntervieweeAnswer(mCursor.getString(mCursor.getColumnIndex(QUESTION_INTERVIEWEE_ANSWER)));
                 result.setKeyAnswer(mCursor.getString(mCursor.getColumnIndex(QUESTION_KEY_ANSWER)));
                 result.setIntervieweeModel(getInterviewee(mCursor.getLong(mCursor.getColumnIndex(QUESTION_FK_INTERVIEWEE))));
@@ -750,6 +797,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
                     model.setAnswer3(mCursor.getString(mCursor.getColumnIndex(QUESTION_ANSWER_3)));
                     model.setAnswer4(mCursor.getString(mCursor.getColumnIndex(QUESTION_ANSWER_4)));
                     model.setBobot(mCursor.getInt(mCursor.getColumnIndex(QUESTION_BOBOT)));
+                    model.setCategory(mCursor.getString(mCursor.getColumnIndex(QUESTION_CATEGORY)));
                     model.setIntervieweeAnswer(mCursor.getString(mCursor.getColumnIndex(QUESTION_INTERVIEWEE_ANSWER)));
                     model.setKeyAnswer(mCursor.getString(mCursor.getColumnIndex(QUESTION_KEY_ANSWER)));
                     model.setIntervieweeModel(getInterviewee(mCursor.getLong(mCursor.getColumnIndex(QUESTION_FK_INTERVIEWEE))));
@@ -783,6 +831,7 @@ public class KYNDatabaseHelper extends SQLiteOpenHelper {
                     model.setAnswer3(mCursor.getString(mCursor.getColumnIndex(QUESTION_ANSWER_3)));
                     model.setAnswer4(mCursor.getString(mCursor.getColumnIndex(QUESTION_ANSWER_4)));
                     model.setBobot(mCursor.getInt(mCursor.getColumnIndex(QUESTION_BOBOT)));
+                    model.setCategory(mCursor.getString(mCursor.getColumnIndex(QUESTION_CATEGORY)));
                     model.setIntervieweeAnswer(mCursor.getString(mCursor.getColumnIndex(QUESTION_INTERVIEWEE_ANSWER)));
                     model.setKeyAnswer(mCursor.getString(mCursor.getColumnIndex(QUESTION_KEY_ANSWER)));
                     model.setIntervieweeModel(getInterviewee(mCursor.getLong(mCursor.getColumnIndex(QUESTION_FK_INTERVIEWEE))));

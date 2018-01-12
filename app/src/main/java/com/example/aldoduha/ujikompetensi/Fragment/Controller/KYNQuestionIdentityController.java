@@ -47,7 +47,7 @@ public class KYNQuestionIdentityController implements View.OnClickListener {
                     if(message!=null && !message.equals(""))
                         fragment.getNewActivity().showAlertDialog("Error", message);
                     else
-                        fragment.getNewActivity().showAlertDialog("Error", "Gagal Generate Soal");
+                        fragment.getNewActivity().showAlertDialog("Error", "Generate Question Failed");
                 }else if(code==KYNIntentConstant.CODE_FAILED_TOKEN){
                     fragment.getNewActivity().showErrorTokenDialog();
                 }else if(code==KYNIntentConstant.CODE_GENERATE_QUESTION_SUCCESS){
@@ -61,6 +61,7 @@ public class KYNQuestionIdentityController implements View.OnClickListener {
         this.fragment = fragment;
         this.database = new KYNDatabaseHelper(fragment.getActivity());
         fragment.initiateTemplate();
+        fragment.initiateCategory();
     }
 
     private KYNDatePickerDialogListener listener = new KYNDatePickerDialogListener() {

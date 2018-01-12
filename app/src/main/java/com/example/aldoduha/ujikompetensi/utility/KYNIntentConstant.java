@@ -1,5 +1,9 @@
 package com.example.aldoduha.ujikompetensi.utility;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by aldoduha on 10/9/2017.
  */
@@ -11,6 +15,9 @@ public class    KYNIntentConstant {
     public static String USERNAME;
     public static boolean needSS = false;
     public static final String DATE_FORMAT = "dd-MM-yyyy";
+    public  static final List<String> role = Arrays.asList("Admin", "Interviewee", "Interviewer");
+    public  static final List<String> category = Arrays.asList("Pilih", "Developer", "QA", "BA");
+    public  static final List<String> categoryDetail = Arrays.asList("Developer", "QA", "BA");
 
     public static final String BUNDLE_KEY_LOADING_SHOW = "loading_show";
     public static final String BUNDLE_KEY_ALERT_SHOW = "alert_show";
@@ -18,6 +25,7 @@ public class    KYNIntentConstant {
     public static final String BUNDLE_KEY_SCORE = "score";
     public static final String BUNDLE_KEY_RESULT = "result";
     public static final String BUNDLE_KEY_CODE = "code";
+    public static final String BUNDLE_KEY_ID = "id";
     public static final String BUNDLE_KEY_TITLE = "title";
     public static final String BUNDLE_KEY_JSON = "json";
     public static final String BUNDLE_KEY_USERNAME = "username";
@@ -26,7 +34,8 @@ public class    KYNIntentConstant {
     public static final String INTENT_EXTRA_CODE = "code";
     public static final String INTENT_EXTRA_DATA = "data";
     public static final String INTENT_EXTRA_USERNAME = "username";
-    public static final String INTENT_EXTRA_STRING = "string";
+    public static final String INTENT_EXTRA_TEMPLATE = "template";
+    public static final String INTENT_EXTRA_CATEGORY = "category";
 
     //action
     public static final String ACTION_LOGIN = "login";

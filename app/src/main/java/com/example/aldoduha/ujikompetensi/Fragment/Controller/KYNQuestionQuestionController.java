@@ -32,7 +32,7 @@ public class KYNQuestionQuestionController implements View.OnClickListener {
                 Bundle bundle = intent.getExtras();
                 int code = bundle.getInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_FAILED);
                 String message = bundle .getString(KYNIntentConstant.BUNDLE_KEY_MESSAGE);
-                String score = bundle.getString(KYNIntentConstant.BUNDLE_KEY_SCORE);
+                int score = bundle.getInt(KYNIntentConstant.BUNDLE_KEY_SCORE);
                 if(code==KYNIntentConstant.CODE_FAILED ||
                         code==KYNIntentConstant.CODE_SUBMIT_INTERVIEWEE_DATA_FAILED){
                     if(message!=null && !message.equals(""))
@@ -42,7 +42,7 @@ public class KYNQuestionQuestionController implements View.OnClickListener {
                 }else if(code==KYNIntentConstant.CODE_FAILED_TOKEN){
                     fragment.getNewActivity().showErrorTokenDialog();
                 }else if(code==KYNIntentConstant.CODE_SUBMIT_INTERVIEWEE_DATA_SUCCESS){
-                    fragment.getNewActivity().showAlertDialog("Your Score :", score, new KYNInfoAlertDialogListener() {
+                    fragment.getNewActivity().showAlertDialog("Your Score :", score+"", new KYNInfoAlertDialogListener() {
                         @Override
                         public void onOk() {
                             fragment.getNewActivity().finish();

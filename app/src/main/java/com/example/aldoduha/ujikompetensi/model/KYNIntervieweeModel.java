@@ -1,6 +1,7 @@
 package com.example.aldoduha.ujikompetensi.model;
 
 import com.example.aldoduha.ujikompetensi.utility.KYNJSONKey;
+import com.google.gson.annotations.SerializedName;
 
 import org.json.JSONObject;
 
@@ -15,7 +16,9 @@ import java.util.List;
  */
 
 public class KYNIntervieweeModel  implements Serializable {
+    @SerializedName(value = "localId")
     private Long id;
+    @SerializedName(value = "id")
     private String serverId;
     private String nama;
     private String email;
@@ -44,8 +47,8 @@ public class KYNIntervieweeModel  implements Serializable {
                 setEmail(object.getString(KYNJSONKey.KEY_INTERVIEWEE_EMAIL));
             if(object.has(KYNJSONKey.KEY_INTERVIEWEE_PHONE))
                 setHandphone(object.getString(KYNJSONKey.KEY_INTERVIEWEE_PHONE));
-//            if(object.has(KYNJSONKey.KEY_INTERVIEWEE_ADDRESS))
-//                setAddress(object.getString(KYNJSONKey.KEY_INTERVIEWEE_ADDRESS));
+            if(object.has(KYNJSONKey.KEY_INTERVIEWEE_ADDRESS))
+                setAddress(object.getString(KYNJSONKey.KEY_INTERVIEWEE_ADDRESS));
             if(object.has(KYNJSONKey.KEY_INTERVIEWEE_DOB)) {
                 String date = object.getString(KYNJSONKey.KEY_INTERVIEWEE_DOB);
                 if(date != null && !date.equals("")) {

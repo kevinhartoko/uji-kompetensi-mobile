@@ -47,6 +47,8 @@ public class KYNAPISubmitIntervieweeData extends KYNHTTPPostConnections {
             }
 
             if (result.equalsIgnoreCase(KYNJSONKey.VAL_SUCCESS)) {
+                int score = jsonResponse.getInt(KYNJSONKey.KEY_INTERVIEWEE_SCORE);
+                bundle.putInt(KYNIntentConstant.BUNDLE_KEY_SCORE, score);
                 bundle.putInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_SUBMIT_INTERVIEWEE_DATA_SUCCESS);
             }else{
                 bundle.putInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_SUBMIT_INTERVIEWEE_DATA_FAILED);

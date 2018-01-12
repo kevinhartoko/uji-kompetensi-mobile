@@ -48,7 +48,7 @@ public class KYNSMPUtilities {
     public static int portHttps;
 
     public static String appIdLoginRest = "users/login";
-    public static String appIdLogoutRest = "eformws/rest/user/logout";
+    public static String appIdLogoutRest = "users/logout";
     public static String appIdUserListRest = "users/getUserList";
     public static String appIdQuestionListRest = "questions/getQuestionList";
     public static String appIdTemplateListRest = "templates/getTemplateList";

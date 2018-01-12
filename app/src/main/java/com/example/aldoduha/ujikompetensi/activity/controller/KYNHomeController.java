@@ -60,6 +60,19 @@ public class KYNHomeController implements View.OnClickListener {
     }
 
     public void getView() {
+        if(activity.getSession().getRole().equalsIgnoreCase("admin")){
+            activity.getAdminLinear().setVisibility(View.VISIBLE);
+            activity.getIntervieweeLinear().setVisibility(View.GONE);
+            activity.getListIntervieweeButton().setVisibility(View.VISIBLE);
+        }else if(activity.getSession().getRole().equalsIgnoreCase("interviewee")){
+            activity.getAdminLinear().setVisibility(View.GONE);
+            activity.getIntervieweeLinear().setVisibility(View.VISIBLE);
+            activity.getListIntervieweeButton().setVisibility(View.GONE);
+        }else if(activity.getSession().getRole().equalsIgnoreCase("interviewer")){
+            activity.getAdminLinear().setVisibility(View.GONE);
+            activity.getIntervieweeLinear().setVisibility(View.GONE);
+            activity.getListIntervieweeButton().setVisibility(View.VISIBLE);
+        }
         //untuk pengecekan menu yang ditampilakan berdasarkan role user
     }
 

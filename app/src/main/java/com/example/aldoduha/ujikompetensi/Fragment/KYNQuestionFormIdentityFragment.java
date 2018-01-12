@@ -123,6 +123,7 @@ public class KYNQuestionFormIdentityFragment extends KYNBaseFragment {
         }else{
             intervieweeModel.setGender("P");
         }
+        intervieweeModel.setCategory(categorySpinner.getSelectedItem().toString());
         if(intervieweeModel.getId()==null) {
             Long id = database.insertInterviewee(intervieweeModel);
             intervieweeModel.setId(id);

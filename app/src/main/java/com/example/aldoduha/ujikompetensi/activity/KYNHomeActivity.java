@@ -147,6 +147,8 @@ public class KYNHomeActivity extends KYNBaseActivity {
     }
 
     private void initDefaultValue() {
+        database = new KYNDatabaseHelper(this);
+        session = database.getSession();
         controller = new KYNHomeController(this);
         jawabPertanyaanButton.setOnClickListener(controller);
         listIntervieweeButton.setOnClickListener(controller);
@@ -154,8 +156,6 @@ public class KYNHomeActivity extends KYNBaseActivity {
         questionManagementButton.setOnClickListener(controller);
         templateManagementButton.setOnClickListener(controller);
         logoutButton.setOnClickListener(controller);
-        database = new KYNDatabaseHelper(this);
-        session = database.getSession();
 
         if(!KYNSMPUtilities.isConnectServer) {
             insertData();
@@ -204,5 +204,29 @@ public class KYNHomeActivity extends KYNBaseActivity {
 
     public void setSession(KYNUserModel session) {
         this.session = session;
+    }
+
+    public LinearLayout getIntervieweeLinear() {
+        return intervieweeLinear;
+    }
+
+    public void setIntervieweeLinear(LinearLayout intervieweeLinear) {
+        this.intervieweeLinear = intervieweeLinear;
+    }
+
+    public LinearLayout getAdminLinear() {
+        return adminLinear;
+    }
+
+    public void setAdminLinear(LinearLayout adminLinear) {
+        this.adminLinear = adminLinear;
+    }
+
+    public Button getListIntervieweeButton() {
+        return listIntervieweeButton;
+    }
+
+    public void setListIntervieweeButton(Button listIntervieweeButton) {
+        this.listIntervieweeButton = listIntervieweeButton;
     }
 }

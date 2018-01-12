@@ -18,6 +18,7 @@ public class KYNFeedbackModel implements Serializable {
     private String serverId;
     @SerializedName(value = "feedback")
     private String description;
+    @SerializedName(value = "feedbackBy")
     private String name;
     private KYNIntervieweeModel intervieweeModel;
 
@@ -31,6 +32,8 @@ public class KYNFeedbackModel implements Serializable {
                 setServerId(object.getString(KYNJSONKey.KEY_SERVER_ID));
             if(object.has(KYNJSONKey.KEY_FEEDBACK_FEEDBACK))
                 setDescription(object.getString(KYNJSONKey.KEY_FEEDBACK_FEEDBACK));
+            if(object.has(KYNJSONKey.KEY_FEEDBACK_USERNAME))
+                setName(object.getString(KYNJSONKey.KEY_FEEDBACK_USERNAME));
         }catch (Exception e){
             e.printStackTrace();
         }

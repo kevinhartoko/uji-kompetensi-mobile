@@ -16,6 +16,9 @@ import com.example.aldoduha.ujikompetensi.activity.controller.KYNLoginController
 import com.example.aldoduha.ujikompetensi.alertDialog.KYNConfirmationAlertDialog;
 import com.example.aldoduha.ujikompetensi.alertDialog.listener.KYNConfirmationAlertDialogListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class KYNLoginActivity extends KYNBaseActivity {
     EditText username;
     EditText password;

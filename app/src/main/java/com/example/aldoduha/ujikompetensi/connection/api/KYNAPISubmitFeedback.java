@@ -33,27 +33,37 @@ public class KYNAPISubmitFeedback extends KYNHTTPPostConnections {
 
     @Override
     protected Bundle generateBundleOnRequestSuccess(String responseString) {
-        try {
+//        try {
+//            Bundle bundle = new Bundle();
+//            JSONObject jsonResponse = new JSONObject(responseString);
+//            //jsonResponse = jsonResponse.getJSONObject(KYNJSONKey.KEY_D);
+//            String result = jsonResponse.getString(KYNJSONKey.KEY_RESULT);
+//
+//            bundle.putString(KYNIntentConstant.BUNDLE_KEY_RESULT, result);
+//            bundle.putString(KYNIntentConstant.BUNDLE_KEY_MESSAGE, jsonResponse.getString(KYNJSONKey.KEY_MESSAGE));
+//
+//            if (result.equalsIgnoreCase(KYNJSONKey.VAL_SUCCESS)) {
+//                bundle.putInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_SUBMIT_FEEDBACK_SUCCESS);
+//            }else{
+//                bundle.putInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_SUBMIT_FEEDBACK_FAILED);
+//            }
+//
+//            return bundle;
+//        } catch (JSONException e) {
+//
+//        }
+//
+//        return null;
             Bundle bundle = new Bundle();
-            JSONObject jsonResponse = new JSONObject(responseString);
-            //jsonResponse = jsonResponse.getJSONObject(KYNJSONKey.KEY_D);
-            String result = jsonResponse.getString(KYNJSONKey.KEY_RESULT);
-
-            bundle.putString(KYNIntentConstant.BUNDLE_KEY_RESULT, result);
-            bundle.putString(KYNIntentConstant.BUNDLE_KEY_MESSAGE, jsonResponse.getString(KYNJSONKey.KEY_MESSAGE));
-
-            if (result.equalsIgnoreCase(KYNJSONKey.VAL_SUCCESS)) {
+            if(responseString.equalsIgnoreCase("success")){
+                bundle.putString(KYNIntentConstant.BUNDLE_KEY_RESULT, "success");
                 bundle.putInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_SUBMIT_FEEDBACK_SUCCESS);
-            }else{
-                bundle.putInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_SUBMIT_FEEDBACK_FAILED);
+            }else {
+                generateBundleOnRequestFailed(responseString);
+                return null;
             }
 
             return bundle;
-        } catch (JSONException e) {
-
-        }
-
-        return null;
     }
 
     @Override
@@ -70,9 +80,14 @@ public class KYNAPISubmitFeedback extends KYNHTTPPostConnections {
     @Override
     protected String generateRequest(){
         try {
-            Gson gson = new GsonBuilder().setDateFormat(KYNIntentConstant.DATE_FORMAT).create();
-            String feedback = gson.toJson(feedbackModel);
-            JSONObject json = new JSONObject(feedback);
+//            Gson gson = new GsonBuilder().setDateFormat(KYNIntentConstant.DATE_FORMAT).create();
+//            String feedback = gson.toJson(feedbackModel);
+            JSONObject jsonInterviewee = new JSONObject();
+            jsonInterviewee.put("id",feedbackModel.getIntervieweeModel().getServerId());
+            JSONObject json = new JSONObject();
+            json.put(KYNJSONKey.KEY_FEEDBACK_FEEDBACK,feedbackModel.getDescription());
+            json.put(KYNJSONKey.KEY_FEEDBACK_USERNAME,feedbackModel.getName());
+            json.put("interviewee",jsonInterviewee);
             return json.toString();
         } catch (JSONException e) {
 

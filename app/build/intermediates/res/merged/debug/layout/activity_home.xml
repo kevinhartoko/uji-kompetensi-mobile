@@ -45,11 +45,11 @@
             android:text="Template Management"
             android:id="@+id/btnTemplateManagement"
             android:textAllCaps="false"/>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Logout"
-            android:id="@+id/btnLogout"
-            android:textAllCaps="false"/>
     </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:id="@+id/btnLogout"
+        android:textAllCaps="false"/>
 </LinearLayout>

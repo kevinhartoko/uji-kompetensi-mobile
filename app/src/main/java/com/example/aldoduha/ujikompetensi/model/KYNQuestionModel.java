@@ -61,6 +61,8 @@ public class KYNQuestionModel  implements Serializable {
                 setBobot(object.getInt(KYNJSONKey.KEY_QUESTION_BOBOT));
             if(object.has(KYNJSONKey.KEY_QUESTION_CATEGORY))
                 setCategory(object.getString(KYNJSONKey.KEY_QUESTION_CATEGORY));
+            if(object.has(KYNJSONKey.KEY_QUESTION_ANSWER))
+                setIntervieweeAnswer(object.getString(KYNJSONKey.KEY_QUESTION_ANSWER));
         }catch (Exception e){
             e.printStackTrace();
         }

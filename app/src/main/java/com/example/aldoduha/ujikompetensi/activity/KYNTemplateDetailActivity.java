@@ -23,6 +23,7 @@ import com.example.aldoduha.ujikompetensi.model.KYNTemplateQuestionModel;
 import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -158,6 +159,34 @@ public class KYNTemplateDetailActivity extends KYNBaseActivity {
                         result = false;
                         showAlertDialog("Error", "Total quantity and total question must be equal");
                     }
+                }
+            }
+        }
+        if(result==true){
+            List<String> a = new ArrayList<>();
+            for(int i = 0; i < linearLayoutSoal.getChildCount(); i++){
+                LinearLayout linearLayout = (LinearLayout) linearLayoutSoal.getChildAt(i);
+                EditText editText = (EditText)linearLayout.getChildAt(1);
+                a.add(editText.getText().toString());
+            }
+            for (int j=0;j<a.size();j++){
+                if(Integer.parseInt(a.get(j))>10){
+                    result = false;
+                    showAlertDialog("Error", "Weight must between 1-10");
+                }
+            }
+            if(result==true) {
+                int count = 0;
+                for (int i = 0; i < a.size(); i++) {
+                    for (int j = 0; j < a.size(); j++) {
+                        if (a.get(i).equals(a.get(j))) {
+                            count++;
+                        }
+                    }
+                }
+                if (count != a.size()) {
+                    result = false;
+                    showAlertDialog("Error", "Weight can't be same in template question");
                 }
             }
         }

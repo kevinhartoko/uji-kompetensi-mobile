@@ -3,15 +3,19 @@ package com.example.aldoduha.ujikompetensi.connection.api;
 import android.content.Context;
 import android.os.Bundle;
 
+import com.example.aldoduha.ujikompetensi.KYNDatabaseHelper;
 import com.example.aldoduha.ujikompetensi.connection.KYNHTTPPostConnections;
 import com.example.aldoduha.ujikompetensi.connection.KYNSMPUtilities;
 import com.example.aldoduha.ujikompetensi.connection.listener.KYNConnectionListener;
+import com.example.aldoduha.ujikompetensi.model.KYNFeedbackModel;
 import com.example.aldoduha.ujikompetensi.model.KYNIntervieweeModel;
 import com.example.aldoduha.ujikompetensi.model.KYNQuestionModel;
+import com.example.aldoduha.ujikompetensi.model.KYNTemplateQuestionModel;
 import com.example.aldoduha.ujikompetensi.model.KYNUserModel;
 import com.example.aldoduha.ujikompetensi.utility.KYNIntentConstant;
 import com.example.aldoduha.ujikompetensi.utility.KYNJSONKey;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,27 +26,53 @@ import org.json.JSONObject;
 public class KYNAPIIntervieweeDetail extends KYNHTTPPostConnections {
     private KYNIntervieweeModel intervieweeModel;
     private String username ="";
+    private KYNDatabaseHelper database;
 
     public KYNAPIIntervieweeDetail(Context applicationContext, KYNConnectionListener listener) {
         super(applicationContext, listener);
+        database = new KYNDatabaseHelper(applicationContext);
     }
 
     @Override
     protected Bundle generateBundleOnRequestSuccess(String responseString) {
         try {
+//            Bundle bundle = new Bundle();
+//            JSONObject jsonResponse = new JSONObject(responseString);
+//            //jsonResponse = jsonResponse.getJSONObject(KYNJSONKey.KEY_D);
+//            String result = jsonResponse.getString(KYNJSONKey.KEY_RESULT);
+//
+//            bundle.putString(KYNIntentConstant.BUNDLE_KEY_RESULT, result);
+//            bundle.putString(KYNIntentConstant.BUNDLE_KEY_MESSAGE, jsonResponse.getString(KYNJSONKey.KEY_MESSAGE));
+//
+//            if (result.equalsIgnoreCase(KYNJSONKey.VAL_SUCCESS)) {
+//                bundle.putInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_INTERVIEWEE_DETAIL_SUCCESS);
+//            }else{
+//                bundle.putInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_INTERVIEWEE_DETAIL_FAILED);
+//            }
+//
+//            return bundle;
             Bundle bundle = new Bundle();
             JSONObject jsonResponse = new JSONObject(responseString);
-            //jsonResponse = jsonResponse.getJSONObject(KYNJSONKey.KEY_D);
-            String result = jsonResponse.getString(KYNJSONKey.KEY_RESULT);
-
-            bundle.putString(KYNIntentConstant.BUNDLE_KEY_RESULT, result);
-            bundle.putString(KYNIntentConstant.BUNDLE_KEY_MESSAGE, jsonResponse.getString(KYNJSONKey.KEY_MESSAGE));
-
-            if (result.equalsIgnoreCase(KYNJSONKey.VAL_SUCCESS)) {
-                bundle.putInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_INTERVIEWEE_DETAIL_SUCCESS);
-            }else{
-                bundle.putInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_INTERVIEWEE_DETAIL_FAILED);
+            if(jsonResponse.has(KYNJSONKey.KEY_QUESTION)){
+                database.deleteQuestion();
+                JSONArray jsonArrayQuestion = new JSONArray(jsonResponse.getString(KYNJSONKey.KEY_QUESTION));
+                for(int i=0;i<jsonArrayQuestion.length();i++){
+                    KYNQuestionModel questionModel= new KYNQuestionModel((JSONObject)jsonArrayQuestion.get(i));
+                    questionModel.setIntervieweeModel(intervieweeModel);
+                    database.insertQuestion(questionModel);
+                }
             }
+            if(jsonResponse.has(KYNJSONKey.KEY_FEEDBACK)){
+                database.deleteFeedback();
+                JSONArray jsonArrayFeedback = new JSONArray(jsonResponse.getString(KYNJSONKey.KEY_FEEDBACK));
+                for(int i=0;i<jsonArrayFeedback.length();i++){
+                    KYNFeedbackModel feedbackModel= new KYNFeedbackModel((JSONObject)jsonArrayFeedback.get(i));
+                    feedbackModel.setIntervieweeModel(intervieweeModel);
+                    database.insertFeedback(feedbackModel);
+                }
+            }
+            bundle.putInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_INTERVIEWEE_DETAIL_SUCCESS);
+            bundle.putString(KYNIntentConstant.BUNDLE_KEY_RESULT, "success");
 
             return bundle;
         } catch (JSONException e) {

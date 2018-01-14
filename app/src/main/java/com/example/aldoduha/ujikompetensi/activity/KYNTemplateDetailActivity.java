@@ -141,7 +141,7 @@ public class KYNTemplateDetailActivity extends KYNBaseActivity {
         if(result == true) {
             if (!cekKolomSoal()) {
                 result = false;
-                showAlertDialog("Error", "Fill the existing template questions first");
+                showAlertDialog("Error", "Fill existing template questions first");
             } else if(linearLayoutSoal.getChildCount() == 0){
                 result = false;
                 showAlertDialog("Error", "Please configure the template questions");
@@ -186,7 +186,7 @@ public class KYNTemplateDetailActivity extends KYNBaseActivity {
                 }
                 if (count != a.size()) {
                     result = false;
-                    showAlertDialog("Error", "Weight can't be same in template question");
+                    showAlertDialog("Error", "Weight value cannot be same");
                 }
             }
         }
@@ -299,7 +299,7 @@ public class KYNTemplateDetailActivity extends KYNBaseActivity {
 
             linearLayoutSoal.addView(linearLayout);
         }else{
-            showAlertDialog("Error","Fill the existing template questions first");
+            showAlertDialog("Error","Fill existing template questions first");
         }
     }
 

@@ -36,7 +36,7 @@
             android:id="@+id/genderErrorTextview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Jenis Kelamin haru dipilih"
+            android:text="Gender must be selected"
             android:textColor="@color/red"
             android:gravity="right"
             android:textSize="12sp"
@@ -160,7 +160,7 @@
             android:textColor="@color/red"
             android:gravity="right"
             android:textSize="12sp"
-            android:text="Category Harus Dipilih"
+            android:text="Position must be selected"
             android:visibility="gone"/>
         <LinearLayout
             android:layout_width="match_parent"

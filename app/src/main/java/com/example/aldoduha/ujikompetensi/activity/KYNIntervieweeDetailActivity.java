@@ -157,7 +157,7 @@ public class KYNIntervieweeDetailActivity extends KYNBaseActivity{
             button.setLayoutParams(layoutParamsButton);
             button.setTextColor(getResources().getColor(R.color.black));
             button.setAllCaps(false);
-            button.setText("Hapus");
+            button.setText("Delete");
 
             KYNUserModel session = database.getSession();
             if(session.getUsername().equals(feedbackModel.getName()))

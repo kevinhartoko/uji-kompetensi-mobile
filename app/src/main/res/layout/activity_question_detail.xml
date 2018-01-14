@@ -240,25 +240,25 @@
                 android:layout_alignParentLeft="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Kembali"
+                android:text="Back"
                 android:id="@+id/btnKembali"
                 android:layout_marginBottom="5dip"
                 android:textAllCaps="false"/>
             <Button
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hapus"
+                android:text="Delete"
                 android:id="@+id/btnHapus"
+                android:textAllCaps="false"
                 android:layout_marginBottom="5dip"
-                android:textAllCaps="false"/>
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true" />
             <Button
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Simpan"
+                android:text="Save"
                 android:id="@+id/btnLanjut"
                 android:layout_marginBottom="5dip"
                 android:textAllCaps="false"/>

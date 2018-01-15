@@ -97,6 +97,9 @@ public class KYNIntervieweeListController implements View.OnClickListener, Adapt
             case R.id.btnRefresh:
                 onRefreshButtonClicked();
                 break;
+            case R.id.buttonKembali:
+                showOnBackPressAlertDialog();
+                break;
             default:
                 break;
         }

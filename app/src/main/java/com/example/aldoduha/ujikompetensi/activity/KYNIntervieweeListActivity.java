@@ -41,6 +41,7 @@ public class KYNIntervieweeListActivity extends KYNBaseActivity {
     private ListView listView;
     private KYNIntervieweeListAdapter adapter;
     private Button refreshButton;
+    private Button backButton;
     private EditText searchEdittext;
     private Long intervieweeId;
     private String category="";
@@ -124,6 +125,7 @@ public class KYNIntervieweeListActivity extends KYNBaseActivity {
         refreshButton = (Button) findViewById(R.id.btnRefresh);
         listView = (ListView)findViewById(R.id.interviewee_listview);
         searchEdittext = (EditText)findViewById(R.id.edittextSearch);
+        backButton = (Button) findViewById(R.id.buttonKembali);
     }
 
     private void initiateDefaultValue() {
@@ -136,6 +138,7 @@ public class KYNIntervieweeListActivity extends KYNBaseActivity {
     private void setMethod() {
         refreshButton.setOnClickListener(controller);
         searchEdittext.addTextChangedListener(controller);
+        backButton.setOnClickListener(controller);
     }
 
     public void generateList(List<KYNIntervieweeModel> intervieweeModels) {

@@ -132,7 +132,7 @@ public class KYNHomeActivity extends KYNBaseActivity {
     }
 
     public void doConfirmationLogout() {
-        showConfirmationAlertDialog("Are you sure to go back?", listener);
+        showConfirmationAlertDialog("Are you sure to logout from this application?", listener);
     }
 
     private void loadView() {

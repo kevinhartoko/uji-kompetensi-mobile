@@ -32,7 +32,6 @@ public class KYNConnectionManager {
     private Context mContext;
     public static RequestManager requestManager;
     public UserManager userManager;
-//    private KYNCustomChallengeListener localCustomChallengeListener;
     public ConnectivityParameters param;
     protected DataVault dataVault;
 
@@ -92,26 +91,10 @@ public class KYNConnectionManager {
         Logger localLogger = new Logger();
         Preferences localPreferences = new Preferences(this.mContext,localLogger);
         param = new ConnectivityParameters();
-//        String username= "";
-//        String password = "";
-//        try {
-//            KYNAES.generateKey();
-//            username = KYNAES.encryptString(KYNSMPUtilities.username);
-//            password = KYNAES.encryptString(KYNSMPUtilities.password);
-//        } catch (Exception e) {
-//
-//        }
         param.setUserName(KYNSMPUtilities.username);
         param.setUserPassword(KYNSMPUtilities.password);
         param.setBaseUrl(requestType + host);
         requestManager = new RequestManager(localLogger, localPreferences,param, 1);
-//        localCustomChallengeListener = new KYNCustomChallengeListener();
-//        requestManager.setMutualSSLChallengeListener(new HttpChannelListeners.IMutualSSLChallengeListener() {
-//            public HttpsTrustManager.HttpsClientCertInfo getClientCertificate() {
-//                return null;
-//            }
-//        });
-//        requestManager.setSSLChallengeListener(localCustomChallengeListener);
         this.clientConnection = new ClientConnection(this.mContext, appId, domain, secConfig, requestManager);
         this.clientConnection.setConnectionProfile(requestType + host);
         this.userManager = new UserManager(this.clientConnection);
@@ -150,7 +133,6 @@ public class KYNConnectionManager {
             }
         } catch (SMPException localSMPException) {
             localSMPException.printStackTrace();
-            //return;
         }
     }
 }

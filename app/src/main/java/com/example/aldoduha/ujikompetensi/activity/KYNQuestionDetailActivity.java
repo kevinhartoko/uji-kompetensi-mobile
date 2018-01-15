@@ -37,7 +37,6 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
     private EditText editTextJawaban2;
     private EditText editTextJawaban3;
     private EditText editTextJawaban4;
-//    private EditText editTextKunciJawaban;
     private EditText editTextBobot;
     private Button buttonLanjut;
     private Button buttonKembali;
@@ -77,7 +76,6 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
         editTextJawaban2 = (EditText)findViewById(R.id.edittextJawaban2);
         editTextJawaban3 = (EditText)findViewById(R.id.edittextJawaban3);
         editTextJawaban4 = (EditText)findViewById(R.id.edittextJawaban4);
-//        editTextKunciJawaban = (EditText)findViewById(R.id.edittextKunciJawaban);
         editTextBobot = (EditText)findViewById(R.id.edittextBobot);
         buttonLanjut = (Button)findViewById(R.id.btnLanjut);
         buttonKembali = (Button)findViewById(R.id.btnKembali);
@@ -129,7 +127,6 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
         }else if(radio4.isChecked()) {
             questionModel.setKeyAnswer(editTextJawaban4.getText().toString());
         }
-//        questionModel.setKeyAnswer(editTextKunciJawaban.getText().toString());
         questionModel.setBobot(Integer.parseInt(editTextBobot.getText().toString()));
         questionModel.setCategory(spinnerCategory.getSelectedItem().toString());
         if(questionId==null || questionId==0){
@@ -159,7 +156,6 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
             editTextJawaban4.setText(questionModel.getAnswer4());
         }
         if(questionModel.getKeyAnswer()!=null){
-//            editTextKunciJawaban.setText(questionModel.getKeyAnswer());
             if(questionModel.getKeyAnswer().equals(questionModel.getAnswer1())){
                 radio1.setChecked(true);
             }else if(questionModel.getKeyAnswer().equals(questionModel.getAnswer2())){
@@ -191,7 +187,6 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
         String jawaban2 = editTextJawaban2.getText().toString();
         String jawaban3 = editTextJawaban3.getText().toString();
         String jawaban4 = editTextJawaban4.getText().toString();
-//        String kunciJawaban = editTextKunciJawaban.getText().toString();
         String bobot = editTextBobot.getText().toString();
         editTextKode.setError(null);
         editTextPertanyaan.setError(null);
@@ -199,7 +194,6 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
         editTextJawaban2.setError(null);
         editTextJawaban3.setError(null);
         editTextJawaban4.setError(null);
-//        editTextKunciJawaban.setError(null);
         editTextBobot.setError(null);
         if (kode==null||kode.equals("")){
             editTextKode.setError(Html.fromHtml("Code must be filled"));
@@ -225,10 +219,6 @@ public class KYNQuestionDetailActivity extends KYNBaseActivity {
             editTextJawaban4.setError(Html.fromHtml("Answer 4 must be filled"));
             result =false;
         }
-//        if(kunciJawaban==null||kunciJawaban.equals("")){
-//            editTextKunciJawaban.setError(Html.fromHtml("Kunci Jawaban Tidak Boleh Kosong"));
-//            result =false;
-//        }
         if(bobot==null||bobot.equals("")){
             editTextBobot.setError(Html.fromHtml("Weight must be filled"));
             result =false;

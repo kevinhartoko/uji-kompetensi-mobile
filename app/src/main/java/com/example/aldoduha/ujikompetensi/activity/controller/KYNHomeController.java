@@ -104,12 +104,8 @@ public class KYNHomeController implements View.OnClickListener {
     }
 
     private void onQuestionManagementClicked() {
-//        if(KYNSMPUtilities.isConnectServer){
-//            activity.getQuestionList();
-//        }else {
-            Intent intent = new Intent(activity, KYNCategoryQuestionActivity.class);
-            activity.startActivity(intent);
-//        }
+        Intent intent = new Intent(activity, KYNCategoryQuestionActivity.class);
+        activity.startActivity(intent);
     }
 
     private void onTemplateManagementClicked() {

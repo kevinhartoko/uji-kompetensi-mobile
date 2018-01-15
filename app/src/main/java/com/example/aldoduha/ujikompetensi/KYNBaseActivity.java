@@ -32,7 +32,6 @@ public class KYNBaseActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        System.loadLibrary("stlport_shared");
         SQLiteDatabase.loadLibs(getApplicationContext());
         super.onCreate(savedInstanceState);
         KYNConnectionManager conMan= new KYNConnectionManager(this);

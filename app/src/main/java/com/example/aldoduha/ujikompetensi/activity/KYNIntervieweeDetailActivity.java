@@ -304,6 +304,17 @@ public class KYNIntervieweeDetailActivity extends KYNBaseActivity{
         startService(intent);
     }
 
+    public void getIntervieweeDetail(KYNIntervieweeModel model){
+        showLoadingDialog(getResources().getString(R.string.loading));
+        KYNUserModel session = database.getSession();
+        Intent intent = new Intent(this, KYNServiceConnection.class);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_DATA, model);
+        intent.putExtra(KYNIntentConstant.INTENT_EXTRA_USERNAME, session.getUsername());
+        intent.setAction(KYNIntentConstant.ACTION_INTERVIEWEE_DETAIL);
+        intent.addCategory(KYNIntentConstant.CATEGORY_INTERVIEWEE_DETAIL);
+        startService(intent);
+    }
+
     public EditText getEditTextFeedback() {
         return editTextFeedback;
     }

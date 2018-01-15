@@ -113,9 +113,6 @@ public class KYNUserDetailActivity extends KYNBaseActivity{
         if(userModel.getUsername()!=null && !userModel.getUsername().equals("")){
             editTextUsername.setText(userModel.getUsername());
         }
-//        if(userModel.getPassword()!=null && !userModel.getPassword().equals("")){
-//            editTextPassword.setText(userModel.getPassword());
-//        }
         if(userModel.getRole()!=null && !userModel.getRole().equals("")){
             int position = 0;
             for(int i=0;i<spinnerRole.getCount();i++){

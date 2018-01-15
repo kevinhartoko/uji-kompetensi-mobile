@@ -28,27 +28,6 @@ public class KYNAPIDeleteFeedback extends KYNHTTPPostConnections {
 
     @Override
     protected Bundle generateBundleOnRequestSuccess(String responseString) {
-//        try {
-//            Bundle bundle = new Bundle();
-//            JSONObject jsonResponse = new JSONObject(responseString);
-//            //jsonResponse = jsonResponse.getJSONObject(KYNJSONKey.KEY_D);
-//            String result = jsonResponse.getString(KYNJSONKey.KEY_RESULT);
-//
-//            bundle.putString(KYNIntentConstant.BUNDLE_KEY_RESULT, result);
-//            bundle.putString(KYNIntentConstant.BUNDLE_KEY_MESSAGE, jsonResponse.getString(KYNJSONKey.KEY_MESSAGE));
-//
-//            if (result.equalsIgnoreCase(KYNJSONKey.VAL_SUCCESS)) {
-//                bundle.putInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_DELETE_FEEDBACK_SUCCESS);
-//            }else{
-//                bundle.putInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_DELETE_FEEDBACK_FAILED);
-//            }
-//
-//            return bundle;
-//        } catch (JSONException e) {
-//
-//        }
-//
-//        return null;
         Bundle bundle = new Bundle();
         if(responseString.equalsIgnoreCase("success")){
             bundle.putString(KYNIntentConstant.BUNDLE_KEY_RESULT, "success");

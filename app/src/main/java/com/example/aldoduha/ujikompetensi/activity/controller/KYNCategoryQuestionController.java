@@ -54,25 +54,16 @@ public class KYNCategoryQuestionController implements View.OnClickListener {
     }
 
     private void onDeveloperClicked(){
-//        Intent intentList = new Intent(activity, KYNIntervieweeListActivity.class);
-//        intentList.putExtra(KYNIntentConstant.INTENT_EXTRA_CATEGORY, "Developer");
-//        activity.startActivity(intentList);
         category = "Developer";
         activity.getQuestionList(category);
     }
 
     private void onQaClicked(){
-//        Intent intentList = new Intent(activity, KYNIntervieweeListActivity.class);
-//        intentList.putExtra(KYNIntentConstant.INTENT_EXTRA_CATEGORY, "QA");
-//        activity.startActivity(intentList);
         category = "Quality Assurance";
         activity.getQuestionList(category);
     }
 
     private void onBaClicked(){
-//        Intent intentList = new Intent(activity, KYNIntervieweeListActivity.class);
-//        intentList.putExtra(KYNIntentConstant.INTENT_EXTRA_CATEGORY, "BA");
-//        activity.startActivity(intentList);
         category = "Business Analyst";
         activity.getQuestionList(category);
     }

@@ -31,7 +31,6 @@ public class KYNIntervieweeDetailController implements View.OnClickListener{
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            activity.dismisLoadingDialog();
             if (action.equals(KYNIntentConstant.ACTION_SUBMIT_FEEDBACK)) {
                 Bundle bundle = intent.getExtras();
                 int code = bundle.getInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_FAILED);
@@ -46,10 +45,8 @@ public class KYNIntervieweeDetailController implements View.OnClickListener{
                 }else if(code==KYNIntentConstant.CODE_FAILED_TOKEN){
                     activity.showErrorTokenDialog();
                 }else if(code==KYNIntentConstant.CODE_SUBMIT_FEEDBACK_SUCCESS){
-                    database.insertFeedback(feedbackModel);
                     activity.getEditTextFeedback().setText("");
-                    List<KYNFeedbackModel> feedbackModels = database.getFeedbackList(activity.getIntervieweeId());
-                    activity.generateFeedback(feedbackModels);
+                    activity.getIntervieweeDetail(activity.getIntervieweeModel());
                 }
             }else if (action.equals(KYNIntentConstant.ACTION_DELETE_FEEDBACK)) {
                 Bundle bundle = intent.getExtras();
@@ -65,8 +62,24 @@ public class KYNIntervieweeDetailController implements View.OnClickListener{
                 }else if(code==KYNIntentConstant.CODE_FAILED_TOKEN){
                     activity.showErrorTokenDialog();
                 }else if(code==KYNIntentConstant.CODE_DELETE_FEEDBACK_SUCCESS){
-                    database.deleteFeedback(activity.getFeedbackId());
                     activity.getEditTextFeedback().setText("");
+                    activity.getIntervieweeDetail(activity.getIntervieweeModel());
+                }
+            }else if (action.equals(KYNIntentConstant.ACTION_INTERVIEWEE_DETAIL)) {
+                activity.dismisLoadingDialog();
+                Bundle bundle = intent.getExtras();
+                int code = bundle.getInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_FAILED);
+                String message = bundle .getString(KYNIntentConstant.BUNDLE_KEY_MESSAGE);
+
+                if(code==KYNIntentConstant.CODE_FAILED ||
+                        code==KYNIntentConstant.CODE_INTERVIEWEE_DETAIL_FAILED){
+                    if(message!=null && !message.equals(""))
+                        activity.showAlertDialog("Error", message);
+                    else
+                        activity.showAlertDialog("Error", "Failed to get detail");
+                }else if(code==KYNIntentConstant.CODE_FAILED_TOKEN){
+                    activity.showErrorTokenDialog();
+                }else if(code==KYNIntentConstant.CODE_INTERVIEWEE_DETAIL_SUCCESS){
                     List<KYNFeedbackModel> feedbackModels = database.getFeedbackList(activity.getIntervieweeId());
                     activity.generateFeedback(feedbackModels);
                 }
@@ -136,6 +149,8 @@ public class KYNIntervieweeDetailController implements View.OnClickListener{
         intentFilter.addCategory(KYNIntentConstant.CATEGORY_SUBMIT_FEEDBACK);
         intentFilter.addAction(KYNIntentConstant.ACTION_DELETE_FEEDBACK);
         intentFilter.addCategory(KYNIntentConstant.CATEGORY_DELETE_FEEDBACK);
+        intentFilter.addAction(KYNIntentConstant.ACTION_INTERVIEWEE_DETAIL);
+        intentFilter.addCategory(KYNIntentConstant.CATEGORY_INTERVIEWEE_DETAIL);
         LocalBroadcastManager.getInstance(activity.getApplicationContext()).registerReceiver(localBroadCastReceiver, intentFilter);
     }
 

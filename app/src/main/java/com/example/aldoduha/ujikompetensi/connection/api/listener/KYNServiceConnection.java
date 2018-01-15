@@ -293,51 +293,6 @@ public class KYNServiceConnection extends Service {
         requestTemplateDetail.execute();
     }
 
-//    private void startTimeCounterForClearData(){
-//        Thread dataKillerThread = new Thread(new Runnable() {
-//
-//            @Override
-//            public void run() {
-//                while (isServiceStart) {
-//                    try {
-//                        Thread.sleep(MTFGenerator.getDiffTimeToMidNight());
-//                        clearData();
-//                    } catch (InterruptedException e) {
-//
-//                    } catch (Exception e) {
-//                    }
-//                }
-//            }
-//        });
-//
-//        dataKillerThread.start();
-//    }
-
-//    private void clearData(){
-//        List<MTFLoanMasterModel> listLoanMasterDraft = database.getLoanMasterListBaseOnLoanStatus(MTFLoanStatus.DRAFT);
-//        List<MTFLoanMasterModel> listLoanMasterApprove = database.getLoanMasterListBaseOnLoanStatus(MTFLoanStatus.DISETUJUI);
-//        List<MTFLoanMasterModel> listLoanMasterReject = database.getLoanMasterListBaseOnLoanStatus(MTFLoanStatus.DITOLAK);
-//        List<MTFLoanMasterModel> listLoanMasterTerkirim = database.getLoanMasterListBaseOnLoanStatus(MTFLoanStatus.TERKIRIM);
-//
-//        deleteDataLoanMaster(listLoanMasterDraft, MTFSystemParams.customerDataDuration);
-//        deleteDataLoanMaster(listLoanMasterApprove, MTFSystemParams.customerCompleteDuration);
-//        deleteDataLoanMaster(listLoanMasterReject, MTFSystemParams.customerCompleteDuration);
-//        deleteDataLoanMaster(listLoanMasterTerkirim, MTFSystemParams.customerCompleteDuration);
-//    }
-
-//    private void deleteDataLoanMaster(List<MTFLoanMasterModel> listOfLoanMaster, int lifeTime){
-//        for (int i = 0; i < listOfLoanMaster.size(); i++) {
-//            MTFLoanMasterModel model = listOfLoanMaster.get(i);
-//            if (MTFGenerator.isDataGreaterThanToday(model.getDate(), lifeTime)) {
-//                MTFGenerator.deleteLoanMasterData(getApplicationContext(), model);
-//                database.deleteLoanMasterDraft(model.getId());
-//            }
-//        }
-//    }
-
-
-
-
     private void registerLocalBroadcastReceiver(){
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(KYNIntentConstant.ACTION_LOGIN);

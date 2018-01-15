@@ -66,7 +66,6 @@ public class KYNUserListActivity extends KYNBaseActivity{
         if (controller != null) {
             initiateDefaultValue();
             controller.onResume();
-            //controller.updateAttachmentUI();
         }
         super.onResume();
     }

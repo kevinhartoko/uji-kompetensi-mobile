@@ -34,7 +34,6 @@ public class KYNAPILogin extends KYNHTTPPostConnections {
         try {
             Bundle bundle = new Bundle();
             JSONObject jsonResponse = new JSONObject(responseString);
-            //jsonResponse = jsonResponse.getJSONObject(KYNJSONKey.KEY_D);
             String result = jsonResponse.getString(KYNJSONKey.KEY_RESULT);
 
             bundle.putString(KYNIntentConstant.BUNDLE_KEY_RESULT, result);

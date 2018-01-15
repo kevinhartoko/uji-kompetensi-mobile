@@ -38,7 +38,6 @@ public class KYNAPISubmitIntervieweeData extends KYNHTTPPostConnections {
         try {
             Bundle bundle = new Bundle();
             JSONObject jsonResponse = new JSONObject(responseString);
-            //jsonResponse = jsonResponse.getJSONObject(KYNJSONKey.KEY_D);
             String result = jsonResponse.getString(KYNJSONKey.KEY_RESULT);
 
             bundle.putString(KYNIntentConstant.BUNDLE_KEY_RESULT, result);
@@ -84,8 +83,6 @@ public class KYNAPISubmitIntervieweeData extends KYNHTTPPostConnections {
             intervieweeModel.setQuestionModels(questionModels);
             String interviewee = gson.toJson(intervieweeModel);
             JSONObject json = new JSONObject(interviewee);
-//            json.put(KYNJSONKey.KEY_USERNAME, username);
-//            json.put(KYNJSONKey.KEY_JSON, interviewee);
             return json.toString();
         } catch (JSONException e) {
 

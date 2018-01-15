@@ -35,25 +35,6 @@ public class KYNAPITemplateDetail extends KYNHTTPPostConnections {
     @Override
     protected Bundle generateBundleOnRequestSuccess(String responseString) {
         try {
-
-//            //jsonResponse = jsonResponse.getJSONObject(KYNJSONKey.KEY_D);
-//            String result = jsonResponse.getString(KYNJSONKey.KEY_RESULT);
-//
-//            bundle.putString(KYNIntentConstant.BUNDLE_KEY_RESULT, result);
-//            bundle.putString(KYNIntentConstant.BUNDLE_KEY_MESSAGE, jsonResponse.getString(KYNJSONKey.KEY_MESSAGE));
-//
-//            if (result.equalsIgnoreCase(KYNJSONKey.VAL_SUCCESS)) {
-//                bundle.putInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_TEMPLATE_DETAIL_SUCCESS);
-//            }else{
-//                bundle.putInt(KYNIntentConstant.BUNDLE_KEY_CODE, KYNIntentConstant.CODE_TEMPLATE_DETAIL_FAILED);
-//            }
-//
-//            return bundle;
-//        } catch (JSONException e) {
-//
-//        }
-//
-//        return null;
             Bundle bundle = new Bundle();
             JSONArray jsonResponse = new JSONArray(responseString);
             database.deleteTemplateQuestion();

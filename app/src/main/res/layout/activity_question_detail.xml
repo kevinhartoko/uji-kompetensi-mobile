@@ -221,7 +221,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="0.4"
-                android:text="Category :"
+                android:text="Position :"
                 android:textColor="#FF000000" />
             <Spinner
                 android:layout_width="0dp"

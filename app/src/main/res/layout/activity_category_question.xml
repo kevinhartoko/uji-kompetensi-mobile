@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/blue"
         android:gravity="center"
-        android:text="CATEGORY"
+        android:text="POSITION"
         android:textSize="20dp"
         android:layout_marginBottom="20dp"
         android:textStyle="bold"/>

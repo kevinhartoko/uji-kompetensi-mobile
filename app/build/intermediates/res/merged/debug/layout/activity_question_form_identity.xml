@@ -193,7 +193,7 @@
             android:textColor="@color/red"
             android:gravity="right"
             android:textSize="12sp"
-            android:text="Template Harus Dipilih"
+            android:text="Template must be selected"
             android:visibility="gone"/>
         <LinearLayout
             android:layout_width="match_parent"

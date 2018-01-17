@@ -243,13 +243,13 @@ public class KYNQuestionFormIdentityFragment extends KYNBaseFragment {
         }else{
             genderErrorTextView.setVisibility(View.GONE);
         }
-        if(template==null||template.equals("")||template.equalsIgnoreCase("pilih")){
+        if(template==null||template.equals("")||template.equalsIgnoreCase("choose")){
             templateErrorMessage.setVisibility(View.VISIBLE);
             result=false;
         }else{
             templateErrorMessage.setVisibility(View.GONE);
         }
-        if(category==null||category.equals("")||category.equalsIgnoreCase("pilih")){
+        if(category==null||category.equals("")||category.equalsIgnoreCase("choose")){
             categoryErrorMessage.setVisibility(View.VISIBLE);
             result=false;
         }else{
@@ -261,6 +261,7 @@ public class KYNQuestionFormIdentityFragment extends KYNBaseFragment {
     public void initiateTemplate(){
         List<String> listTemplate = new ArrayList<>();
         List<KYNTemplateModel> models = database.getTemplateList();
+        listTemplate.add("Choose");
         for (KYNTemplateModel model : models){
             listTemplate.add(model.getNama());
         }

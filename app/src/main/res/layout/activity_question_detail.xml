@@ -143,7 +143,7 @@
             android:id="@+id/kunciJawabanErrorTextview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Kunci Jawaban harus dipilih"
+            android:text="True answer must be selected"
             android:textColor="@color/red"
             android:gravity="right"
             android:textSize="12sp"

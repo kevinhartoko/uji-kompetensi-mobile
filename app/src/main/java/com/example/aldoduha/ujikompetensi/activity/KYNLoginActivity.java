@@ -109,7 +109,7 @@ public class KYNLoginActivity extends KYNBaseActivity {
                 }
             },"");
 
-            exitConfirmationDialog.setDialogMessage("Apakah anda ingin keluar dari aplikasi?");
+            exitConfirmationDialog.setDialogMessage("Are you sure to close this application?");
         }
 
         exitConfirmationDialog.show();

@@ -100,15 +100,6 @@ public class KYNIntervieweeListActivity extends KYNBaseActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        if (controller != null) {
-            controller.showOnBackPressAlertDialog();
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode){

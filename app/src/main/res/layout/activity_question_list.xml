@@ -48,7 +48,7 @@
                             android:layout_gravity="center_vertical"
                             android:gravity="center"
                             android:layout_column="0"
-                            android:text="Nama"/>
+                            android:text="Name"/>
 
                         <TextView
                             android:id="@+id/textViewBobot"
@@ -59,7 +59,7 @@
                             android:paddingLeft="3dip"
                             android:paddingRight="3dip"
                             android:layout_column="0"
-                            android:text="Bobot"/>
+                            android:text="Weight"/>
                     </TableRow>
                 </TableLayout>
             </HorizontalScrollView>

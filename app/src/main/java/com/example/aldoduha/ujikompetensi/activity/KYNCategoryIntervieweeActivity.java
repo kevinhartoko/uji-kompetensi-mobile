@@ -37,15 +37,6 @@ public class KYNCategoryIntervieweeActivity extends KYNBaseActivity {
         initDefaultValue();
     }
 
-    @Override
-    public void onBackPressed() {
-        if (controller != null) {
-            controller.showOnBackPressAlertDialog();
-        } else {
-            super.onBackPressed();
-        }
-    }
-
     private void loadView() {
         developerButton = (Button) findViewById(R.id.btnDeveloper);
         qaButton = (Button) findViewById(R.id.btnQA);
